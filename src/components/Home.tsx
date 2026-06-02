@@ -8,23 +8,23 @@ const Home = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
+    const fetchCardsData = async (): Promise<void> => {
+      try {
+        const url = "https://jsonplaceholder.typicode.com/posts";
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: Post[] = await response.json();
+        setPosts(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
     fetchCardsData();
   }, []);
-
-  const fetchCardsData = async (): Promise<void> => {
-    try {
-      const url = "https://jsonplaceholder.typicode.com/posts";
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data: Post[] = await response.json();
-      setPosts(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
 
   if (isLoading) {
     return (

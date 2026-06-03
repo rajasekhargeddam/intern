@@ -96,10 +96,10 @@ const Home = () => {
 
       {postsView()}
 
-      <div className="flex justify-center items-center p-4">
+      <div className="flex flex-wrap justify-center items-center gap-2 p-2 sm:gap-3 sm:p-4">
         {currentPage > 1 && (
           <button
-            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-600 mr-2"
+            className="bg-indigo-600 text-white px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base rounded hover:bg-indigo-700 transition-all"
             onClick={() => {
               setCurrentPage((value) => value - 1);
             }}
@@ -108,7 +108,7 @@ const Home = () => {
           </button>
         )}
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-1 sm:gap-2 justify-center">
           {Array.from({ length: maxPage }, (_, index) => (
             <button
               key={index}
@@ -118,7 +118,7 @@ const Home = () => {
                 }
               }}
               disabled={currentPage === index + 1}
-              className={`w-10 h-10 rounded-lg font-medium shadow-md border border-slate-300 hover:shadow-blue-400 ${currentPage === index + 1 ? "bg-indigo-600 text-white shadow-md" : ""} transition-all`}
+              className={`w-8 h-8 sm:w-10 sm:h-10 text-xs sm:text-base rounded-lg font-medium shadow-md border border-slate-300 hover:shadow-blue-400 transition-all ${currentPage === index + 1 ? "bg-indigo-600 text-white shadow-md" : ""}`}
             >
               {index + 1}
             </button>
@@ -127,7 +127,7 @@ const Home = () => {
 
         {hasNextPage && (
           <button
-            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-600 ml-2"
+            className="bg-indigo-600 text-white px-2 sm:px-4 py-1 sm:py-2 text-sm sm:text-base rounded hover:bg-indigo-700 transition-all"
             onClick={onClickNextPage}
           >
             next

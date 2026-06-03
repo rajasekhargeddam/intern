@@ -7,10 +7,10 @@ type CardProps = {
 const Card = ({ post }: CardProps) => {
   const { title, body } = post;
   return (
-    <div className="bg-slate-800 shadow-md rounded-lg border-slate-700 p-4 hover:scale-95 transition-transform duration-300 cursor-pointer">
-      <h1 className="text-slate-50 text-xl font-bold mb-2">{title}</h1>
-      <p className="text-slate-300">{body}</p>
-    </div>
+    <li className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-slate-200">
+      <h1 className="text-slate-900 text-xl font-bold mb-2">{title}</h1>
+      <p className="text-slate-600">{body}</p>
+    </li>
   );
 };
 

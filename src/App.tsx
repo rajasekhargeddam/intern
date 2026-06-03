@@ -2,9 +2,10 @@ import Home from "./components/Home";
 
 const App = () => {
   return (
-    <div className="flex justify-center bg-slate-950 min-h-screen">
+    <div className="bg-slate-50 min-h-screen py-4">
       <Home />
     </div>
+    
   );
 };
 

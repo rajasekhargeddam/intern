@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import CardList from "./CardList";
+import CardList from "../components/CardList";
 import type { Post } from "../types/post";
 import { POSTS_API_URL, POSTS_PER_PAGE } from "../constants/api";
 import { api_status } from "../constants/const-data";
 import ShimmerPosts from "../shimmerUi/ShimmerPosts";
-import NoPostsView from "./NoPostsView";
-import FailedView from "./FailedView";
+import NoPostsView from "../components/NoPostsView";
+import FailedView from "../components/FailedView";
 
 const Home = () => {
   const [apiStatus, setApiStatus] = useState(api_status.loading);
@@ -75,7 +75,9 @@ const Home = () => {
       <div className="flex flex-col justify-center items-center p-4">
         <h1 className="text-4xl font-bold text-slate-900">Discover Posts</h1>
 
-        <p className="text-slate-500 mb-2">Search and explore posts effortlessly</p>
+        <p className="text-slate-500 mb-2">
+          Search and explore posts effortlessly
+        </p>
         <div className="flex space-x-2">
           <input
             className="w-full max-w-xl px-5 py-2 rounded-xl border border-slate-300 outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500"

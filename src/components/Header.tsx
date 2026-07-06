@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import { LOGOUT_API } from "../constants/api";
+import { UserContext } from "../context/UserContext";
+import CreatePostForm from "./CreatePostForm";
+import ToggleSideBar from "./ToggleSideBar";
 
-type HeaderProps = {
-  username: string;
-};
-
-const Header = ({ username }: HeaderProps) => {
+const Header = () => {
   const navigate = useNavigate();
+  const { user, logout } = useContext(UserContext);
 
   const onlogout = async () => {
     try {
@@ -21,6 +22,7 @@ const Header = ({ username }: HeaderProps) => {
       if (!response.ok) {
         throw new Error("Logout failed");
       }
+      logout();
       navigate("/auth/login", { replace: true });
     } catch (err) {
       if (err instanceof Error) {
@@ -32,15 +34,19 @@ const Header = ({ username }: HeaderProps) => {
   };
 
   return (
-    <div className="py-4 px-8 m-4 w-full flex justify-between shadow-sm sticky top-0 z-50 bg-white rounded-2xl">
-      <p className="text-2xl">{username}</p>
-      <button
-        type="button"
-        className="border rounded-md py-2 px-4 hover:shadow-xl transition-all duration-300 cursor-pointer"
-        onClick={() => onlogout()}
-      >
-        Logout
-      </button>
+    <div className="py-4 px-8 w-full flex justify-between shadow-sm fixed top-0 left-0 right-0 h-16 z-50 bg-white rounded-2xl">
+      <p className="md:text-2xl">Hello, {user?.username}</p>
+      <div className="flex gap-2">
+        <CreatePostForm />
+        <button
+          type="button"
+          className="hidden md:block border rounded-md py-1 px-4 hover:shadow-xl transition-all duration-300 cursor-pointer"
+          onClick={() => onlogout()}
+        >
+          Logout
+        </button>
+        <ToggleSideBar onLogout={onlogout} />
+      </div>
     </div>
   );
 };

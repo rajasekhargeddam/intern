@@ -7,7 +7,7 @@ import ShimmerPosts from "../shimmerUi/ShimmerPosts";
 import NoPostsView from "../components/NoPostsView";
 import FailedView from "../components/FailedView";
 
-const Home = () => {
+const StaticPosts = () => {
   const [apiStatus, setApiStatus] = useState(api_status.loading);
   const [posts, setPosts] = useState<Post[]>([]);
   const [searchText, setSearchText] = useState("");
@@ -140,4 +140,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default StaticPosts;

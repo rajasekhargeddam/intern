@@ -1,9 +1,11 @@
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent , useContext} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { SIGNUP_API } from "../constants/api";
 import type { SignupRequest, AuthSuccessResponse } from "../types/auth";
+import { UserContext } from "../context/UserContext";
 
 const SignUp = () => {
+  const { login } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +28,7 @@ const SignUp = () => {
       return;
     }
 
-    const signupData: SignupRequest = { username, email, password };
+    const signupData: SignupRequest = {username, email, password };
 
     try {
       if (password !== conformPassword) {
@@ -49,6 +51,7 @@ const SignUp = () => {
         setPassword("");
         setUsername("");
         setConformPassword("");
+        login(resData.user);
         navigate("/", {
           replace: true,
         });

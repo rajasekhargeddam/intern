@@ -1,9 +1,11 @@
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent , useContext} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { LOGIN_API } from "../constants/api";
 import type { LoginRequest, AuthSuccessResponse } from "../types/auth";
+import { UserContext } from "../context/UserContext";
 
 const Login = () => {
+  const { login } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +42,7 @@ const Login = () => {
       if (response.ok) {
         setEmail("");
         setPassword("");
+        login(resData.user);
         navigate("/", {
           replace: true,
         });

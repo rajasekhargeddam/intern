@@ -18,8 +18,10 @@ function CreatePostForm() {
   const [imgUrl3, setImgUrl3] = useState("");
   const [imgUrl4, setImgUrl4] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
 
   const onClickPostBtn = async () => {
+    setIsPosting(true);
     setErrMsg("");
 
     if (!content) {
@@ -65,6 +67,8 @@ function CreatePostForm() {
       const errorMessage =
         err instanceof Error ? err.message : "An error occurred during signup";
       setErrMsg(errorMessage);
+    } finally {
+      setIsPosting(false);
     }
   };
 
@@ -87,7 +91,9 @@ function CreatePostForm() {
               </button>
             </Close>
           </div>
-          <Title className="text-center text-xl font-semibold text-slate-900 mb-4">Create Your Post</Title>
+          <Title className="text-center text-xl font-semibold text-slate-900 mb-4">
+            Create Your Post
+          </Title>
 
           <textarea
             rows={5}
@@ -100,7 +106,9 @@ function CreatePostForm() {
           />
 
           <div className="mt-4 flex flex-col gap-3">
-            <label className="text-sm font-medium text-slate-700">Enter image URLs</label>
+            <label className="text-sm font-medium text-slate-700">
+              Enter image URLs
+            </label>
             <input
               type="text"
               className="w-full rounded-3xl border border-slate-300 bg-slate-50 py-3 px-4 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
@@ -146,6 +154,7 @@ function CreatePostForm() {
               className="w-full rounded-lg px-3 bg-blue-600 py-3 text-sm font-semibold text-white transition cursor-pointer hover:bg-blue-700 sm:w-auto"
               type="button"
               onClick={onClickPostBtn}
+              disabled={isPosting}
             >
               POST
             </button>

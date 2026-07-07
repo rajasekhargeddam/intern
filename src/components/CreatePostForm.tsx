@@ -21,13 +21,14 @@ function CreatePostForm() {
   const [isPosting, setIsPosting] = useState(false);
 
   const onClickPostBtn = async () => {
-    setIsPosting(true);
     setErrMsg("");
 
     if (!content) {
       setErrMsg("Can't post eamty content");
       return;
     }
+
+    setIsPosting(true);
 
     const images = [];
 
@@ -151,12 +152,15 @@ function CreatePostForm() {
 
           <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-end">
             <button
-              className="w-full rounded-lg px-3 bg-blue-600 py-3 text-sm font-semibold text-white transition cursor-pointer hover:bg-blue-700 sm:w-auto"
+              className={
+                "w-full rounded-lg px-3 py-3 text-sm font-semibold text-white transition cursor-pointer hover:bg-blue-700 sm:w-auto" +
+                (isPosting ? " bg-blue-900" : " bg-blue-600")
+              }
               type="button"
               onClick={onClickPostBtn}
               disabled={isPosting}
             >
-              POST
+              {isPosting ? "Posting" : "POST"}
             </button>
           </div>
         </Content>

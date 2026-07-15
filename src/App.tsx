@@ -8,6 +8,10 @@ import StaticPosts from "./pages/StaticPosts";
 import UserPosts from "./pages/UserPosts";
 import UserProvider from "./context/UserContext";
 import { AuthLoader } from "./loaders/authLoader";
+import Profile from "./pages/Profile";
+import AdminLayout from "./layouts/AdminLayout";
+import AdminUsers from "./pages/AdminUsers";
+import ProtectedLayout from "./layouts/ProtectedLayout";
 
 const routes = createBrowserRouter([
   {
@@ -24,18 +28,40 @@ const routes = createBrowserRouter([
       },
     ],
   },
+
   {
-    path: "/",
     loader: AuthLoader,
-    element: <MainLayout />,
+    element: <ProtectedLayout />,
     children: [
       {
-        index: true,
-        element: <UserPosts />
+        path: "/profile",
+        element: <Profile />,
       },
+
       {
-        path: "/static-posts",
-        element: <StaticPosts />,
+        path: "/",
+        element: <MainLayout />,
+        children: [
+          {
+            index: true,
+            element: <UserPosts />,
+          },
+          {
+            path: "static-posts",
+            element: <StaticPosts />,
+          },
+        ],
+      },
+
+      {
+        path: "/admin",
+        element: <AdminLayout />,
+        children: [
+          {
+            index: true,
+            element: <AdminUsers />,
+          },
+        ],
       },
     ],
   },

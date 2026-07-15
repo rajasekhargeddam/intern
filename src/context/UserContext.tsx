@@ -1,10 +1,5 @@
-import { createContext, useState } from "react";
-
-interface User {
-  id: string;
-  email: string;
-  username: string;
-}
+import { createContext, useState, type ReactNode } from "react";
+import type { User } from "../types/auth";
 
 interface UserContextType {
   user: User | null;
@@ -18,7 +13,7 @@ const UserContext = createContext<UserContextType>({
   logout: () => {},
 });
 
-const UserProvider = ({ children }: { children: React.ReactNode }) => {
+const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   const login = (userData: User | null) => {

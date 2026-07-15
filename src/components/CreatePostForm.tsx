@@ -8,6 +8,7 @@ import {
   Close,
 } from "@radix-ui/react-dialog";
 import { useState } from "react";
+import { IoCreateOutline } from "react-icons/io5";
 
 import { POSTS_API } from "../constants/api";
 
@@ -76,8 +77,9 @@ function CreatePostForm() {
   return (
     <Root>
       <Trigger asChild>
-        <button className="flex gap-1 border rounded-md py-1 px-4 hover:shadow-xl transition-all duration-300 cursor-pointer">
-          + <span className="hidden sm:block">Create Post</span>
+        <button className="flex items-center gap-1 border rounded-md py-1 px-4 hover:shadow-xl transition-all duration-300 cursor-pointer">
+          <IoCreateOutline />{" "}
+          <span className="hidden sm:block">Create Post</span>
         </button>
       </Trigger>
 

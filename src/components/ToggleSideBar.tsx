@@ -8,23 +8,20 @@ import {
   Close,
 } from "@radix-ui/react-dialog";
 import SideBar from "./SideBar";
+import { CiMenuBurger } from "react-icons/ci";
 
-interface Props {
-  onLogout: () => void;
-}
-
-const ToggleSideBar = ({ onLogout }: Props) => {
+const ToggleSideBar = () => {
   return (
     <Root>
       <Trigger asChild>
-        <button className="flex md:hidden gap-1 border rounded-md py-1 px-4 hover:shadow-xl transition-all duration-300 cursor-pointer">
-          Menu
+        <button className="flex items-center md:hidden gap-1 border rounded-md py-1 px-4 hover:shadow-xl transition-all duration-300 cursor-pointer">
+          <CiMenuBurger />
         </button>
       </Trigger>
 
       <Portal>
         <Overlay className="fixed inset-0 bg-black/50" />
-        <Content className="fixed right-0 top-0 z-50 h-full w-full max-w-xs bg-white p-5 shadow-2xl">
+        <Content className="fixed left-0 top-0 z-50 h-full w-full max-w-xs bg-white p-5 shadow-2xl">
           <div className="flex items-center justify-between mb-6">
             <Title className="text-lg font-semibold">Menu</Title>
             <Close asChild>
@@ -35,14 +32,6 @@ const ToggleSideBar = ({ onLogout }: Props) => {
           </div>
 
           <SideBar />
-
-          <button
-            type="button"
-            className="mt-6 w-full border rounded-md py-2 px-4 hover:shadow-xl transition-all duration-300 cursor-pointer text-slate-800"
-            onClick={onLogout}
-          >
-            Logout
-          </button>
         </Content>
       </Portal>
     </Root>

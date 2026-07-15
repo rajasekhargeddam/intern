@@ -1,8 +1,16 @@
 export interface User {
-  id: string;
+  id?: string;
+  _id?: string;
   username: string;
   email: string;
+  firstname?: string;
+  lastname?: string;
+  profilePicture?: string;
+  bio?: string;
+  gender?: string;
+  role?: string;
 }
+
 export interface LoginRequest {
   email: string;
   password: string;

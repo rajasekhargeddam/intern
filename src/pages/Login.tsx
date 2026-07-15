@@ -13,7 +13,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const onclickSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
     setIsLoading(true);
@@ -69,7 +69,7 @@ const Login = () => {
             Sign in to your account to continue
           </p>
 
-          <form onSubmit={onclickSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label
                 htmlFor="email"

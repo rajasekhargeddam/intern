@@ -1,23 +1,8 @@
-import { Outlet, Navigate, useLoaderData } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { UserContext } from "../context/UserContext";
+import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
 import SideBar from "../components/SideBar.tsx";
 
 const MainLayout = () => {
-  const { user, login } = useContext(UserContext);
-  const userData = useLoaderData();
-
-  useEffect(() => {
-    if (!user && userData) {
-      login(userData);
-    }
-  }, [userData, user, login]);
-
-  if (!user && !userData) {
-    return <Navigate to="/auth/login" replace />;
-  }
-
   return (
     <>
       <Header />

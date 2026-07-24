@@ -24,9 +24,11 @@ const UserCard = ({ user }: UserCardProps) => {
             <p className="text-sm text-gray-500">{user.email}</p>
 
             <div className="mt-2 flex gap-2">
-              <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
-                {user.gender}
-              </span>
+              {user.gender && (
+                <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">
+                  {user.gender}
+                </span>
+              )}
 
               <span
                 className={`rounded-full px-3 py-1 text-xs font-medium ${

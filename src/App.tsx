@@ -10,8 +10,9 @@ import UserProvider from "./context/UserContext";
 import { AuthLoader } from "./loaders/authLoader";
 import Profile from "./pages/Profile";
 import AdminLayout from "./layouts/AdminLayout";
-import AdminUsers from "./pages/AdminUsers";
 import ProtectedLayout from "./layouts/ProtectedLayout";
+import Users from "./pages/admin/Users";
+import UserProfile from "./pages/admin/UserProfile";
 
 const routes = createBrowserRouter([
   {
@@ -59,7 +60,11 @@ const routes = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <AdminUsers />,
+            element: <Users />,
+          },
+          {
+            path: "user/:userId",
+            element: <UserProfile />,
           },
         ],
       },

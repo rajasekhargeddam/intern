@@ -7,23 +7,33 @@ import {
   Title,
   Close,
 } from "@radix-ui/react-dialog";
-import { useState, useContext, type ChangeEvent, useEffect } from "react";
+import {
+  useState,
+  useContext,
+  type ChangeEvent,
+  useEffect,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { RxCross2 } from "react-icons/rx";
 import { MdDeleteOutline } from "react-icons/md";
 import { UserContext } from "../context/UserContext";
-import { updateProfile } from "../services/updateProfile";
-
+import type { User } from "../types/auth";
+import { ADMIN_GET_USER, UPDATE_PROFILE_API } from "../constants/api";
 type Gender = "Male" | "Female" | "Other";
 
-const EditProfile = () => {
-  const { user, login } = useContext(UserContext);
+type EditProfileProps = {
+  open: boolean;
+  onOpenChange: Dispatch<SetStateAction<boolean>>;
+  user: User;
+  mode: "self" | "admin";
+};
 
-  const [firstname, setFirstname] = useState(
-    () => user?.firstname?.toLowerCase() || "",
-  );
-  const [lastname, setLastname] = useState(
-    () => user?.lastname?.toLowerCase() || "",
-  );
+const EditProfile = ({ open, onOpenChange, user, mode }: EditProfileProps) => {
+  const { login } = useContext(UserContext);
+
+  const [firstname, setFirstname] = useState(() => user?.firstname || "");
+  const [lastname, setLastname] = useState(() => user?.lastname || "");
   const [bio, setBio] = useState(user?.bio || "");
   const [gender, setGender] = useState<Gender>(
     (user?.gender as Gender) || "Male",
@@ -78,11 +88,11 @@ const EditProfile = () => {
     const normalizedLastName = normalizeName(lastname);
 
     if (normalizedFirstName !== (user.firstname || "")) {
-      formData.append("firstName", normalizedFirstName);
+      formData.append("firstname", normalizedFirstName);
     }
 
     if (normalizedLastName !== (user.lastname || "")) {
-      formData.append("lastName", normalizedLastName);
+      formData.append("lastname", normalizedLastName);
     }
 
     if (bio !== (user.bio || "")) {
@@ -110,13 +120,38 @@ const EditProfile = () => {
       setIsSaving(true);
       setErrorMessage("");
 
-      const updatedUser = await updateProfile(formData);
+      let response;
 
-      login({
-        ...user,
-        ...updatedUser,
-      });
+      if (mode === "self") {
+        response = await fetch(UPDATE_PROFILE_API, {
+          method: "PATCH",
+          credentials: "include",
+          body: formData,
+        });
+      } else {
+        response = await fetch(`${ADMIN_GET_USER}${user._id}`, {
+          method: "PATCH",
+          credentials: "include",
+          body: formData,
+        });
+      }
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // show toast
+        return;
+      }
+      const updatedUser = data.user;
+
+      if (mode === "self") {
+        login({
+          ...user,
+          ...updatedUser,
+        });
+      }
       alert("Profile updated...");
+      onOpenChange(false);
     } catch (error) {
       setErrorMessage(
         error instanceof Error ? error.message : "Unable to update profile",
@@ -127,7 +162,7 @@ const EditProfile = () => {
   };
 
   return (
-    <Root>
+    <Root open={open} onOpenChange={onOpenChange}>
       <Trigger asChild>
         <button
           type="button"
@@ -194,7 +229,7 @@ const EditProfile = () => {
                 <input
                   className="mt-2 w-full rounded-lg border px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
                   value={firstname}
-                  onChange={(e) => setFirstname(e.target.value.toLowerCase())}
+                  onChange={(e) => setFirstname(e.target.value)}
                 />
               </div>
 
@@ -204,7 +239,7 @@ const EditProfile = () => {
                 <input
                   className="mt-2 w-full rounded-lg border px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
                   value={lastname}
-                  onChange={(e) => setLastname(e.target.value.toLowerCase())}
+                  onChange={(e) => setLastname(e.target.value)}
                 />
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import {
   Root,
@@ -57,16 +57,37 @@ function ProfileDropdown() {
           sideOffset={8}
         >
           <Item className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer outline-none">
-            <Link to="/profile">My Profile</Link>
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                isActive ? "text-blue-600 font-semibold" : ""
+              }
+            >
+              My Profile
+            </NavLink>
           </Item>
 
           {user?.role === "admin" && (
             <>
               <Item className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer outline-none">
-                <Link to="/">user portal</Link>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive ? "text-blue-600 font-semibold" : ""
+                  }
+                >
+                  user portal
+                </NavLink>
               </Item>
-              <Item className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer outline-none">
-                <Link to="/admin">Admin Portal</Link>
+              <Item className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer outline-non">
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    isActive ? "text-blue-600 font-semibold" : ""
+                  }
+                >
+                  Admin Portal
+                </NavLink>
               </Item>
             </>
           )}

@@ -12,7 +12,7 @@ import { IoCreateOutline } from "react-icons/io5";
 
 import ImageUploader from "./ImageUploader";
 import PostContentInput from "./PostContentInput";
-import { POSTS_API } from "../../constants/api";
+import { createPost } from "../../services/posts";
 
 function CreatePostForm() {
   const [content, setContent] = useState("");
@@ -65,17 +65,7 @@ function CreatePostForm() {
     });
 
     try {
-      const response = await fetch(POSTS_API, {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to create post.");
-      }
+      const data = await createPost(formData);
 
       alert(data.message);
 

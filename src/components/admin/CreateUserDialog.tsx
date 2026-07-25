@@ -11,8 +11,8 @@ import {
 import { useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { ADMIN_GET_USER } from "../../constants/api";
 import type { SignupRequest } from "../../types/auth";
+import { createAdminUser } from "../../services/admin";
 
 function CreateUserDialog() {
   const [username, setUsername] = useState("");
@@ -40,21 +40,8 @@ function CreateUserDialog() {
       setIsLoading(true);
       const userData: SignupRequest = { username, email, password };
 
-      const response = await fetch(ADMIN_GET_USER, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(userData),
-      });
+      await createAdminUser(userData);
 
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error("Something went wrong..");
-      }
-
-      console.log(data);
       alert("User Created successfully...");
 
       setUsername("");

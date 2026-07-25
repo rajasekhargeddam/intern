@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import CardList from "../components/CardList";
 import type { Post } from "../types/post";
-import { POSTS_API_URL, POSTS_PER_PAGE } from "../constants/api";
-import { api_status } from "../constants/const-data";
+import { POSTS_PER_PAGE, api_status } from "../constants";
+import { fetchPosts } from "../services/posts";
 import ShimmerPosts from "../shimmerUi/ShimmerPosts";
 import NoPostsView from "../components/NoPostsView";
 import FailedView from "../components/FailedView";
@@ -20,15 +20,9 @@ const StaticPosts = () => {
     const fetchCardsData = async (): Promise<void> => {
       setApiStatus(api_status.loading);
       try {
-        const offset = (currentPage - 1) * POSTS_PER_PAGE;
-        const url = `${POSTS_API_URL}?q=${searchQuery}&_start=${offset}&_limit=${POSTS_PER_PAGE + 1}`;
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: Post[] = await response.json();
-        setHasNextPage(data.length > POSTS_PER_PAGE);
-        setPosts(data.slice(0, POSTS_PER_PAGE));
+        const { posts: fetchedPosts, hasNextPage } = await fetchPosts(searchQuery, currentPage, POSTS_PER_PAGE);
+        setHasNextPage(hasNextPage);
+        setPosts(fetchedPosts);
         setApiStatus(api_status.success);
       } catch (error) {
         console.error("Error fetching data:", error);

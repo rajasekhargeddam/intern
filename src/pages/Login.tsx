@@ -1,8 +1,8 @@
 import { useState, type FormEvent , useContext} from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { LOGIN_API } from "../constants/api";
-import type { LoginRequest, AuthSuccessResponse } from "../types/auth";
+import type { LoginRequest } from "../types/auth";
 import { UserContext } from "../context/UserContext";
+import { loginUser } from "../services/auth";
 
 const Login = () => {
   const { login } = useContext(UserContext);
@@ -28,27 +28,14 @@ const Login = () => {
     const loginData: LoginRequest = { email, password };
 
     try {
-      const response = await fetch(LOGIN_API, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(loginData),
+      const resData = await loginUser(loginData);
+
+      setEmail("");
+      setPassword("");
+      login(resData.user);
+      navigate("/", {
+        replace: true,
       });
-
-      const resData: AuthSuccessResponse = await response.json();
-
-      if (response.ok) {
-        setEmail("");
-        setPassword("");
-        login(resData.user);
-        navigate("/", {
-          replace: true,
-        });
-      } else {
-        throw new Error(resData.message);
-      }
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "An error occurred during login";

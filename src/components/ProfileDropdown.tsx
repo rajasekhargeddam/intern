@@ -9,7 +9,7 @@ import {
   Separator,
 } from "@radix-ui/react-dropdown-menu";
 import { UserContext } from "../context/UserContext";
-import { LOGOUT_API } from "../constants/api";
+import { logoutUser } from "../services/auth";
 
 function ProfileDropdown() {
   const navigate = useNavigate();
@@ -17,17 +17,7 @@ function ProfileDropdown() {
 
   const onlogout = async () => {
     try {
-      const response = await fetch(LOGOUT_API, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error("Logout failed");
-      }
+      await logoutUser();
       logout();
       navigate("/auth/login", { replace: true });
     } catch (err) {

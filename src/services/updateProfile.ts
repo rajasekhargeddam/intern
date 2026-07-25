@@ -1,11 +1,11 @@
-import { UPDATE_PROFILE_API } from "../constants/api";
+import { BASE_URL } from "../constants";
 import type { User } from "../types/auth";
 
 export const updateProfile = async (
   formData: FormData
 ): Promise<User> => {
   try {
-    const response = await fetch(UPDATE_PROFILE_API, {
+    const response = await fetch(`${BASE_URL}/profile/edit`, {
       method: "PATCH",
       credentials: "include",
       body: formData,

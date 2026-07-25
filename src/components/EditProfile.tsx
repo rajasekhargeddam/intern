@@ -19,7 +19,9 @@ import { RxCross2 } from "react-icons/rx";
 import { MdDeleteOutline } from "react-icons/md";
 import { UserContext } from "../context/UserContext";
 import type { User } from "../types/auth";
-import { ADMIN_GET_USER, UPDATE_PROFILE_API } from "../constants/api";
+import { updateAdminUser } from "../services/admin";
+import { updateProfile } from "../services/updateProfile";
+
 type Gender = "Male" | "Female" | "Other";
 
 type EditProfileProps = {
@@ -120,29 +122,19 @@ const EditProfile = ({ open, onOpenChange, user, mode }: EditProfileProps) => {
       setIsSaving(true);
       setErrorMessage("");
 
-      let response;
+      let updatedUser;
 
       if (mode === "self") {
-        response = await fetch(UPDATE_PROFILE_API, {
-          method: "PATCH",
-          credentials: "include",
-          body: formData,
-        });
+        const data = await updateProfile(formData);
+        updatedUser = data;
       } else {
-        response = await fetch(`${ADMIN_GET_USER}${user._id}`, {
-          method: "PATCH",
-          credentials: "include",
-          body: formData,
-        });
-      }
+        if (!user._id) {
+          throw new Error("User ID is missing.");
+        }
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        // show toast
-        return;
+        const data = await updateAdminUser(user._id, formData);
+        updatedUser = data.user;
       }
-      const updatedUser = data.user;
 
       if (mode === "self") {
         login({

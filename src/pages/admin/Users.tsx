@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { ADMIN_USERS } from "../../constants/api";
-import { api_status } from "../../constants/const-data";
+import { api_status } from "../../constants";
 import AdminUsersShimmer from "../../shimmerUi/AdminUsersShimmer";
 import FailedView from "../../components/FailedView";
 import type { User } from "../../types/auth";
 import UserCard from "../../components/admin/UserCard";
 import CreateUserDialog from "../../components/admin/CreateUserDialog";
+import { fetchAdminUsers } from "../../services/admin";
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -16,17 +16,9 @@ const Users = () => {
       setApiStatus(api_status.loading);
 
       try {
-        const response = await fetch(ADMIN_USERS, {
-          credentials: "include",
-        });
+        const usersData = await fetchAdminUsers();
 
-        const usersData = await response.json();
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch user accounts");
-        }
-
-        setUsers(usersData.data);
+        setUsers(usersData);
         setApiStatus(api_status.success);
       } catch (err) {
         console.log(err);

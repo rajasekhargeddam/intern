@@ -1,8 +1,8 @@
-import { GET_PROFILE_API } from "../constants/api";
+import { BASE_URL } from "../constants";
 
 export const fetchProfile = async () => {
   try {
-    const response = await fetch(GET_PROFILE_API, {
+    const response = await fetch(`${BASE_URL}/profile/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

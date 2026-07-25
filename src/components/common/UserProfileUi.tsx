@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { User } from "../../types/auth";
 import EditProfile from "../EditProfile";
 import { useNavigate } from "react-router-dom";
-import { ADMIN_GET_USER } from "../../constants/api";
+import { deleteAdminUser } from "../../services/admin";
 
 type userProfileProps = {
   user: User;
@@ -26,17 +26,12 @@ const UserProfileUi = ({ user, mode }: userProfileProps) => {
     try {
       setIsDeleting(true);
 
-      const response = await fetch(`${ADMIN_GET_USER}${user._id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        alert(data.message || "Failed to delete user.");
+      if (!user._id) {
+        alert("User ID is missing.");
         return;
       }
+
+      await deleteAdminUser(user._id);
 
       alert("User deleted successfully.");
 

@@ -1,25 +1,21 @@
 import { useEffect, useState } from "react";
-import { POSTS_API } from "../constants/api";
+import { api_status } from "../constants";
 import { type UserPost } from "../types/post";
-import { api_status } from "../constants/const-data";
 import UserPostsList from "../components/UserPostsList";
 import FailedView from "../components/FailedView";
 import UserPostsShimmer from "../shimmerUi/UserPostsShimmer";
+import { fetchUserPosts } from "../services/posts";
 
 const UserPosts = () => {
   const [apistate, setApistate] = useState("");
   const [userPosts, setUserPosts] = useState<UserPost[]>([]);
 
   useEffect(() => {
-    const fetchUserPosts = async () => {
+    const loadUserPosts = async () => {
       try {
         setApistate(api_status.loading);
-        const respose = await fetch(POSTS_API, { credentials: "include" });
-        if (!respose.ok) {
-          throw new Error("Failed to fetch user posts");
-        }
-        const data = await respose.json();
-        setUserPosts(data.posts);
+        const posts = await fetchUserPosts();
+        setUserPosts(posts);
         setApistate(api_status.success);
       } catch (err) {
         setApistate(api_status.failed);
@@ -27,7 +23,7 @@ const UserPosts = () => {
       }
     };
 
-    fetchUserPosts();
+    loadUserPosts();
   }, []);
 
   const showUserPosts = () => {

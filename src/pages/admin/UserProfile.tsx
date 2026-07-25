@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 
 import FailedView from "../../components/FailedView";
 
-import { api_status } from "../../constants/const-data";
+import { api_status } from "../../constants";
 import type { User } from "../../types/auth";
 import ProfileShimmer from "../../shimmerUi/ProfileShimmer";
 import UserProfileUi from "../../components/common/UserProfileUi";
-import { ADMIN_GET_USER } from "../../constants/api";
+import { fetchAdminUserById } from "../../services/admin";
 
 const UserProfile = () => {
   const { userId } = useParams();
@@ -22,18 +22,9 @@ const UserProfile = () => {
       setApiStatus(api_status.loading);
 
       try {
-        const response = await fetch(ADMIN_GET_USER + userId, {
-          credentials: "include",
-        });
+        const userData = await fetchAdminUserById(userId);
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || "Failed to fetch user.");
-        }
-        console.log(data);
-
-        setUser(data.user);
+        setUser(userData);
         setApiStatus(api_status.success);
       } catch (error) {
         console.error(error);

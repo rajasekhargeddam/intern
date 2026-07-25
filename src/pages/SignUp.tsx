@@ -1,8 +1,8 @@
 import { useState, type FormEvent , useContext} from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { SIGNUP_API } from "../constants/api";
-import type { SignupRequest, AuthSuccessResponse } from "../types/auth";
+import type { SignupRequest } from "../types/auth";
 import { UserContext } from "../context/UserContext";
+import { signupUser } from "../services/auth";
 
 const SignUp = () => {
   const { login } = useContext(UserContext);
@@ -35,29 +35,16 @@ const SignUp = () => {
         throw new Error("Password didn't match");
       }
 
-      const response = await fetch(SIGNUP_API, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(signupData),
+      const resData = await signupUser(signupData);
+
+      setEmail("");
+      setPassword("");
+      setUsername("");
+      setConfirmPassword("");
+      login(resData.user);
+      navigate("/", {
+        replace: true,
       });
-
-      const resData: AuthSuccessResponse = await response.json();
-
-      if (response.ok) {
-        setEmail("");
-        setPassword("");
-        setUsername("");
-        setConfirmPassword("");
-        login(resData.user);
-        navigate("/", {
-          replace: true,
-        });
-      } else {
-        throw new Error(resData.message || `Signup failed with status ${response.status}`);
-      }
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "An error occurred during signup";

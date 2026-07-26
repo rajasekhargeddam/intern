@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import CardList from "../components/CardList";
+import CardList from "../components/post/CardList";
 import type { Post } from "../types/post";
 import { POSTS_PER_PAGE, api_status } from "../constants";
 import { fetchPosts } from "../services/posts";
-import ShimmerPosts from "../shimmerUi/ShimmerPosts";
-import NoPostsView from "../components/NoPostsView";
-import FailedView from "../components/FailedView";
+import ShimmerPosts from "../shimmer/ShimmerPosts";
+import NoPostsView from "../components/common/NoPostsView";
+import FailedView from "../components/common/FailedView";
 
 const StaticPosts = () => {
   const [apiStatus, setApiStatus] = useState(api_status.loading);

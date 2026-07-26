@@ -8,14 +8,14 @@ import {
   Item,
   Separator,
 } from "@radix-ui/react-dropdown-menu";
-import { UserContext } from "../context/UserContext";
-import { logoutUser } from "../services/auth";
+import { UserContext } from "../../context/UserContext";
+import { logoutUser } from "../../services/auth";
 
 function ProfileDropdown() {
   const navigate = useNavigate();
   const { user, logout } = useContext(UserContext);
 
-  const onlogout = async () => {
+  const handleLogout = async () => {
     try {
       await logoutUser();
       logout();
@@ -88,7 +88,7 @@ function ProfileDropdown() {
             <button
               type="button"
               className="w-full flex justify-center items-center cursor-pointer outline-none"
-              onClick={() => onlogout()}
+              onClick={() => handleLogout()}
             >
               Logout
             </button>

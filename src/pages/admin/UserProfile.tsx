@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import FailedView from "../../components/FailedView";
+import FailedView from "../../components/common/FailedView";
 
 import { api_status } from "../../constants";
 import type { User } from "../../types/auth";
-import ProfileShimmer from "../../shimmerUi/ProfileShimmer";
-import UserProfileUi from "../../components/common/UserProfileUi";
+import ProfileShimmer from "../../shimmer/ProfileShimmer";
+import UserProfileUi from "../../components/profile/UserProfileUi";
 import { fetchAdminUserById } from "../../services/admin";
 
 const UserProfile = () => {
@@ -41,7 +41,9 @@ const UserProfile = () => {
         return <ProfileShimmer />;
 
       case api_status.success:
-        return user ? <UserProfileUi user={user} mode="admin" /> : null;
+        return user ? (
+          <UserProfileUi user={user} mode="admin" onUpdateUser={setUser} />
+        ) : null;
 
       case api_status.failed:
         return <FailedView />;

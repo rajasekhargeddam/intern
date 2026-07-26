@@ -13,6 +13,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import ProtectedLayout from "./layouts/ProtectedLayout";
 import Users from "./pages/admin/Users";
 import UserProfile from "./pages/admin/UserProfile";
+import { Toaster } from "sonner";
 
 const routes = createBrowserRouter([
   {
@@ -76,6 +77,7 @@ const App = () => {
   return (
     <div className="bg-slate-50 min-h-screen pb-4">
       <UserProvider>
+         <Toaster richColors position="top-right" />
         <RouterProvider router={routes} />
       </UserProvider>
     </div>

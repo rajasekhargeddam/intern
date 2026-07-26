@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import type { SignupRequest } from "../types/auth";
 import { UserContext } from "../context/UserContext";
 import { signupUser } from "../services/auth";
+import { notifySuccess } from "../utils/toast";
 
 const SignUp = () => {
   const { login } = useContext(UserContext);
@@ -37,6 +38,7 @@ const SignUp = () => {
 
       const resData = await signupUser(signupData);
 
+      notifySuccess("Profile created successfully")
       setEmail("");
       setPassword("");
       setUsername("");

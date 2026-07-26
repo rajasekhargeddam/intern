@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
-import Header from "../components/Header";
+import Header from "../components/layout/Header";
 
 const AdminLayout = () => {
   const { user } = useContext(UserContext);

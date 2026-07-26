@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api_status } from "../../constants";
-import AdminUsersShimmer from "../../shimmerUi/AdminUsersShimmer";
-import FailedView from "../../components/FailedView";
+import AdminUsersShimmer from "../../shimmer/AdminUsersShimmer";
+import FailedView from "../../components/common/FailedView";
 import type { User } from "../../types/auth";
 import UserCard from "../../components/admin/UserCard";
 import CreateUserDialog from "../../components/admin/CreateUserDialog";
@@ -21,7 +21,7 @@ const Users = () => {
         setUsers(usersData);
         setApiStatus(api_status.success);
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setApiStatus(api_status.failed);
       }
     };

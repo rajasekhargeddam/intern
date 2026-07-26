@@ -17,10 +17,11 @@ import {
 } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { MdDeleteOutline } from "react-icons/md";
-import { UserContext } from "../context/UserContext";
-import type { User } from "../types/auth";
-import { updateAdminUser } from "../services/admin";
-import { updateProfile } from "../services/updateProfile";
+import { UserContext } from "../../context/UserContext";
+import type { User } from "../../types/auth";
+import { updateAdminUser } from "../../services/admin";
+import { updateProfile } from "../../services/updateProfile";
+import { notifySuccess } from "../../utils/toast";
 
 type Gender = "Male" | "Female" | "Other";
 
@@ -29,9 +30,16 @@ type EditProfileProps = {
   onOpenChange: Dispatch<SetStateAction<boolean>>;
   user: User;
   mode: "self" | "admin";
+  onUpdateUser?: Dispatch<SetStateAction<User | null>> | undefined;
 };
 
-const EditProfile = ({ open, onOpenChange, user, mode }: EditProfileProps) => {
+const EditProfile = ({
+  open,
+  onOpenChange,
+  user,
+  mode,
+  onUpdateUser,
+}: EditProfileProps) => {
   const { login } = useContext(UserContext);
 
   const [firstname, setFirstname] = useState(() => user?.firstname || "");
@@ -141,8 +149,13 @@ const EditProfile = ({ open, onOpenChange, user, mode }: EditProfileProps) => {
           ...user,
           ...updatedUser,
         });
+      } else {
+        if (onUpdateUser !== undefined) {
+          onUpdateUser(updatedUser);
+        }
       }
-      alert("Profile updated...");
+
+      notifySuccess("Profile updated successfully");
       onOpenChange(false);
     } catch (error) {
       setErrorMessage(

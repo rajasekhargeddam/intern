@@ -1,4 +1,4 @@
-import { type UserPost } from "../types/post";
+import { type UserPost } from "../../types/post";
 import UserPostCard from "./UserPostCard";
 
 type UserPostsListProps = {

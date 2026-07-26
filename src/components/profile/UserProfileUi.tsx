@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import type { User } from "../../types/auth";
-import EditProfile from "../EditProfile";
+import EditProfile from "./EditProfile";
 import { useNavigate } from "react-router-dom";
 import { deleteAdminUser } from "../../services/admin";
 
 type userProfileProps = {
   user: User;
   mode: "self" | "admin";
+  onUpdateUser?: Dispatch<SetStateAction<User | null>> | undefined;
 };
 
-const UserProfileUi = ({ user, mode }: userProfileProps) => {
+const UserProfileUi = ({ user, mode, onUpdateUser }: userProfileProps) => {
   const navigate = useNavigate();
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const { username, profilePicture, firstname, lastname, bio } = user;
+  const { username, profilePicture, firstname, lastname, bio, role } = user;
 
   const handleDelete = async () => {
     const confirmed = window.confirm(
@@ -78,13 +79,14 @@ const UserProfileUi = ({ user, mode }: userProfileProps) => {
         </div>
       </div>
 
-      {mode === "admin" && (
+      {mode === "admin" && role === "user" && (
         <div className="mt-5">
           <EditProfile
             open={isEditOpen}
             onOpenChange={setIsEditOpen}
             user={user}
             mode={mode}
+            onUpdateUser={onUpdateUser}
           />
           <button
             type="button"

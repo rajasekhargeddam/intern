@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import ToggleSideBar from "./ToggleSideBar";
-import ProfileDropdown from "./ProfileDropdown";
-import CreatePostForm from "./create-post/CreatePostForm";
+import ProfileDropdown from "../profile/ProfileDropdown";
+import CreatePostForm from "../post/CreatePostForm";
 
 const Header = () => {
   const { user } = useContext(UserContext);

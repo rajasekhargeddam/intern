@@ -1,7 +1,7 @@
-import { type UserPost } from "../types/post";
-import { timeAgo } from "../utils/dateConvertions.ts";
+import { type UserPost } from "../../types/post";
+import { timeAgo } from "../../utils/dateConvertions.ts";
 import UserPostImages from "./UserPostImages.tsx";
-import PostContent from "./PostContent.tsx";
+import PostContent from "../PostContent";
 
 type UserPostsProps = {
   post: UserPost;

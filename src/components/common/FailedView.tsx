@@ -1,4 +1,4 @@
-import failedImage from "../assets/images/failed.svg";
+import failedImage from "../../assets/images/failed.svg";
 
 const FailedView = () => {
   return (

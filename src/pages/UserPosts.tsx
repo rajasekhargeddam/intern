@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 import { api_status } from "../constants";
 import { type UserPost } from "../types/post";
-import UserPostsList from "../components/UserPostsList";
-import FailedView from "../components/FailedView";
-import UserPostsShimmer from "../shimmerUi/UserPostsShimmer";
+import UserPostsList from "../components/post/UserPostsList";
+import FailedView from "../components/common/FailedView";
+import UserPostsShimmer from "../shimmer/UserPostsShimmer";
 import { fetchUserPosts } from "../services/posts";
 
 const UserPosts = () => {
-  const [apistate, setApistate] = useState("");
+  const [apiStatus, setApiStatus] = useState("");
   const [userPosts, setUserPosts] = useState<UserPost[]>([]);
 
   useEffect(() => {
     const loadUserPosts = async () => {
       try {
-        setApistate(api_status.loading);
+        setApiStatus(api_status.loading);
         const posts = await fetchUserPosts();
         setUserPosts(posts);
-        setApistate(api_status.success);
+        setApiStatus(api_status.success);
       } catch (err) {
-        setApistate(api_status.failed);
-        console.log(err);
+        setApiStatus(api_status.failed);
+        console.error(err);
       }
     };
 
@@ -27,7 +27,7 @@ const UserPosts = () => {
   }, []);
 
   const showUserPosts = () => {
-    switch (apistate) {
+    switch (apiStatus) {
       case api_status.loading:
         return <UserPostsShimmer />;
       case api_status.success:

@@ -13,6 +13,7 @@ import { IoCreateOutline } from "react-icons/io5";
 import ImageUploader from "./ImageUploader";
 import PostContentInput from "./PostContentInput";
 import { createPost } from "../../services/posts";
+import { notifySuccess } from "../../utils/toast";
 
 function CreatePostForm() {
   const [content, setContent] = useState("");
@@ -20,7 +21,7 @@ function CreatePostForm() {
   const [errMsg, setErrMsg] = useState("");
   const [isPosting, setIsPosting] = useState(false);
 
-  const onChangeImages = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
 
     const selectedImages = Array.from(event.target.files);
@@ -34,7 +35,7 @@ function CreatePostForm() {
     setImages(selectedImages);
   };
 
-  const removeImage = (index: number) => {
+  const handleRemoveImage = (index: number) => {
     setImages((prevImages) =>
       prevImages.filter((_, currentIndex) => currentIndex !== index),
     );
@@ -65,9 +66,9 @@ function CreatePostForm() {
     });
 
     try {
-      const data = await createPost(formData);
+      await createPost(formData);
 
-      alert(data.message);
+      notifySuccess("Post created successfully");
 
       resetForm();
     } catch (err) {
@@ -109,8 +110,8 @@ function CreatePostForm() {
 
           <ImageUploader
             images={images}
-            onChangeImages={onChangeImages}
-            removeImage={removeImage}
+            onChangeImages={handleImageSelection}
+            removeImage={handleRemoveImage}
           />
 
           {errMsg && <p className="mt-4 text-sm text-red-500">{errMsg}</p>}

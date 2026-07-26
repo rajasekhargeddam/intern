@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import type { LoginRequest } from "../types/auth";
 import { UserContext } from "../context/UserContext";
 import { loginUser } from "../services/auth";
+import { notifySuccess } from "../utils/toast";
 
 const Login = () => {
   const { login } = useContext(UserContext);
@@ -30,6 +31,7 @@ const Login = () => {
     try {
       const resData = await loginUser(loginData);
 
+      notifySuccess("Welcome back!")
       setEmail("");
       setPassword("");
       login(resData.user);

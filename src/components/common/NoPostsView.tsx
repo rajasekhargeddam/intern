@@ -1,4 +1,4 @@
-import noPostsImage from "../assets/images/no-posts.svg";
+import noPostsImage from "../../assets/images/no-posts.svg";
 
 const NoPostsView = () => {
   return (

@@ -9,7 +9,7 @@ const Header = () => {
   const adminTag = user?.role === "admin";
 
   return (
-    <div className="py-4 px-8 w-full flex justify-between shadow-sm sticky top-0 left-0 right-0 h-16 z-50 bg-white rounded-2xl">
+    <div className="sticky top-0 z-50 w-full bg-white shadow-sm px-8 h-16 flex items-center justify-between">
       <div className="flex items-center gap-2">
         <ToggleSideBar />
         <p className="md:text-2xl">

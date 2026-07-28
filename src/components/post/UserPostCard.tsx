@@ -2,17 +2,48 @@ import { type UserPost } from "../../types/post";
 import { timeAgo } from "../../utils/dateConvertions.ts";
 import UserPostImages from "./UserPostImages.tsx";
 import PostContent from "../PostContent";
+import MoreOptionsDropdown from "./MoreOptionsDropdown.tsx";
+import { deletePost, toggleLike } from "../../services/posts.ts";
+import { notifyError, notifySuccess } from "../../utils/toast.ts";
+import { FiHeart } from "react-icons/fi";
+import { FaHeart, FaRegCommentDots } from "react-icons/fa";
+import { useState } from "react";
 
 type UserPostsProps = {
   post: UserPost;
+  onDeletePost: (postId: string) => void;
 };
 
-const UserPostCard = ({ post }: UserPostsProps) => {
-  const { author, content, createdAt, images } = post;
+const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
+  const { _id, author, content, createdAt, images, likesCount, isLiked } = post;
+
+  const [likesNum, setLikesNum] = useState(likesCount);
+  const [isLike, setIsLike] = useState(isLiked);
+
+  const onDeleteHandler = async () => {
+    try {
+      const data = await deletePost(_id);
+      notifySuccess(data);
+      onDeletePost(_id);
+    } catch (err) {
+      notifyError(err instanceof Error ? err.message : "failed to delete Post");
+    }
+  };
+
+  const ontoggleLike = async () => {
+    try {
+      const data = await toggleLike(_id);
+      console.log(data);
+      setIsLike(data.liked);
+      setLikesNum((count) => (data.liked ? count + 1 : count - 1));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <li className="w-full bg-white rounded-lg border border-slate-200/80 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl overflow-hidden">
-      <div className="flex flex-col gap-4 p-4 sm:p-6">
+      <div className="flex flex-col gap-4 px-4 pb-2 pt-4 sm:px-6 sm:pt-6 relative">
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-3">
             <img
@@ -33,6 +64,39 @@ const UserPostCard = ({ post }: UserPostsProps) => {
 
         <div className="w-full">
           <UserPostImages images={images} />
+        </div>
+
+        <div className="absolute text-lg top-5 right-5 cursor-pointer">
+          <MoreOptionsDropdown
+            author={author}
+            onDeleteHandler={onDeleteHandler}
+          />
+        </div>
+
+        <div className="border-t border-slate-200 mt-2">
+          <div className="flex items-center justify-start gap-3">
+            <button className="group flex items-center justify-center gap-2 rounded-lg py-2 px-5 cursor-pointer transition-colors hover:bg-blue-50">
+              <span className="text-sm font-medium text-slate-600 group-hover:text-blue-500">
+                15
+              </span>
+              <FaRegCommentDots className="text-lg text-slate-600 transition-colors group-hover:text-blue-500" />{" "}
+              <span>comments</span>
+            </button>
+
+            <button
+              onClick={ontoggleLike}
+              className="group flex items-center justify-center gap-2 rounded-lg py-2 px-2 cursor-pointer transition-colors hover:bg-blue-50"
+            >
+              {isLike ? (
+                <FaHeart className="text-lg text-blue-600" />
+              ) : (
+                <FiHeart className="text-lg text-slate-600 transition-colors group-hover:text-blue-600" />
+              )}
+              <span className="text-sm font-medium text-slate-600">
+                {likesNum}
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </li>

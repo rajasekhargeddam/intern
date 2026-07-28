@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
-import UserProfile from "../components/profile/UserProfileUi";
+import UserProfileUi from "../components/profile/UserProfileUi";
+import UserPosts from "./UserPosts";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -9,7 +10,12 @@ const Profile = () => {
     return null;
   }
 
-  return <UserProfile user={user} mode="self" />;
+  return (
+    <>
+      <UserProfileUi user={user} mode="self" />
+      <UserPosts id={user._id} />
+    </>
+  );
 };
 
 export default Profile;

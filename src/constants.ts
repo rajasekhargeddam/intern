@@ -1,11 +1,12 @@
-export const STATIC_POSTS_API_URL = "https://jsonplaceholder.typicode.com/posts";
+export const STATIC_POSTS_API_URL =
+  "https://jsonplaceholder.typicode.com/posts";
 export const POSTS_PER_PAGE = 12;
 
 // Render
-export const BASE_URL = "https://intern-api-ew1g.onrender.com";
+// export const BASE_URL = "https://intern-api-ew1g.onrender.com";
 
 // localhost
-// export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "http://localhost:3000";
 
 export const api_status = {
   loading: "LOADING",

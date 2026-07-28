@@ -29,6 +29,19 @@ export const fetchUserPosts = async (): Promise<UserPost[]> => {
   });
 
   if (!response.ok) {
+    throw new Error("Failed to fetch posts");
+  }
+
+  const data = await response.json();
+  return data.posts || [];
+};
+
+export const fetchOneUserPosts = async (id: string): Promise<UserPost[]> => {
+  const response = await fetch(`${BASE_URL}/posts/${id}`, {
+    credentials: "include",
+  });
+
+  if (!response.ok) {
     throw new Error("Failed to fetch user posts");
   }
 
@@ -47,6 +60,36 @@ export const createPost = async (formData: FormData) => {
 
   if (!response.ok) {
     throw new Error(data.message || "Failed to create post.");
+  }
+
+  return data;
+};
+
+export const deletePost = async (postId: string): Promise<string> => {
+  const response = await fetch(`${BASE_URL}/posts/${postId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to delete post.");
+  }
+
+  return data.message;
+};
+
+export const toggleLike = async (postId: string) => {
+  const response = await fetch(`${BASE_URL}/posts/${postId}/like`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to toggle like");
   }
 
   return data;

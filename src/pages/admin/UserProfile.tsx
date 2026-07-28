@@ -8,6 +8,7 @@ import type { User } from "../../types/auth";
 import ProfileShimmer from "../../shimmer/ProfileShimmer";
 import UserProfileUi from "../../components/profile/UserProfileUi";
 import { fetchAdminUserById } from "../../services/admin";
+import UserPosts from "../UserPosts";
 
 const UserProfile = () => {
   const { userId } = useParams();
@@ -53,7 +54,11 @@ const UserProfile = () => {
     }
   };
 
-  return <section>{renderContent()}</section>;
+  return (
+    <>
+      <section>{renderContent()}</section> <UserPosts id={userId} />
+    </>
+  );
 };
 
 export default UserProfile;

@@ -1,4 +1,6 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
+import { MdDeleteOutline } from "react-icons/md";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import type { User } from "../../types/auth";
 import EditProfile from "./EditProfile";
 import { useNavigate } from "react-router-dom";
@@ -46,28 +48,15 @@ const UserProfileUi = ({ user, mode, onUpdateUser }: userProfileProps) => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
-      <div className="flex flex-col md:flex-row gap-12">
-        <div className="flex justify-center md:justify-start md:w-1/3">
-          <img
-            src={profilePicture}
-            alt="profile"
-            className="w-44 h-44 md:w-52 md:h-52 rounded-full object-cover border"
-          />
-        </div>
+    <div className="max-w-5xl mx-auto px-6 py-10 m-auto flex flex-col justify-center">
+      <div className="flex flex-col items-center text-center relative">
+        <img
+          src={profilePicture}
+          alt="profile"
+          className="w-44 h-44 md:w-40 md:h-40 rounded-full object-cover border"
+        />
         <div className="flex-1">
-          <div className="flex items-center gap-4 flex-wrap">
-            <h1 className="text-3xl font-light">{username}</h1>
-
-            {mode === "self" && (
-              <EditProfile
-                open={isEditOpen}
-                onOpenChange={setIsEditOpen}
-                user={user}
-                mode={mode}
-              />
-            )}
-          </div>
+          <h1 className="text-3xl font-light pb-0 mb-0">{username}</h1>
 
           {firstname && (
             <h2 className="mt-6 font-semibold text-lg">{`${firstname.toLowerCase()} ${lastname ? lastname.toLowerCase() : ""}`}</h2>
@@ -76,28 +65,36 @@ const UserProfileUi = ({ user, mode, onUpdateUser }: userProfileProps) => {
           {bio && (
             <p className="mt-2 text-gray-700 leading-7 max-w-lg">{bio}</p>
           )}
+
+          <div className="absolute top-4 right-4 flex items-center gap-2">
+            {!(mode === "admin" && role === "admin") && (
+              <EditProfile
+                open={isEditOpen}
+                onOpenChange={setIsEditOpen}
+                user={user}
+                mode={mode}
+                onUpdateUser={onUpdateUser}
+              />
+            )}
+
+            {mode === "admin" && role === "user" && (
+              <button
+                type="button"
+                onClick={handleDelete}
+                disabled={isDeleting}
+                title="Delete User"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-red-200 bg-white text-red-500 shadow-sm transition-all duration-200 cursor-pointer hover:bg-red-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isDeleting ? (
+                  <AiOutlineLoading3Quarters className="animate-spin text-lg" />
+                ) : (
+                  <MdDeleteOutline className="text-xl" />
+                )}
+              </button>
+            )}
+          </div>
         </div>
       </div>
-
-      {mode === "admin" && role === "user" && (
-        <div className="mt-5">
-          <EditProfile
-            open={isEditOpen}
-            onOpenChange={setIsEditOpen}
-            user={user}
-            mode={mode}
-            onUpdateUser={onUpdateUser}
-          />
-          <button
-            type="button"
-            onClick={handleDelete}
-            disabled={isDeleting}
-            className="rounded-lg border border-red-600 px-5 py-2 font-medium text-red-600 transition-colors duration-200 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isDeleting ? "Deleting..." : "Delete User"}
-          </button>
-        </div>
-      )}
       <div className="border-t mt-12"></div>
     </div>
   );

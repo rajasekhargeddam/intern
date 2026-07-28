@@ -17,6 +17,7 @@ import {
 } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { MdDeleteOutline } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 import { UserContext } from "../../context/UserContext";
 import type { User } from "../../types/auth";
 import { updateAdminUser } from "../../services/admin";
@@ -171,9 +172,10 @@ const EditProfile = ({
       <Trigger asChild>
         <button
           type="button"
-          className="rounded-lg bg-gray-100 px-4 py-1.5 transition hover:bg-gray-200"
+          title="Edit Profile"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition-all duration-200 cursor-pointer hover:bg-gray-900 hover:text-white"
         >
-          Edit Profile
+          <FaEdit className="text-lg" />
         </button>
       </Trigger>
 

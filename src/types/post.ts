@@ -1,8 +1,8 @@
 export interface Post {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
 }
 
 export interface CreatePostRequest {
@@ -25,4 +25,6 @@ export interface UserPost {
   links: string[];
   createdAt: string;
   updatedAt: string;
+  likesCount: number;
+  isLiked: boolean;
 }

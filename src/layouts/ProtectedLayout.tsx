@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLoaderData } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
+import Header from "../components/layout/Header";
 
 const ProtectedLayout = () => {
   const { user, login } = useContext(UserContext);
@@ -16,7 +17,11 @@ const ProtectedLayout = () => {
     return <Navigate to="/auth/login" replace />;
   }
 
-  return <Outlet />;
+  return (
+    <>
+      <Header /> <Outlet />
+    </>
+  );
 };
 
 export default ProtectedLayout;

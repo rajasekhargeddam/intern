@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
-import Header from "../components/layout/Header";
 
 const AdminLayout = () => {
   const { user } = useContext(UserContext);
@@ -11,13 +10,12 @@ const AdminLayout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    // <div className="min-h-screen bg-gray-50">
 
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-        <Outlet />
-      </main>
-    </div>
+    <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      <Outlet />
+    </main>
+    // </div>
   );
 };
 

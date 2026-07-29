@@ -12,3 +12,16 @@ export const fetchProfile = async () => {
   const data = await response.json();
   return data?.user;
 };
+
+export const fetchLikedPosts = async () => {
+  const response = await fetch(`${BASE_URL}/profile/likes`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  const data = await response.json();
+  return data.posts || [];
+};

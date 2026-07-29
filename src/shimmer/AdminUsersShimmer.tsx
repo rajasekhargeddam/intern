@@ -7,8 +7,8 @@ const AdminUsersShimmer = () => {
         <div className="mt-2 h-4 w-32 animate-pulse rounded bg-gray-200" />
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
-        {Array.from({ length: 5 }).map((_, index) => (
+      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white grid grid-cols-2 sm:grid-cols-3 gap-5">
+        {Array.from({ length: 10 }).map((_, index) => (
           <div
             key={index}
             className="flex items-center gap-4 border-b border-gray-200 p-4 last:border-b-0 sm:p-5"

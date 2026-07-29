@@ -30,17 +30,26 @@ function PostContent({ content }: Props) {
 
   return (
     <>
-      <div ref={contentRef} className={expanded ? "" : "line-clamp-4"}>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        ref={contentRef}
+        className={expanded ? "" : "line-clamp-4"}
+      >
         <Linkify options={linkifyOptions}>{content}</Linkify>
       </div>
       {showButton && (
-          <button
-            onClick={() => setExpanded((prev) => !prev)}
-            className="text-sm font-medium text-blue-600 hover:underline"
-          >
-            {expanded ? "Show less" : "Read more"}
-          </button>
-        )}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setExpanded((prev) => !prev);
+          }}
+          className="text-sm font-medium text-blue-600 hover:underline"
+        >
+          {expanded ? "Show less" : "Read more"}
+        </button>
+      )}
     </>
   );
 }

@@ -1,4 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./lib/queryClient";
 
 import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
@@ -14,6 +16,9 @@ import ProtectedLayout from "./layouts/ProtectedLayout";
 import Users from "./pages/admin/Users";
 import UserProfile from "./pages/admin/UserProfile";
 import { Toaster } from "sonner";
+import PostDetails from "./pages/PostDetails";
+import LikedPosts from "./pages/LikedPosts";
+import ProfileLayout from "./layouts/ProfileLayout";
 
 const routes = createBrowserRouter([
   {
@@ -37,7 +42,17 @@ const routes = createBrowserRouter([
     children: [
       {
         path: "/profile",
-        element: <Profile />,
+        element: <ProfileLayout />,
+        children: [
+          {
+            index: true,
+            element: <Profile />,
+          },
+          {
+            path: "liked-posts",
+            element: <LikedPosts />,
+          },
+        ],
       },
 
       {
@@ -53,6 +68,10 @@ const routes = createBrowserRouter([
             element: <StaticPosts />,
           },
         ],
+      },
+      {
+        path: "posts/:postId",
+        element: <PostDetails />,
       },
 
       {
@@ -76,10 +95,12 @@ const routes = createBrowserRouter([
 const App = () => {
   return (
     <div className="bg-slate-50 min-h-screen pb-4">
-      <UserProvider>
-         <Toaster richColors position="top-right" />
-        <RouterProvider router={routes} />
-      </UserProvider>
+      <QueryClientProvider client={queryClient}>
+        <UserProvider>
+          <Toaster richColors position="top-right" />
+          <RouterProvider router={routes} />
+        </UserProvider>
+      </QueryClientProvider>
     </div>
   );
 };

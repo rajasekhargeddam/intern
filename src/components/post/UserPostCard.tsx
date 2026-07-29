@@ -15,7 +15,16 @@ type UserPostsProps = {
 };
 
 const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
-  const { _id, author, content, createdAt, images, likesCount, isLiked } = post;
+  const {
+    _id,
+    author,
+    content,
+    createdAt,
+    images,
+    likesCount,
+    isLiked,
+    commentsCount,
+  } = post;
 
   const [likesNum, setLikesNum] = useState(likesCount);
   const [isLike, setIsLike] = useState(isLiked);
@@ -30,10 +39,10 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
     }
   };
 
-  const ontoggleLike = async () => {
+  const ontoggleLike = async (e: React.MouseEvent) => {
+    e.stopPropagation();
     try {
       const data = await toggleLike(_id);
-      console.log(data);
       setIsLike(data.liked);
       setLikesNum((count) => (data.liked ? count + 1 : count - 1));
     } catch (err) {
@@ -42,64 +51,68 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
   };
 
   return (
-    <li className="w-full bg-white rounded-lg border border-slate-200/80 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl overflow-hidden">
-      <div className="flex flex-col gap-4 px-4 pb-2 pt-4 sm:px-6 sm:pt-6 relative">
-        <div className="flex items-center gap-5">
-          <div className="flex items-center gap-3">
-            <img
-              src="https://static.vecteezy.com/system/resources/thumbnails/067/451/114/small/avatar-default-user-profile-icon-gender-neutral-silhouette-simple-flat-profile-picture-symbol-user-account-dp-sign-best-for-social-media-icons-web-and-app-design-illustration-vector.jpg"
-              alt="pic"
-              className="w-10 h-11 rounded-full border border-slate-200 object-cover"
-            />
-            <p className="font-semibold text-slate-900 truncate text-base sm:text-lg">
-              {author.username}
-            </p>
-          </div>
-          <p className="text-xs text-slate-500 sm:text-sm">
-            {timeAgo(createdAt)}
+    <div className="flex flex-col gap-4 px-4 pb-2 pt-4 sm:px-6 sm:pt-6 relative">
+      <div className="flex items-center gap-5">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="flex items-center gap-3"
+        >
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/067/451/114/small/avatar-default-user-profile-icon-gender-neutral-silhouette-simple-flat-profile-picture-symbol-user-account-dp-sign-best-for-social-media-icons-web-and-app-design-illustration-vector.jpg"
+            alt="pic"
+            className="w-10 h-11 rounded-full border border-slate-200 object-cover"
+          />
+          <p className="font-semibold text-slate-900 truncate text-base sm:text-lg">
+            {author.username}
           </p>
         </div>
+        <p className="text-xs text-slate-500 sm:text-sm">
+          {timeAgo(createdAt)}
+        </p>
+      </div>
 
-        <PostContent content={content} />
+      <PostContent content={content} />
 
-        <div className="w-full">
-          <UserPostImages images={images} />
-        </div>
+      <div onClick={(e) => e.stopPropagation()} className="w-full">
+        <UserPostImages images={images} />
+      </div>
 
-        <div className="absolute text-lg top-5 right-5 cursor-pointer">
-          <MoreOptionsDropdown
-            author={author}
-            onDeleteHandler={onDeleteHandler}
-          />
-        </div>
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="absolute text-lg top-5 right-5 cursor-pointer"
+      >
+        <MoreOptionsDropdown
+          author={author}
+          onDeleteHandler={onDeleteHandler}
+        />
+      </div>
 
-        <div className="border-t border-slate-200 mt-2">
-          <div className="flex items-center justify-start gap-3">
-            <button className="group flex items-center justify-center gap-2 rounded-lg py-2 px-5 cursor-pointer transition-colors hover:bg-blue-50">
-              <span className="text-sm font-medium text-slate-600 group-hover:text-blue-500">
-                15
-              </span>
-              <FaRegCommentDots className="text-lg text-slate-600 transition-colors group-hover:text-blue-500" />{" "}
-              <span>comments</span>
-            </button>
+      <div className="border-t border-slate-200 mt-2">
+        <div className="flex items-center justify-start gap-3">
+          <button className="group flex items-center justify-center gap-2 rounded-lg py-2 px-5 cursor-pointer transition-colors hover:bg-blue-50">
+            <span className="text-sm font-medium text-slate-600 group-hover:text-blue-500">
+              {commentsCount}
+            </span>
+            <FaRegCommentDots className="text-lg text-slate-600 transition-colors group-hover:text-blue-500" />{" "}
+            <span>comments</span>
+          </button>
 
-            <button
-              onClick={ontoggleLike}
-              className="group flex items-center justify-center gap-2 rounded-lg py-2 px-2 cursor-pointer transition-colors hover:bg-blue-50"
-            >
-              {isLike ? (
-                <FaHeart className="text-lg text-blue-600" />
-              ) : (
-                <FiHeart className="text-lg text-slate-600 transition-colors group-hover:text-blue-600" />
-              )}
-              <span className="text-sm font-medium text-slate-600">
-                {likesNum}
-              </span>
-            </button>
-          </div>
+          <button
+            onClick={ontoggleLike}
+            className="group flex items-center justify-center gap-2 rounded-lg py-2 px-2 cursor-pointer transition-colors hover:bg-blue-50"
+          >
+            {isLike ? (
+              <FaHeart className="text-lg text-blue-600" />
+            ) : (
+              <FiHeart className="text-lg text-slate-600 transition-colors group-hover:text-blue-600" />
+            )}
+            <span className="text-sm font-medium text-slate-600">
+              {likesNum}
+            </span>
+          </button>
         </div>
       </div>
-    </li>
+    </div>
   );
 };
 

@@ -27,4 +27,24 @@ export interface UserPost {
   updatedAt: string;
   likesCount: number;
   isLiked: boolean;
+  commentsCount: number;
+}
+
+export interface Comment {
+  _id: string;
+  content: string;
+
+  user: {
+    _id: string;
+    username: string;
+    profilePicture?: string;
+  };
+
+  parentComment?: string | null;
+
+  replyCount: number;
+
+  createdAt: string;
+
+  replies?: Comment[];
 }

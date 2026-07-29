@@ -49,6 +49,20 @@ export const fetchOneUserPosts = async (id: string): Promise<UserPost[]> => {
   return data.posts || [];
 };
 
+export const fetchPostById = async (postId: string): Promise<UserPost> => {
+  const response = await fetch(`${BASE_URL}/posts/details/${postId}`, {
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch post");
+  }
+
+  const data = await response.json();
+
+  return data.post;
+};
+
 export const createPost = async (formData: FormData) => {
   const response = await fetch(`${BASE_URL}/posts`, {
     method: "POST",

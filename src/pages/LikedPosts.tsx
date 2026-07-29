@@ -1,32 +1,33 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import UserPostsList from "../components/post/UserPostsList";
 import FailedView from "../components/common/FailedView";
 import UserPostsShimmer from "../shimmer/UserPostsShimmer";
-import {
-  fetchOneUserPosts,
-  fetchUserPosts,
-  deletePost,
-} from "../services/posts";
-import { queryClient } from "../lib/queryClient";
-type UserPostsProps = {
-  id?: string;
-};
 
-const UserPosts = ({ id }: UserPostsProps) => {
+import { deletePost } from "../services/posts";
+import {fetchLikedPosts} from "../services/fetchProfile"
+
+const LikedPosts = () => {
+  const queryClient = useQueryClient();
+
   const {
-    data: userPosts = [],
+    data: posts = [],
     isLoading,
     isError,
   } = useQuery({
-    queryKey: id ? ["posts", id] : ["posts"],
-    queryFn: () => (id ? fetchOneUserPosts(id) : fetchUserPosts()),
+    queryKey: ["liked-posts"],
+    queryFn: fetchLikedPosts,
   });
 
   const deletePostMutation = useMutation({
     mutationFn: deletePost,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: id ? ["posts", id] : ["posts"],
+        queryKey: ["liked-posts"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["posts"],
       });
     },
   });
@@ -43,7 +44,12 @@ const UserPosts = ({ id }: UserPostsProps) => {
     return <FailedView />;
   }
 
-  return <UserPostsList posts={userPosts} onDeletePost={onDeletePost} />;
+  return (
+    <UserPostsList
+      posts={posts}
+      onDeletePost={onDeletePost}
+    />
+  );
 };
 
-export default UserPosts;
+export default LikedPosts;

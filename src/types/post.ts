@@ -1,3 +1,5 @@
+import type { User } from "./auth";
+
 export interface Post {
   userId: number;
   id: number;
@@ -10,15 +12,9 @@ export interface CreatePostRequest {
   images: string[];
 }
 
-export interface Author {
-  _id: string;
-  username: string;
-  email: string;
-}
-
 export interface UserPost {
   _id: string;
-  author: Author;
+  author: User;
   content: string;
   hashtags: string[];
   images: string[];

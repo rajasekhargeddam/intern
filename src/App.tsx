@@ -19,6 +19,8 @@ import { Toaster } from "sonner";
 import PostDetails from "./pages/PostDetails";
 import LikedPosts from "./pages/LikedPosts";
 import ProfileLayout from "./layouts/ProfileLayout";
+import UserDetails from "./pages/UserDetails";
+import NotificationsPage from "./pages/NotificationsPage";
 
 const routes = createBrowserRouter([
   {
@@ -66,6 +68,14 @@ const routes = createBrowserRouter([
           {
             path: "static-posts",
             element: <StaticPosts />,
+          },
+          {
+            path: "user/:userId",
+            element: <UserDetails />,
+          },
+          {
+            path: "notifications",
+            element: <NotificationsPage />,
           },
         ],
       },

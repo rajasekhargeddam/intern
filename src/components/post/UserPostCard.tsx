@@ -8,6 +8,7 @@ import { notifyError, notifySuccess } from "../../utils/toast.ts";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart, FaRegCommentDots } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type UserPostsProps = {
   post: UserPost;
@@ -25,6 +26,7 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
     isLiked,
     commentsCount,
   } = post;
+  const navigate = useNavigate();
 
   const [likesNum, setLikesNum] = useState(likesCount);
   const [isLike, setIsLike] = useState(isLiked);
@@ -54,11 +56,14 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
     <div className="flex flex-col gap-4 px-4 pb-2 pt-4 sm:px-6 sm:pt-6 relative">
       <div className="flex items-center gap-5">
         <div
-          onClick={(e) => e.stopPropagation()}
-          className="flex items-center gap-3"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/user/${author._id}`);
+          }}
+          className="flex items-center gap-3 cursor-pointer"
         >
           <img
-            src="https://static.vecteezy.com/system/resources/thumbnails/067/451/114/small/avatar-default-user-profile-icon-gender-neutral-silhouette-simple-flat-profile-picture-symbol-user-account-dp-sign-best-for-social-media-icons-web-and-app-design-illustration-vector.jpg"
+            src={author.profilePicture}
             alt="pic"
             className="w-10 h-11 rounded-full border border-slate-200 object-cover"
           />

@@ -1,23 +1,46 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
+import {
+  useContext,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import type { User } from "../../types/auth";
 import EditProfile from "./EditProfile";
 import { useNavigate } from "react-router-dom";
 import { deleteAdminUser } from "../../services/admin";
+import RelationshipButton from "./RelationshipButton";
+import { UserContext } from "../../context/UserContext";
+import ConnectionsDialog from "../connections/ConnectionsDialog";
 
 type userProfileProps = {
   user: User;
-  mode: "self" | "admin";
+  mode: "self" | "admin" | "user";
   onUpdateUser?: Dispatch<SetStateAction<User | null>> | undefined;
 };
 
 const UserProfileUi = ({ user, mode, onUpdateUser }: userProfileProps) => {
   const navigate = useNavigate();
+  const { user: loggedInUser } = useContext(UserContext);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [openConnections, setOpenConnections] = useState(false);
 
-  const { username, profilePicture, firstname, lastname, bio, role } = user;
+  if (!loggedInUser) {
+    return null;
+  }
+
+  const {
+    username,
+    profilePicture,
+    firstname,
+    lastname,
+    bio,
+    role,
+    connectionsCount,
+    relationship,
+  } = user;
 
   const handleDelete = async () => {
     const confirmed = window.confirm(
@@ -61,38 +84,62 @@ const UserProfileUi = ({ user, mode, onUpdateUser }: userProfileProps) => {
           {firstname && (
             <h2 className="mt-6 font-semibold text-lg">{`${firstname.toLowerCase()} ${lastname ? lastname.toLowerCase() : ""}`}</h2>
           )}
+          <div className="flex justify-center items-center gap-4 mt-3">
+            <span
+              onClick={() => setOpenConnections(true)}
+              className="text-sm font-medium text-blue-600 cursor-pointer"
+            >
+              <span className="font-semibold">{connectionsCount || 0}</span>{" "}
+              Connections
+            </span>
+
+            <ConnectionsDialog
+              userId={user._id}
+              open={openConnections}
+              onOpenChange={setOpenConnections}
+            />
+
+            {relationship && user._id !== loggedInUser._id && (
+              <RelationshipButton
+                relationship={relationship}
+                profileUserId={user._id}
+              />
+            )}
+          </div>
 
           {bio && (
             <p className="mt-2 text-gray-700 leading-7 max-w-lg">{bio}</p>
           )}
 
-          <div className="absolute top-4 right-4 flex items-center gap-2">
-            {!(mode === "admin" && role === "admin") && (
-              <EditProfile
-                open={isEditOpen}
-                onOpenChange={setIsEditOpen}
-                user={user}
-                mode={mode}
-                onUpdateUser={onUpdateUser}
-              />
-            )}
+          {mode !== "user" && (
+            <div className="absolute top-4 right-4 flex items-center gap-2">
+              {!(mode === "admin" && role === "admin") && (
+                <EditProfile
+                  open={isEditOpen}
+                  onOpenChange={setIsEditOpen}
+                  user={user}
+                  mode={mode}
+                  onUpdateUser={onUpdateUser}
+                />
+              )}
 
-            {mode === "admin" && role === "user" && (
-              <button
-                type="button"
-                onClick={handleDelete}
-                disabled={isDeleting}
-                title="Delete User"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-red-200 bg-white text-red-500 shadow-sm transition-all duration-200 cursor-pointer hover:bg-red-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isDeleting ? (
-                  <AiOutlineLoading3Quarters className="animate-spin text-lg" />
-                ) : (
-                  <MdDeleteOutline className="text-xl" />
-                )}
-              </button>
-            )}
-          </div>
+              {mode === "admin" && role === "user" && (
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  disabled={isDeleting}
+                  title="Delete User"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-red-200 bg-white text-red-500 shadow-sm transition-all duration-200 cursor-pointer hover:bg-red-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isDeleting ? (
+                    <AiOutlineLoading3Quarters className="animate-spin text-lg" />
+                  ) : (
+                    <MdDeleteOutline className="text-xl" />
+                  )}
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <div className="border-t mt-12"></div>

@@ -68,12 +68,12 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
   const totalRepliesCount = Math.max(comment.replyCount, fetchedReplies.length);
 
   return (
-    <li className="py-4">
+    <li className="py-2">
       <div className="flex gap-2.5">
         <img
           src={profileImage}
           alt={displayName}
-          className="h-8 w-8 rounded-full object-cover"
+          className="h-5 w-5 rounded-full object-cover"
         />
 
         <div className="flex-1">
@@ -121,7 +121,7 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
           )}
 
           {showReplies && (
-            <div className="ml-5 mt-3 border-l border-slate-200 pl-4">
+            <div className="ml-2 border-l border-slate-200 pl-4">
               {isRepliesLoading ? (
                 <div className="text-sm text-slate-500">Loading replies...</div>
               ) : (

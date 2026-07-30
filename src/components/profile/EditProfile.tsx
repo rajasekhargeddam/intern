@@ -30,7 +30,7 @@ type EditProfileProps = {
   open: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
   user: User;
-  mode: "self" | "admin";
+  mode: "self" | "admin" | "user";
   onUpdateUser?: Dispatch<SetStateAction<User | null>> | undefined;
 };
 

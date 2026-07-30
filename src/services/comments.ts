@@ -1,5 +1,6 @@
 import { BASE_URL } from "../constants";
 import type { Comment } from "../types/post";
+import { notifySuccess } from "../utils/toast";
 
 type CreateCommentPayload = {
   postId: string;
@@ -91,4 +92,20 @@ export const fetchReplies = async (commentId: string): Promise<Comment[]> => {
   const data = await response.json();
 
   return data.replies;
+};
+
+export const deleteComment = async (commentId: string) => {
+  const response = await fetch(`${BASE_URL}/comments/${commentId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete replies");
+  }
+
+  const data = await response.json();
+
+  notifySuccess("Comment deleted successfully");
+  return data;
 };

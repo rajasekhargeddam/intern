@@ -57,7 +57,8 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
     <div className="flex flex-col gap-4 px-4 pb-2 pt-4 sm:px-6 sm:pt-6 relative">
       <div className="flex items-center gap-5">
         <div
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             navigate(`/user/${author._id}`);
           }}
           className="flex items-center gap-1 cursor-pointer"

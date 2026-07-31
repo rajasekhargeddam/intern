@@ -4,7 +4,6 @@ export const getConnectionRequests = async () => {
   const response = await fetch(`${BASE_URL}/connections/requests`, {
     credentials: "include",
   });
-  console.log("requests");
 
   const data = await response.json();
 

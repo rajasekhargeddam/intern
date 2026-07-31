@@ -38,3 +38,17 @@ export const getUserDetails = async (userId: string) => {
   const data = await response.json();
   return data.user;
 };
+
+export const getNotificationCount = async () => {
+  const response = await fetch(`${BASE_URL}/profile/notification/count`, {
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch notification count");
+  }
+
+  return data;
+};

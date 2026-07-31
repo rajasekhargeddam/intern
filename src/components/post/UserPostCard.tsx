@@ -21,6 +21,7 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
     author,
     content,
     createdAt,
+    updatedAt,
     images,
     likesCount,
     isLiked,
@@ -56,11 +57,10 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
     <div className="flex flex-col gap-4 px-4 pb-2 pt-4 sm:px-6 sm:pt-6 relative">
       <div className="flex items-center gap-5">
         <div
-          onClick={(e) => {
-            e.stopPropagation();
+          onClick={() => {
             navigate(`/user/${author._id}`);
           }}
-          className="flex items-center gap-3 cursor-pointer"
+          className="flex items-center gap-1 cursor-pointer"
         >
           <img
             src={author.profilePicture}
@@ -74,6 +74,9 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
         <p className="text-xs text-slate-500 sm:text-sm">
           {timeAgo(createdAt)}
         </p>
+        {createdAt !== updatedAt && (
+          <p className="text-xs text-slate-500 sm:text-sm">(Edited)</p>
+        )}
       </div>
 
       <PostContent content={content} />
@@ -86,10 +89,7 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
         onClick={(e) => e.stopPropagation()}
         className="absolute text-lg top-5 right-5 cursor-pointer"
       >
-        <MoreOptionsDropdown
-          author={author}
-          onDeleteHandler={onDeleteHandler}
-        />
+        <MoreOptionsDropdown post={post} onDeleteHandler={onDeleteHandler} />
       </div>
 
       <div className="border-t border-slate-200 mt-2">

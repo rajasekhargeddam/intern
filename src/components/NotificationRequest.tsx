@@ -5,6 +5,7 @@ import {
   rejectConnectionRequest,
 } from "../services/connections";
 import type { ConnectionRequest } from "../types/auth";
+import { useNavigate } from "react-router-dom";
 
 interface NotificationRequestProps {
   request: ConnectionRequest;
@@ -12,12 +13,17 @@ interface NotificationRequestProps {
 
 const NotificationRequest = ({ request }: NotificationRequestProps) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const acceptMutation = useMutation({
     mutationFn: acceptConnectionRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["notifications"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["notification-count"],
       });
     },
   });
@@ -28,6 +34,10 @@ const NotificationRequest = ({ request }: NotificationRequestProps) => {
       queryClient.invalidateQueries({
         queryKey: ["notifications"],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["notification-count"],
+      });
     },
   });
 
@@ -35,7 +45,10 @@ const NotificationRequest = ({ request }: NotificationRequestProps) => {
 
   return (
     <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm transition hover:shadow-md">
-      <button className="flex items-center gap-3">
+      <button
+        onClick={() => navigate(`/user/${sender._id}`)}
+        className="flex items-center gap-3 cursor-pointer"
+      >
         <img
           src={sender.profilePicture}
           alt={sender.firstname}
@@ -55,7 +68,7 @@ const NotificationRequest = ({ request }: NotificationRequestProps) => {
         <button
           onClick={() => acceptMutation.mutate(request._id)}
           disabled={acceptMutation.isPending}
-          className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700 disabled:opacity-60"
+          className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700 disabled:opacity-60 cursor-pointer"
         >
           {acceptMutation.isPending ? "Accepting..." : "Accept"}
         </button>
@@ -63,7 +76,7 @@ const NotificationRequest = ({ request }: NotificationRequestProps) => {
         <button
           onClick={() => rejectMutation.mutate(request._id)}
           disabled={rejectMutation.isPending}
-          className="rounded-lg border border-red-500 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-60"
+          className="rounded-lg border border-red-500 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-60 cursor-pointer"
         >
           {rejectMutation.isPending ? "Rejecting..." : "Reject"}
         </button>

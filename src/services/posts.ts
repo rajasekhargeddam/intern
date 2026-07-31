@@ -23,32 +23,54 @@ export const fetchPosts = async (
   };
 };
 
-export const fetchUserPosts = async (): Promise<UserPost[]> => {
-  const response = await fetch(`${BASE_URL}/posts`, {
-    credentials: "include",
-  });
+export interface FetchPostsResponse {
+  posts: UserPost[];
+  hasMore: boolean;
+  nextOffset: number;
+}
+
+export const fetchUserPosts = async ({
+  pageParam = 0,
+}: {
+  pageParam: number;
+}): Promise<FetchPostsResponse> => {
+  const response = await fetch(
+    `${BASE_URL}/posts?limit=5&offset=${pageParam}`,
+    {
+      credentials: "include",
+    },
+  );
 
   if (!response.ok) {
     throw new Error("Failed to fetch posts");
   }
 
-  const data = await response.json();
-  return data.posts || [];
+  return response.json();
 };
 
-export const fetchOneUserPosts = async (id: string): Promise<UserPost[]> => {
-  const response = await fetch(`${BASE_URL}/posts/${id}`, {
-    credentials: "include",
-  });
+export interface FetchPostsResponse {
+  posts: UserPost[];
+  hasMore: boolean;
+  nextOffset: number;
+}
+
+export const fetchOneUserPosts = async (
+  userId: string,
+  pageParam: number = 0,
+): Promise<FetchPostsResponse> => {
+  const response = await fetch(
+    `${BASE_URL}/posts/${userId}?limit=5&offset=${pageParam}`,
+    {
+      credentials: "include",
+    },
+  );
 
   if (!response.ok) {
-    throw new Error("Failed to fetch user posts");
+    throw new Error("Failed to fetch posts");
   }
 
-  const data = await response.json();
-  return data.posts || [];
+  return response.json();
 };
-
 export const fetchPostById = async (postId: string): Promise<UserPost> => {
   const response = await fetch(`${BASE_URL}/posts/details/${postId}`, {
     credentials: "include",
@@ -106,5 +128,27 @@ export const toggleLike = async (postId: string) => {
     throw new Error(data.message || "Failed to toggle like");
   }
 
+  return data;
+};
+
+export const updatePost = async ({
+  postId,
+  content,
+}: {
+  postId: string;
+  content: string;
+}) => {
+  // Since backend uses upload.none(), pass standard multipart FormData
+  const formData = new FormData();
+  formData.append("content", content);
+
+  const response = await fetch(`${BASE_URL}/posts/${postId}`, {
+    method: "PATCH",
+    credentials: "include",
+    body: formData,
+  });
+
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || "Failed to update post.");
   return data;
 };

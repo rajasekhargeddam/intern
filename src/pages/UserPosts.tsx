@@ -1,4 +1,8 @@
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import {
+  type InfiniteData,
+  useInfiniteQuery,
+  useMutation,
+} from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 
 import UserPostsList from "../components/post/UserPostsList";
@@ -10,9 +14,16 @@ import {
   fetchUserPosts,
 } from "../services/posts";
 import { queryClient } from "../lib/queryClient";
+import type { UserPost } from "../types/post";
 
 type UserPostsProps = {
   id?: string;
+};
+
+type PostsResponse = {
+  posts: UserPost[];
+  hasMore: boolean;
+  nextOffset: number;
 };
 
 const UserPosts = ({ id }: UserPostsProps) => {
@@ -41,10 +52,31 @@ const UserPosts = ({ id }: UserPostsProps) => {
 
   const deletePostMutation = useMutation({
     mutationFn: deletePost,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: id ? ["posts", id] : ["posts"],
-      });
+    onSuccess: (_, postId) => {
+      const updateCache = (queryKey: readonly unknown[]) => {
+        queryClient.setQueryData<InfiniteData<PostsResponse>>(
+          queryKey,
+          (oldData) => {
+            if (!oldData) return oldData;
+
+            return {
+              ...oldData,
+              pages: oldData.pages.map((page) => ({
+                ...page,
+                posts: page.posts.filter((post) => post._id !== postId),
+              })),
+            };
+          },
+        );
+
+        queryClient.invalidateQueries({ queryKey });
+      };
+
+      updateCache(["posts"]);
+
+      if (id) {
+        updateCache(["posts", id]);
+      }
     },
   });
 

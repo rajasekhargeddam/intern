@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import type { Comment } from "../../types/post";
-import { timeAgo } from "../../utils/dateConvertions";
+import { timeAgo } from "../../utils/dateConversions";
 import { createReply, fetchReplies } from "../../services/comments";
 import CommentList from "./CommentList";
 import CommentInput from "./CommentInput";

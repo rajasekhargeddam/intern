@@ -1,15 +1,13 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import UserPostsList from "../components/post/UserPostsList";
 import FailedView from "../components/common/FailedView";
 import UserPostsShimmer from "../shimmer/UserPostsShimmer";
 
-import { deletePost } from "../services/posts";
-import {fetchLikedPosts} from "../services/fetchProfile"
+import { fetchLikedPosts } from "../services/profile";
+import useDeletePostMutation from "../hooks/useDeletePostMutation";
 
 const LikedPosts = () => {
-  const queryClient = useQueryClient();
-
   const {
     data: posts = [],
     isLoading,
@@ -19,18 +17,10 @@ const LikedPosts = () => {
     queryFn: fetchLikedPosts,
   });
 
-  const deletePostMutation = useMutation({
-    mutationFn: deletePost,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["liked-posts"],
-      });
-
-      queryClient.invalidateQueries({
-        queryKey: ["posts"],
-      });
-    },
-  });
+  const deletePostMutation = useDeletePostMutation([
+    ["liked-posts"],
+    ["posts"],
+  ]);
 
   const onDeletePost = (postId: string) => {
     deletePostMutation.mutate(postId);

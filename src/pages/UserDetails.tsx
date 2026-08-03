@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 import UserProfileUi from "../components/profile/UserProfileUi";
-import { getUserDetails } from "../services/fetchProfile";
+import { getUserDetails } from "../services/profile";
 import ProfileShimmer from "../shimmer/ProfileShimmer";
 import FailedView from "../components/common/FailedView";
 import UserPosts from "./UserPosts";

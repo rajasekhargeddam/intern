@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { IoNotificationsOutline } from "react-icons/io5";
 import CreatePost from "../post/CreatePost";
 import { useQuery } from "@tanstack/react-query";
-import { getNotificationCount } from "../../services/fetchProfile";
+import { getNotificationCount } from "../../services/profile";
 
 const Header = () => {
   const { user } = useContext(UserContext);

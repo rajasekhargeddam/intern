@@ -1,5 +1,5 @@
 import { type UserPost } from "../../types/post";
-import { timeAgo } from "../../utils/dateConvertions.ts";
+import { timeAgo } from "../../utils/dateConversions";
 import UserPostImages from "./UserPostImages.tsx";
 import PostContent from "../PostContent";
 import MoreOptionsDropdown from "./MoreOptionsDropdown.tsx";

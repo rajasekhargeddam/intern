@@ -1,4 +1,4 @@
-import { fetchProfile } from "../services/fetchProfile";
+import { fetchProfile } from "../services/profile";
 
 export const AuthLoader = () => {
   const userData = fetchProfile();

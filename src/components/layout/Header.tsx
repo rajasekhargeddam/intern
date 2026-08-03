@@ -19,16 +19,16 @@ const Header = () => {
   });
 
   return (
-    <div className="sticky top-0 z-50 w-full bg-white shadow-sm px-8 h-16 flex items-center justify-between">
-      <div className="flex items-center gap-2">
+    <div className="sticky top-0 z-50 h-16 w-full flex items-center justify-between gap-2 bg-white px-3 shadow-sm sm:px-6 md:px-8">
+      <div className="flex min-w-0 items-center gap-2">
         <ToggleSideBar />
-        <p className="md:text-2xl">
-          Hello, {user?.username}
+        <p className="min-w-0 max-w-[55vw] truncate text-sm sm:text-lg md:text-2xl">
+          <Link to="/">Hello</Link>, {user?.username}
           {"  "}
           {adminTag && <sup>{user.role}</sup>}
         </p>
       </div>
-      <div className="flex gap-2">
+      <div className="flex shrink-0 items-center gap-2">
         <CreatePost />
         <Link
           to="/notifications"

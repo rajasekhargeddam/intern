@@ -34,12 +34,7 @@ const LikedPosts = () => {
     return <FailedView />;
   }
 
-  return (
-    <UserPostsList
-      posts={posts}
-      onDeletePost={onDeletePost}
-    />
-  );
+  return <UserPostsList posts={posts} onDeletePost={onDeletePost} />;
 };
 
 export default LikedPosts;

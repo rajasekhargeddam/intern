@@ -10,9 +10,9 @@ type userProfileProps = {
 
 const UserProfileUi = ({ user, mode, onUpdateUser }: userProfileProps) => {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10 m-auto flex flex-col justify-center">
+    <div className="mx-auto flex w-full max-w-5xl flex-col justify-center px-4 py-6 sm:px-6 sm:py-10">
       <ProfileHeader user={user} mode={mode} onUpdateUser={onUpdateUser} />
-      <div className="border-t mt-12"></div>
+      <div className="mt-12 border-t"></div>
     </div>
   );
 };

@@ -71,15 +71,15 @@ const ProfileHeader = ({ user, mode, onUpdateUser }: ProfileHeaderProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center text-center relative">
+    <div className="relative flex flex-col items-center px-2 text-center sm:px-0">
       <img
         src={profilePicture}
         alt="profile"
-        className="w-44 h-44 md:w-40 md:h-40 rounded-full object-cover border"
+        className="h-32 w-32 rounded-full border object-cover sm:h-44 sm:w-44 md:h-40 md:w-40"
       />
 
       <div className="flex-1">
-        <h1 className="text-3xl font-light pb-0 mb-0">{username}</h1>
+        <h1 className="mb-0 pb-0 text-2xl font-light sm:text-3xl">{username}</h1>
 
         {firstname && (
           <h2 className="mt-6 font-semibold text-lg">{`${firstname.toLowerCase()} ${lastname ? lastname.toLowerCase() : ""}`}</h2>
@@ -109,11 +109,13 @@ const ProfileHeader = ({ user, mode, onUpdateUser }: ProfileHeaderProps) => {
         </div>
 
         {bio && (
-          <p className="mt-2 text-gray-700 leading-7 max-w-lg">{bio}</p>
+          <p className="mt-2 max-w-lg text-sm leading-6 text-gray-700 sm:text-base sm:leading-7">
+            {bio}
+          </p>
         )}
 
         {mode !== "user" && (
-          <div className="absolute top-4 right-4 flex items-center gap-2">
+          <div className="mt-4 flex items-center justify-center gap-2 sm:absolute sm:right-4 sm:top-4 sm:mt-0">
             {!(mode === "admin" && role === "admin") && (
               <EditProfile
                 open={isEditOpen}

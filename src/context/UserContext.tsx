@@ -5,12 +5,14 @@ interface UserContextType {
   user: User | null;
   login: (user: User | null) => void;
   logout: () => void;
+  userConnectionRemoved: () => void;
 }
 
 const UserContext = createContext<UserContextType>({
   user: null,
   login: () => {},
   logout: () => {},
+  userConnectionRemoved: () => {},
 });
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -24,8 +26,19 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
   };
 
+  const userConnectionRemoved = () => {
+    if (user) {
+      setUser({
+        ...user,
+        connectionsCount: user.connectionsCount ? user.connectionsCount - 1 : 0,
+      });
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider
+      value={{ user, login, logout, userConnectionRemoved }}
+    >
       {children}
     </UserContext.Provider>
   );

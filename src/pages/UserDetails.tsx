@@ -6,10 +6,10 @@ import { getUserDetails } from "../services/profile";
 import ProfileShimmer from "../shimmer/ProfileShimmer";
 import FailedView from "../components/common/FailedView";
 import UserPosts from "./UserPosts";
+import BackButton from "../components/BackButton";
 
 const UserDetails = () => {
   const { userId } = useParams();
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ["profile", userId],
     queryFn: () => getUserDetails(userId!),
@@ -26,6 +26,7 @@ const UserDetails = () => {
 
   return (
     <>
+      <BackButton />
       <UserProfileUi user={data} mode="user" />
       <UserPosts id={data._id} />
     </>

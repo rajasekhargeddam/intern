@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
   acceptConnectionRequest,
-  rejectConnectionRequest,
+  deleteConnection,
 } from "../services/connections";
 import type { ConnectionRequest } from "../types/auth";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ const NotificationRequest = ({ request }: NotificationRequestProps) => {
   });
 
   const rejectMutation = useMutation({
-    mutationFn: rejectConnectionRequest,
+    mutationFn: deleteConnection,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["notifications"],

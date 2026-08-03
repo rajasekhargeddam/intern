@@ -6,12 +6,23 @@ import FailedView from "../components/common/FailedView";
 import UserPostsShimmer from "../shimmer/UserPostsShimmer";
 import { fetchOneUserPosts, fetchUserPosts } from "../services/posts";
 import useDeletePostMutation from "../hooks/useDeletePostMutation";
+import { useScroll } from "../context/ScrollContext";
 
 type UserPostsProps = {
   id?: string;
 };
 
 const UserPosts = ({ id }: UserPostsProps) => {
+  const { getScrollPosition, saveScrollPosition } = useScroll();
+
+  useEffect(() => {
+    window.scrollTo(0, getScrollPosition("feed"));
+
+    return () => {
+      saveScrollPosition("feed", window.scrollY);
+    };
+  }, []);
+
   const {
     data,
     isLoading,

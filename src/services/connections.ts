@@ -50,19 +50,16 @@ export const acceptConnectionRequest = async (connectionId: string) => {
   return data;
 };
 
-export const rejectConnectionRequest = async (connectionId: string) => {
-  const response = await fetch(
-    `${BASE_URL}/connections/${connectionId}/reject`,
-    {
-      method: "DELETE",
-      credentials: "include",
-    },
-  );
+export const deleteConnection = async (connectionId: string) => {
+  const response = await fetch(`${BASE_URL}/connections/${connectionId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
 
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Failed to reject connection request.");
+    throw new Error(data.message || "Failed to delete connection.");
   }
 
   return data;

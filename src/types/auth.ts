@@ -29,10 +29,7 @@ export interface ConnectionRequest {
 
 export interface UserConnection {
   _id: string;
-  username: string;
-  firstname?: string;
-  lastname?: string;
-  profilePicture: string;
+  user: User;
 }
 
 export interface LoginRequest {

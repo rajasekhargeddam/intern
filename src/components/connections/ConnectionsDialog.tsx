@@ -29,6 +29,7 @@ const ConnectionsDialog = ({
     enabled: open,
   });
 
+
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>

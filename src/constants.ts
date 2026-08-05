@@ -3,10 +3,13 @@ export const STATIC_POSTS_API_URL =
 export const POSTS_PER_PAGE = 12;
 
 // Render
-export const BASE_URL = "https://intern-api-ew1g.onrender.com";
+// export const BASE_URL = "https://intern-api-ew1g.onrender.com";
 
 // localhost
 // export const BASE_URL = "http://localhost:3000";
+
+// aws
+export const BASE_URL = "/api";
 
 export const api_status = {
   loading: "LOADING",

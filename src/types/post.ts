@@ -12,12 +12,16 @@ export interface CreatePostRequest {
   images: string[];
 }
 
+export interface Images {
+  url: string;
+}
+
 export interface UserPost {
   _id: string;
   author: User;
   content: string;
   hashtags: string[];
-  images: string[];
+  images: Images[];
   links: string[];
   createdAt: string;
   updatedAt: string;

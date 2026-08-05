@@ -1,8 +1,9 @@
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
+import type { Images } from "../../types/post";
 
 interface Props {
-  images: string[];
+  images: Images[];
 }
 
 const UserPostImages = ({ images }: Props) => {
@@ -17,11 +18,11 @@ const UserPostImages = ({ images }: Props) => {
     <PhotoProvider>
       <div className={`grid ${gridColumns} gap-2`}>
         {images.map((image, index) => (
-          <PhotoView key={`${image}-${index}`} src={image}>
+          <PhotoView key={`${image.url}-${index}`} src={image.url}>
             <div className="overflow-hidden rounded-md bg-slate-100 transition-transform duration-300 hover:scale-[1.01] cursor-pointer">
-              <div className={`${aspectClass} w-full`}> 
+              <div className={`${aspectClass} w-full`}>
                 <img
-                  src={image}
+                  src={image.url}
                   alt="POST"
                   loading="lazy"
                   className="w-full h-full object-cover"

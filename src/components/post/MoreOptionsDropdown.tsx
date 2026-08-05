@@ -31,6 +31,11 @@ const MoreOptionsDropdown = ({
   const isAdminDeletingUserPost =
     user?.role === "admin" && author.role === "user";
 
+  console.log("Logged in user:", user);
+  console.log("Post author:", author);
+  console.log("isOwner:", isOwner);
+  console.log("isAdminDeletingUserPost:", isAdminDeletingUserPost);
+
   return (
     <>
       <Root>

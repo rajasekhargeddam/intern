@@ -11,7 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import PostForm, { type PostFormData } from "./PostForm";
 import { updatePost } from "../../services/posts";
 import { notifySuccess } from "../../utils/toast";
-import type { UserPost } from "../../types/post";
+import type { UserPost } from "../../types";
 import type { Dispatch, SetStateAction } from "react";
 
 interface EditPostProps {

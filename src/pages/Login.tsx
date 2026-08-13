@@ -1,6 +1,6 @@
 import { useState, type FormEvent , useContext} from "react";
 import { useNavigate, Link } from "react-router-dom";
-import type { LoginRequest } from "../types/auth";
+import type { LoginRequest } from "../types";
 import { UserContext } from "../context/UserContext";
 import { loginUser } from "../services/auth";
 import { notifySuccess } from "../utils/toast";

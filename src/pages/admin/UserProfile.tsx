@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import FailedView from "../../components/common/FailedView";
 
 import { api_status } from "../../constants";
-import type { User } from "../../types/auth";
+import type { User } from "../../types";
 import ProfileShimmer from "../../shimmer/ProfileShimmer";
 import UserProfileUi from "../../components/profile/UserProfileUi";
 import { fetchAdminUserById } from "../../services/admin";

@@ -1,4 +1,4 @@
-import { type UserPost } from "../../types/post";
+import { type UserPost } from "../../types";
 import { timeAgo } from "../../utils/dateConversions";
 import UserPostImages from "./UserPostImages.tsx";
 import PostContent from "../PostContent";
@@ -47,7 +47,7 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
     try {
       const data = await toggleLike(_id);
       setIsLike(data.liked);
-      setLikesNum((count) => (data.liked ? count + 1 : count - 1));
+      setLikesNum((count: number) => (data.liked ? count + 1 : count - 1));
     } catch (err) {
       console.log(err);
     }

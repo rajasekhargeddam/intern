@@ -11,7 +11,7 @@ import { MdDeleteOutline, MdMoreVert } from "react-icons/md";
 import { UserContext } from "../../context/UserContext";
 // import type { User } from "../../types/auth";
 import EditPost from "./EditPost";
-import type { UserPost } from "../../types/post";
+import type { UserPost } from "../../types";
 
 type MoreOptionsDropdownProps = {
   post: UserPost;

@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import type { SignupRequest } from "../../types/auth";
+import type { SignupRequest } from "../../types";
 import { createAdminUser } from "../../services/admin";
 
 function CreateUserDialog() {

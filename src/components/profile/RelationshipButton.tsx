@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { acceptConnectionRequest, sendConnectionRequest } from "../../services/connections";
-import type { Relationship } from "../../types/auth";
+import type { Relationship } from "../../types";
 
 interface RelationshipButtonProps {
   relationship: Relationship;

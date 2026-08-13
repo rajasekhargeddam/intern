@@ -10,7 +10,7 @@ import CommentList from "../components/comment/CommentList";
 import { fetchPostById } from "../services/posts";
 import { createComment, fetchComments } from "../services/comments";
 
-import type { Comment } from "../types/post";
+import type { Comment } from "../types";
 
 const PostDetails = () => {
   const { postId } = useParams();

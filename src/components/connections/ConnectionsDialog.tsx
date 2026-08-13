@@ -6,7 +6,7 @@ import { getConnections } from "../../services/connections";
 import ConnectionItem from "./ConnectionItem";
 import FailedView from "../common/FailedView";
 import ConnectionsShimmer from "../../shimmer/ConnectionsShimmer";
-import type { UserConnection } from "../../types/auth";
+import type { UserConnection } from "../../types";
 
 interface ConnectionsDialogProps {
   userId: string;

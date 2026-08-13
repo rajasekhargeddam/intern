@@ -1,5 +1,5 @@
 import { BASE_URL } from "../constants";
-import type { AuthSuccessResponse, LoginRequest, SignupRequest } from "../types/auth";
+import type { AuthSuccessResponse, LoginRequest, SignupRequest } from "../types";
 
 export const loginUser = async (loginData: LoginRequest): Promise<AuthSuccessResponse> => {
   const response = await fetch(`${BASE_URL}/auth/login`, {

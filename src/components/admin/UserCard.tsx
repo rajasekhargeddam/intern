@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { User } from "../../types/auth";
+import type { User } from "../../types";
 
 type UserCardProps = {
   user: User;

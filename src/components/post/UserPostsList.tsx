@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { type UserPost } from "../../types/post";
+import { type UserPost } from "../../types";
 import UserPostCard from "./UserPostCard";
 
 type UserPostsListProps = {

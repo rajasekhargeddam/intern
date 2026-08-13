@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CardList from "../components/post/CardList";
-import type { Post } from "../types/post";
+import type { Post } from "../types";
 import { POSTS_PER_PAGE, api_status } from "../constants";
 import { fetchPosts } from "../services/posts";
 import ShimmerPosts from "../shimmer/ShimmerPosts";

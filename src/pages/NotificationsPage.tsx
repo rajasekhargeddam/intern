@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getConnectionRequests } from "../services/connections";
 import NotificationRequest from "../components/NotificationRequest";
-import type { ConnectionRequest  } from "../types/auth";
+import type { ConnectionRequest  } from "../types";
 
 const NotificationsPage = () => {
   const {

@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { User } from "../../types/auth";
+import type { User } from "../../types";
 import ProfileHeader from "./ProfileHeader";
 
 type userProfileProps = {

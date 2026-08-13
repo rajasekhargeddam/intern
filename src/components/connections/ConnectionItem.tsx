@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import type { UserConnection } from "../../types/auth";
+import type { UserConnection } from "../../types";
 import { CiCircleRemove } from "react-icons/ci";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteConnection } from "../../services/connections";

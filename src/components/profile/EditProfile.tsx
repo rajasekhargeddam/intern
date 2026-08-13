@@ -19,7 +19,7 @@ import { RxCross2 } from "react-icons/rx";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { UserContext } from "../../context/UserContext";
-import type { User } from "../../types/auth";
+import type { User } from "../../types";
 import { updateAdminUser } from "../../services/admin";
 import { updateProfile } from "../../services/updateProfile";
 import { notifySuccess } from "../../utils/toast";

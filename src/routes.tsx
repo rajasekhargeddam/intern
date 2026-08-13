@@ -17,6 +17,8 @@ import LikedPosts from "./pages/LikedPosts";
 import ProfileLayout from "./layouts/ProfileLayout";
 import UserDetails from "./pages/UserDetails";
 import NotificationsPage from "./pages/NotificationsPage";
+import ChatLayout from "./layouts/ChatLayout";
+import Chat from "./components/chat/Chat";
 
 const routes = createBrowserRouter([
   {
@@ -91,6 +93,20 @@ const routes = createBrowserRouter([
           {
             path: "user/:userId",
             element: <UserProfile />,
+          },
+        ],
+      },
+      {
+        path: "chat",
+        element: <ChatLayout />,
+        children: [
+          {
+            index: true,
+            element: <Chat />,
+          },
+          {
+            path: ":userId",
+            element: <Chat />,
           },
         ],
       },

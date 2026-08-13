@@ -4,7 +4,7 @@ import {
   acceptConnectionRequest,
   deleteConnection,
 } from "../services/connections";
-import type { ConnectionRequest } from "../types/auth";
+import type { ConnectionRequest } from "../types";
 import { useNavigate } from "react-router-dom";
 
 interface NotificationRequestProps {

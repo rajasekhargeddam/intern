@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 
 import { deletePost } from "../services/posts";
-import type { UserPost } from "../types/post";
+import type { UserPost } from "../types";
 
 type PostsResponse = {
   posts: UserPost[];

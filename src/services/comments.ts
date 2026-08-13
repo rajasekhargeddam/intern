@@ -1,5 +1,5 @@
 import { BASE_URL } from "../constants";
-import type { Comment } from "../types/post";
+import type { Comment } from "../types";
 import { notifySuccess } from "../utils/toast";
 
 type CreateCommentPayload = {

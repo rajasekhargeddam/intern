@@ -1,5 +1,5 @@
 import { BASE_URL } from "../constants";
-import type { User } from "../types/auth";
+import type { User } from "../types";
 
 export const fetchAdminUsers = async (): Promise<User[]> => {
   const response = await fetch(`${BASE_URL}/admin/users`, {

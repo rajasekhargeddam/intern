@@ -1,6 +1,6 @@
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
-import type { Images } from "../../types/post";
+import type { Images } from "../../types";
 
 interface Props {
   images: Images[];

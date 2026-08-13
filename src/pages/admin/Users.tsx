@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { api_status } from "../../constants";
 import AdminUsersShimmer from "../../shimmer/AdminUsersShimmer";
 import FailedView from "../../components/common/FailedView";
-import type { User } from "../../types/auth";
+import type { User } from "../../types";
 import UserCard from "../../components/admin/UserCard";
 import CreateUserDialog from "../../components/admin/CreateUserDialog";
 import { fetchAdminUsers } from "../../services/admin";

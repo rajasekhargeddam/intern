@@ -1,5 +1,5 @@
 import { BASE_URL } from "../constants";
-import type { User } from "../types/auth";
+import type { User } from "../types";
 
 export const updateProfile = async (
   formData: FormData

@@ -1,5 +1,5 @@
 import { BASE_URL, STATIC_POSTS_API_URL } from "../constants";
-import type { Post, UserPost } from "../types/post";
+import type { Post, UserPost } from "../types";
 
 export const fetchPosts = async (
   searchQuery: string,

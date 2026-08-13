@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { MdDeleteOutline } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-import type { User } from "../../types/auth";
+import type { User } from "../../types";
 import { UserContext } from "../../context/UserContext";
 import { deleteAdminUser } from "../../services/admin";
 import EditProfile from "./EditProfile";

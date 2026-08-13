@@ -9,7 +9,6 @@ import { useContext, useState } from "react";
 import { FiBookmark, FiEdit2 } from "react-icons/fi";
 import { MdDeleteOutline, MdMoreVert } from "react-icons/md";
 import { UserContext } from "../../context/UserContext";
-// import type { User } from "../../types/auth";
 import EditPost from "./EditPost";
 import type { UserPost } from "../../types";
 
@@ -30,11 +29,6 @@ const MoreOptionsDropdown = ({
 
   const isAdminDeletingUserPost =
     user?.role === "admin" && author.role === "user";
-
-  console.log("Logged in user:", user);
-  console.log("Post author:", author);
-  console.log("isOwner:", isOwner);
-  console.log("isAdminDeletingUserPost:", isAdminDeletingUserPost);
 
   return (
     <>

@@ -6,18 +6,21 @@ import { queryClient } from "./lib/queryClient";
 import UserProvider from "./context/UserContext";
 import routes from "./routes";
 import { ScrollProvider } from "./context/ScrollContext";
+import { Suspense } from "react";
 
 const App = () => {
   return (
     <div className="bg-slate-50 min-h-screen pb-4">
-      <QueryClientProvider client={queryClient}>
-        <UserProvider>
-          <ScrollProvider>
-            <Toaster richColors position="top-right" />
-            <RouterProvider router={routes} />
-          </ScrollProvider>
-        </UserProvider>
-      </QueryClientProvider>
+      <Suspense fallback={<div>Loading...</div>}>
+        <QueryClientProvider client={queryClient}>
+          <UserProvider>
+            <ScrollProvider>
+              <Toaster richColors position="top-right" />
+              <RouterProvider router={routes} />
+            </ScrollProvider>
+          </UserProvider>
+        </QueryClientProvider>
+      </Suspense>
     </div>
   );
 };

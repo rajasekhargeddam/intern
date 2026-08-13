@@ -2,23 +2,27 @@ import { createBrowserRouter } from "react-router-dom";
 
 import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import StaticPosts from "./pages/StaticPosts";
-import UserPosts from "./pages/UserPosts";
-import { AuthLoader } from "./loaders/authLoader";
-import Profile from "./pages/Profile";
 import AdminLayout from "./layouts/AdminLayout";
 import ProtectedLayout from "./layouts/ProtectedLayout";
-import Users from "./pages/admin/Users";
-import UserProfile from "./pages/admin/UserProfile";
-import PostDetails from "./pages/PostDetails";
-import LikedPosts from "./pages/LikedPosts";
 import ProfileLayout from "./layouts/ProfileLayout";
-import UserDetails from "./pages/UserDetails";
-import NotificationsPage from "./pages/NotificationsPage";
 import ChatLayout from "./layouts/ChatLayout";
-import Chat from "./components/chat/Chat";
+
+import { AuthLoader } from "./loaders/authLoader";
+
+import {
+  Login,
+  SignUp,
+  UserPosts,
+  StaticPosts,
+  UserDetails,
+  Profile,
+  LikedPosts,
+  NotificationsPage,
+  PostDetails,
+  Users,
+  UserProfile,
+  Chat,
+} from "./lazyPages";
 
 const routes = createBrowserRouter([
   {
@@ -77,6 +81,7 @@ const routes = createBrowserRouter([
           },
         ],
       },
+
       {
         path: "posts/:postId",
         element: <PostDetails />,
@@ -96,6 +101,7 @@ const routes = createBrowserRouter([
           },
         ],
       },
+
       {
         path: "chat",
         element: <ChatLayout />,

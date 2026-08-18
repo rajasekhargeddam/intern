@@ -59,6 +59,8 @@ export interface Chat {
   _id: string;
   targetUser: User;
   messages: Message[];
+  lastMessage?: Message;
+  updatedAt?: string;
 }
 
 export interface Post {

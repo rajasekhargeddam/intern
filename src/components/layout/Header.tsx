@@ -8,6 +8,7 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import CreatePost from "../post/CreatePost";
 import { useQuery } from "@tanstack/react-query";
 import { getNotificationCount } from "../../services/profile";
+import { RiMessengerLine } from "react-icons/ri";
 
 const Header = () => {
   const { user } = useContext(UserContext);
@@ -30,6 +31,11 @@ const Header = () => {
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <CreatePost />
+
+        <Link to="/chat" className="text-xl mx-2">
+          <RiMessengerLine />
+        </Link>
+
         <Link
           to="/notifications"
           className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition-all duration-200 hover:border-blue-500 hover:bg-blue-50 hover:text-blue-600 active:scale-95"

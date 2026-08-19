@@ -7,10 +7,14 @@ import {
   Title,
   Close,
 } from "@radix-ui/react-dialog";
-import SideBar from "./SideBar";
+import type { ReactNode } from "react";
 import { CiMenuBurger } from "react-icons/ci";
 
-const ToggleSideBar = () => {
+type ToggleSideBarProps = {
+  children: ReactNode;
+};
+
+const ToggleSideBar = ({ children }: ToggleSideBarProps) => {
   return (
     <Root>
       <Trigger asChild>
@@ -31,7 +35,7 @@ const ToggleSideBar = () => {
             </Close>
           </div>
 
-          <SideBar />
+          {children}
         </Content>
       </Portal>
     </Root>

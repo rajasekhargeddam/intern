@@ -1,10 +1,12 @@
 import { useState } from "react";
 import ImageUploader from "./ImageUploader";
+import VideoUploader from "./VideoUploader";
 import PostContentInput from "./PostContentInput";
 
 export interface PostFormData {
   content: string;
   images: File[];
+  video: File | null;
 }
 
 interface PostFormProps {
@@ -22,16 +24,23 @@ function PostForm({
 }: PostFormProps) {
   const [content, setContent] = useState(initialContent);
   const [images, setImages] = useState<File[]>([]);
+  const [video, setVideo] = useState<File | null>(null);
   const [errMsg, setErrMsg] = useState("");
-
-  // Sync state if initialContent changes
 
   const handleImageSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
 
+    // If video is already selected, don't allow images
+    if (video) {
+      setErrMsg("A post cannot contain both images and a video.");
+      event.target.value = "";
+      return;
+    }
+
     const selectedImages = Array.from(event.target.files);
     if (selectedImages.length > 4) {
       setErrMsg("You can upload a maximum of 4 images.");
+      event.target.value = "";
       return;
     }
 
@@ -39,37 +48,66 @@ function PostForm({
     setImages(selectedImages);
   };
 
+  const handleVideoSelection = (file: File | null, error: string = "") => {
+    if (error) {
+      setErrMsg(error);
+      return;
+    }
+
+    // If images are already selected, don't allow video
+    if (file && images.length > 0) {
+      setErrMsg("A post cannot contain both images and a video.");
+      return;
+    }
+
+    setErrMsg("");
+    setVideo(file);
+  };
+
   const handleRemoveImage = (index: number) => {
     setImages((prev) => prev.filter((_, idx) => idx !== index));
+  };
+
+  const handleRemoveVideo = () => {
+    setVideo(null);
   };
 
   const onclickHandler = () => {
     setErrMsg("");
 
-    if (!content.trim() && mode === "create" && images.length === 0) {
-      setErrMsg("Please add some content or upload at least one image.");
+    if (!content.trim() && mode === "create" && images.length === 0 && !video) {
+      setErrMsg("Please add some content or upload at least one image/video.");
       return;
     }
 
-    onSubmit({ content, images });
+    onSubmit({ content, images, video });
     if (mode === "create") {
       setContent("");
       setImages([]);
+      setVideo(null);
     }
   };
 
   return (
     <div className="mt-5 space-y-4">
-      {/* Matches original prop signature (content, onChange) */}
       <PostContentInput content={content} onChange={setContent} />
 
-      {/* Conditionally render image uploader in create mode */}
       {mode === "create" && (
-        <ImageUploader
-          images={images}
-          onChangeImages={handleImageSelection}
-          removeImage={handleRemoveImage}
-        />
+        <>
+          <ImageUploader
+            images={images}
+            onChangeImages={handleImageSelection}
+            removeImage={handleRemoveImage}
+            disabled={!!video}
+          />
+
+          <VideoUploader
+            video={video}
+            onVideoSelect={handleVideoSelection}
+            removeVideo={handleRemoveVideo}
+            disabled={images.length > 0}
+          />
+        </>
       )}
 
       {errMsg && <p className="text-sm text-red-500">{errMsg}</p>}

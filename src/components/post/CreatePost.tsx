@@ -10,9 +10,9 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IoCreateOutline } from "react-icons/io5";
 
-import PostForm, {type PostFormData } from "./PostForm";
+import PostForm, { type PostFormData } from "./PostForm";
 import { createPost } from "../../services/posts";
-import { notifySuccess } from "../../utils/toast";
+import { notifyError, notifySuccess } from "../../utils/toast";
 
 function CreatePost() {
   const queryClient = useQueryClient();
@@ -23,14 +23,22 @@ function CreatePost() {
       notifySuccess("Post created successfully");
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
+    onError: (error) => {
+      notifyError(error.message);
+    },
   });
 
-  const handleSubmit = ({ content, images }: PostFormData) => {
+  const handleSubmit = ({ content, images, video }: PostFormData) => {
     const formData = new FormData();
     formData.append("content", content);
+
     images.forEach((image) => {
       formData.append("images", image);
     });
+
+    if (video) {
+      formData.append("video", video);
+    }
 
     mutation.mutate(formData);
   };

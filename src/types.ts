@@ -79,12 +79,18 @@ export interface Images {
   url: string;
 }
 
+export interface Video {
+  url: string;
+  publicId?: string;
+}
+
 export interface UserPost {
   _id: string;
   author: User;
   content: string;
   hashtags: string[];
   images: Images[];
+  video?: Video | null;
   links: string[];
   createdAt: string;
   updatedAt: string;

@@ -1,6 +1,7 @@
 import { type UserPost } from "../../types";
 import { timeAgo } from "../../utils/dateConversions";
 import UserPostImages from "./UserPostImages.tsx";
+import UserPostVideo from "./UserPostVideo.tsx";
 import PostContent from "../PostContent";
 import MoreOptionsDropdown from "./MoreOptionsDropdown.tsx";
 import { deletePost, toggleLike } from "../../services/posts.ts";
@@ -23,6 +24,7 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
     createdAt,
     updatedAt,
     images,
+    video,
     likesCount,
     isLiked,
     commentsCount,
@@ -84,6 +86,7 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
 
       <div onClick={(e) => e.stopPropagation()} className="w-full">
         <UserPostImages images={images} />
+        <UserPostVideo video={video} />
       </div>
 
       <div

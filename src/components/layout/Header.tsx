@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, type ReactNode } from "react";
 import { UserContext } from "../../context/UserContext";
 import ToggleSideBar from "./ToggleSideBar";
 import ProfileDropdown from "../profile/ProfileDropdown";
@@ -10,7 +10,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getNotificationCount } from "../../services/profile";
 import { RiMessengerLine } from "react-icons/ri";
 
-const Header = () => {
+type HeaderProps = {
+  sidebar: ReactNode;
+};
+
+const Header = ({ sidebar }: HeaderProps) => {
   const { user } = useContext(UserContext);
   const adminTag = user?.role === "admin";
 
@@ -22,7 +26,7 @@ const Header = () => {
   return (
     <div className="sticky top-0 z-50 h-16 w-full flex items-center justify-between gap-2 bg-white px-3 shadow-sm sm:px-6 md:px-8">
       <div className="flex min-w-0 items-center gap-2">
-        <ToggleSideBar />
+        <ToggleSideBar>{sidebar}</ToggleSideBar>
         <p className="min-w-0 max-w-[55vw] truncate text-sm sm:text-lg md:text-2xl">
           <Link to="/">Hello</Link>, {user?.username}
           {"  "}

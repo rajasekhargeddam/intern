@@ -4,12 +4,14 @@ type ImageUploaderProps = {
   images: File[];
   onChangeImages: (event: React.ChangeEvent<HTMLInputElement>) => void;
   removeImage: (index: number) => void;
+  disabled?: boolean;
 };
 
 function ImageUploader({
   images,
   onChangeImages,
   removeImage,
+  disabled = false,
 }: ImageUploaderProps) {
   return (
     <div className="mt-4 flex flex-col gap-3">
@@ -22,7 +24,10 @@ function ImageUploader({
         multiple
         accept="image/jpeg,image/png,image/webp"
         onChange={onChangeImages}
-        className="w-full rounded-3xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm"
+        disabled={disabled}
+        className={`w-full rounded-3xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm ${
+          disabled ? "cursor-not-allowed opacity-50" : ""
+        }`}
       />
 
       <p className="text-xs text-slate-500">Maximum 4 images</p>

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { FaUser, FaHeart } from "react-icons/fa";
+import { FaUser, FaHeart, FaBookmark } from "react-icons/fa";
 
 const navItems = [
   {
@@ -12,16 +12,11 @@ const navItems = [
     path: "/profile/liked-posts",
     icon: FaHeart,
   },
-  //   {
-  //     label: "Saved Posts",
-  //     path: "/profile/saved-posts",
-  //     icon: FaBookmark,
-  //   },
-  //   {
-  //     label: "Settings",
-  //     path: "/profile/settings",
-  //     icon: FaCog,
-  //   },
+  {
+    label: "Saved Posts",
+    path: "/profile/saved-posts",
+    icon: FaBookmark,
+  },
 ];
 
 const ProfileSidebar = () => {
@@ -35,10 +30,9 @@ const ProfileSidebar = () => {
                 to={path}
                 end={path === "/profile"}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 rounded-lg px-4 py-3 transition ${
-                    isActive
-                      ? "bg-blue-50 text-blue-600 font-medium"
-                      : "text-slate-700 hover:bg-slate-100"
+                  `flex items-center gap-3 rounded-lg px-4 py-3 transition ${isActive
+                    ? "bg-blue-50 text-blue-600 font-medium"
+                    : "text-slate-700 hover:bg-slate-100"
                   }`
                 }
               >

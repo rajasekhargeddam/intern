@@ -1,0 +1,53 @@
+import { Link } from "react-router-dom";
+
+import type { User } from "../../types";
+import RelationshipButton from "../profile/RelationshipButton";
+
+type UserCardProps = {
+  user: User;
+};
+
+const UserCard = ({ user }: UserCardProps) => {
+  const displayName = [user.firstname, user.lastname].filter(Boolean).join(" ");
+
+  return (
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <Link
+        to={`/user/${user._id}`}
+        className="flex min-w-0 flex-1 items-center gap-4 transition-opacity hover:opacity-90"
+      >
+        <img
+          src={user.profilePicture}
+          alt={user.username}
+          className="h-14 w-14 shrink-0 rounded-full border border-slate-200 object-cover sm:h-16 sm:w-16"
+        />
+
+        <div className="min-w-0">
+          <p className="truncate text-base font-semibold text-slate-900 sm:text-lg">
+            {user.username}
+          </p>
+
+          {displayName && (
+            <p className="truncate text-sm text-slate-500">{displayName}</p>
+          )}
+
+          <p className="mt-1 line-clamp-2 text-sm text-slate-600">
+            {user.bio?.trim() || "No bio yet."}
+          </p>
+        </div>
+      </Link>
+
+      {user.relationship && (
+        <div className="shrink-0 sm:pl-4">
+          <RelationshipButton
+            relationship={user.relationship}
+            profileUserId={user._id}
+            invalidateQueryKeys={[["user-feed"]]}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default UserCard;

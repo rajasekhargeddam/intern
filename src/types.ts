@@ -96,6 +96,7 @@ export interface UserPost {
   updatedAt: string;
   likesCount: number;
   isLiked: boolean;
+  isSaved: boolean;
   commentsCount: number;
 }
 

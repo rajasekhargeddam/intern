@@ -13,10 +13,12 @@ import {
   Login,
   SignUp,
   UserPosts,
+  UserFeed,
   StaticPosts,
   UserDetails,
   Profile,
   LikedPosts,
+  SavedPosts,
   NotificationsPage,
   PostDetails,
   Users,
@@ -56,6 +58,10 @@ const routes = createBrowserRouter([
             path: "liked-posts",
             element: <LikedPosts />,
           },
+          {
+            path: "saved-posts",
+            element: <SavedPosts />,
+          },
         ],
       },
 
@@ -66,6 +72,10 @@ const routes = createBrowserRouter([
           {
             index: true,
             element: <UserPosts />,
+          },
+          {
+            path: "discover",
+            element: <UserFeed />,
           },
           {
             path: "static-posts",

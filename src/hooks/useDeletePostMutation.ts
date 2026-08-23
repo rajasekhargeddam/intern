@@ -36,7 +36,7 @@ const removePostFromCache = (
       ...infiniteData,
       pages: infiniteData.pages.map((page) => ({
         ...page,
-        posts: page.posts.filter((item) => item._id !== postId),
+        posts: (page.posts ?? []).filter((item) => item._id !== postId),
       })),
     };
   }

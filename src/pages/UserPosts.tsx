@@ -7,12 +7,15 @@ import UserPostsShimmer from "../shimmer/UserPostsShimmer";
 import { fetchOneUserPosts, fetchUserPosts } from "../services/posts";
 import useDeletePostMutation from "../hooks/useDeletePostMutation";
 import { useScroll } from "../context/ScrollContext";
+import { fetchLikedPosts, fetchSavedPosts } from "../services/profile";
+import { notifyError, notifySuccess } from "../utils/toast";
 
 type UserPostsProps = {
   id?: string;
+  feedType?: "posts" | "liked-posts" | "saved-posts";
 };
 
-const UserPosts = ({ id }: UserPostsProps) => {
+const UserPosts = ({ id, feedType = "posts" }: UserPostsProps) => {
   const { getScrollPosition, saveScrollPosition } = useScroll();
 
   useEffect(() => {
@@ -31,10 +34,19 @@ const UserPosts = ({ id }: UserPostsProps) => {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: id ? ["posts", id] : ["posts"],
+    queryKey: id ? [feedType, id] : [feedType],
 
-    queryFn: ({ pageParam }) =>
-      id ? fetchOneUserPosts(id, pageParam) : fetchUserPosts({ pageParam }),
+    queryFn: ({ pageParam }) => {
+      if (id) {
+        return fetchOneUserPosts(id, pageParam);
+      } else if (feedType === "liked-posts") {
+        return fetchLikedPosts({ pageParam });
+      } else if (feedType === "saved-posts") {
+        return fetchSavedPosts({ pageParam });
+      } else {
+        return fetchUserPosts({ pageParam });
+      }
+    },
 
     initialPageParam: 0,
 
@@ -42,17 +54,32 @@ const UserPosts = ({ id }: UserPostsProps) => {
       lastPage.hasMore ? lastPage.nextOffset : undefined,
   });
 
-  const userPosts = data?.pages.flatMap((page) => page.posts) ?? [];
+  const userPosts =
+    data?.pages.flatMap((page) => page.posts ?? []).filter(Boolean) ?? [];
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-  const deletePostMutation = useDeletePostMutation([
+  const deleteQueryKeys: (readonly unknown[])[] = [
+    id ? [feedType, id] : [feedType],
     ["posts"],
     ...(id ? [["posts", id]] : []),
-  ]);
+    ["liked-posts"],
+    ["saved-posts"],
+  ];
+
+  const deletePostMutation = useDeletePostMutation(deleteQueryKeys);
 
   const onDeletePost = (postId: string) => {
-    deletePostMutation.mutate(postId);
+    deletePostMutation.mutate(postId, {
+      onSuccess: (message) => {
+        notifySuccess(message);
+      },
+      onError: (error) => {
+        notifyError(
+          error instanceof Error ? error.message : "failed to delete Post",
+        );
+      },
+    });
   };
 
   useEffect(() => {

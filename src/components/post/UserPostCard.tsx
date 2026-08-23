@@ -4,12 +4,12 @@ import UserPostImages from "./UserPostImages.tsx";
 import UserPostVideo from "./UserPostVideo.tsx";
 import PostContent from "../PostContent";
 import MoreOptionsDropdown from "./MoreOptionsDropdown.tsx";
-import { deletePost, toggleLike } from "../../services/posts.ts";
-import { notifyError, notifySuccess } from "../../utils/toast.ts";
+import { toggleLike } from "../../services/posts.ts";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart, FaRegCommentDots } from "react-icons/fa";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 type UserPostsProps = {
   post: UserPost;
@@ -30,18 +30,13 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
     commentsCount,
   } = post;
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [likesNum, setLikesNum] = useState(likesCount);
   const [isLike, setIsLike] = useState(isLiked);
 
-  const onDeleteHandler = async () => {
-    try {
-      const data = await deletePost(_id);
-      notifySuccess(data);
-      onDeletePost(_id);
-    } catch (err) {
-      notifyError(err instanceof Error ? err.message : "failed to delete Post");
-    }
+  const onDeleteHandler = () => {
+    onDeletePost(_id);
   };
 
   const ontoggleLike = async (e: React.MouseEvent) => {
@@ -50,6 +45,7 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
       const data = await toggleLike(_id);
       setIsLike(data.liked);
       setLikesNum((count: number) => (data.liked ? count + 1 : count - 1));
+      queryClient.invalidateQueries({ queryKey: ["liked-posts"] });
     } catch (err) {
       console.log(err);
     }

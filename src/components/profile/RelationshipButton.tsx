@@ -6,30 +6,34 @@ import type { Relationship } from "../../types";
 interface RelationshipButtonProps {
   relationship: Relationship;
   profileUserId: string;
+  invalidateQueryKeys?: readonly (readonly unknown[])[];
 }
 
 const RelationshipButton = ({
   relationship,
   profileUserId,
+  invalidateQueryKeys = [],
 }: RelationshipButtonProps) => {
   const queryClient = useQueryClient();
 
+  const invalidateQueries = () => {
+    queryClient.invalidateQueries({
+      queryKey: ["profile", profileUserId],
+    });
+
+    invalidateQueryKeys.forEach((queryKey) => {
+      queryClient.invalidateQueries({ queryKey });
+    });
+  };
+
   const sendRequestMutation = useMutation({
     mutationFn: sendConnectionRequest,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["profile", profileUserId],
-      });
-    },
+    onSuccess: invalidateQueries,
   });
 
   const acceptRequestMutation = useMutation({
     mutationFn: acceptConnectionRequest,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["profile", profileUserId],
-      });
-    },
+    onSuccess: invalidateQueries,
   });
 
   switch (relationship.status) {

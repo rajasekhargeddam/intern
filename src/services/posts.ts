@@ -48,12 +48,6 @@ export const fetchUserPosts = async ({
   return response.json();
 };
 
-export interface FetchPostsResponse {
-  posts: UserPost[];
-  hasMore: boolean;
-  nextOffset: number;
-}
-
 export const fetchOneUserPosts = async (
   userId: string,
   pageParam: number = 0,
@@ -71,6 +65,7 @@ export const fetchOneUserPosts = async (
 
   return response.json();
 };
+
 export const fetchPostById = async (postId: string): Promise<UserPost> => {
   const response = await fetch(`${BASE_URL}/posts/details/${postId}`, {
     credentials: "include",
@@ -126,6 +121,21 @@ export const toggleLike = async (postId: string) => {
 
   if (!response.ok) {
     throw new Error(data.message || "Failed to toggle like");
+  }
+
+  return data;
+};
+
+export const toggleSave = async (postId: string) => {
+  const response = await fetch(`${BASE_URL}/posts/${postId}/save`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to toggle save");
   }
 
   return data;

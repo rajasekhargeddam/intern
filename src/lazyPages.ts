@@ -5,6 +5,7 @@ export const SignUp = lazy(() => import("./pages/SignUp"));
 
 export const UserPosts = lazy(() => import("./pages/UserPosts"));
 export const UserFeed = lazy(() => import("./pages/UserFeed"));
+export const Search = lazy(() => import("./pages/Search"));
 export const StaticPosts = lazy(() => import("./pages/StaticPosts"));
 export const UserDetails = lazy(() => import("./pages/UserDetails"));
 

@@ -14,6 +14,7 @@ import {
   SignUp,
   UserPosts,
   UserFeed,
+  Search,
   StaticPosts,
   UserDetails,
   Profile,
@@ -76,6 +77,10 @@ const routes = createBrowserRouter([
           {
             path: "discover",
             element: <UserFeed />,
+          },
+          {
+            path: "search",
+            element: <Search />,
           },
           {
             path: "static-posts",

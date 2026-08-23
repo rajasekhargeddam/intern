@@ -5,9 +5,13 @@ import RelationshipButton from "../profile/RelationshipButton";
 
 type UserCardProps = {
   user: User;
+  invalidateQueryKeys?: readonly (readonly unknown[])[];
 };
 
-const UserCard = ({ user }: UserCardProps) => {
+const UserCard = ({
+  user,
+  invalidateQueryKeys = [["user-feed"]],
+}: UserCardProps) => {
   const displayName = [user.firstname, user.lastname].filter(Boolean).join(" ");
 
   return (
@@ -42,7 +46,7 @@ const UserCard = ({ user }: UserCardProps) => {
           <RelationshipButton
             relationship={user.relationship}
             profileUserId={user._id}
-            invalidateQueryKeys={[["user-feed"]]}
+            invalidateQueryKeys={invalidateQueryKeys}
           />
         </div>
       )}

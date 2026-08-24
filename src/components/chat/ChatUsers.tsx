@@ -4,9 +4,12 @@ import { getChatUsers, getChatConnectionUsers } from "../../services/chat";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import type { Chat, User } from "../../types";
+import useChatPresence from "../../hooks/useChatPresence";
+import OnlineAvatar from "./OnlineAvatar";
 
 const ChatUsers = () => {
   const { user } = useContext(UserContext);
+  useChatPresence();
 
   const {
     data: chatUsers = [],
@@ -57,19 +60,21 @@ const ChatUsers = () => {
                   }`
                 }
               >
-                <img
+                <OnlineAvatar
                   src={chat.targetUser.profilePicture}
                   alt={chat.targetUser.username}
-                  className="w-12 h-12 rounded-full object-cover"
+                  isOnline={chat.targetUser.isOnline}
                 />
 
                 <div className="flex-1 min-w-0">
                   <div className="font-medium truncate">
                     {chat.targetUser.username}
                   </div>
-                  <div className="text-xs text-slate-500 truncate">
-                    {chat.lastMessage?.text || "No messages yet"}
-                  </div>
+                  {chat.lastMessage?.text && (
+                    <div className="text-xs text-slate-500 truncate">
+                      {chat.lastMessage.text}
+                    </div>
+                  )}
                 </div>
               </NavLink>
             ))}
@@ -92,17 +97,14 @@ const ChatUsers = () => {
                   }`
                 }
               >
-                <img
+                <OnlineAvatar
                   src={user.profilePicture}
                   alt={user.username}
-                  className="w-12 h-12 rounded-full object-cover"
+                  isOnline={user.isOnline}
                 />
 
                 <div className="flex-1 min-w-0">
                   <div className="font-medium truncate">{user.username}</div>
-                  <div className="text-xs text-slate-500 truncate">
-                    Start conversation
-                  </div>
                 </div>
               </NavLink>
             ))}

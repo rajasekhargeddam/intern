@@ -15,6 +15,8 @@ export interface User {
   role?: string;
   relationship?: Relationship;
   connectionsCount?: number;
+  isOnline?: boolean;
+  lastSeen?: string | null;
 }
 
 export interface ConnectionRequest {

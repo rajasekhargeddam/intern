@@ -1,5 +1,5 @@
 import type { Message } from "../../types";
-import { timeAgo } from "../../utils/dateConversions";
+import { formatExactTime } from "../../utils/dateConversions";
 
 const ChatMessage = ({ msg, userId }: { msg: Message; userId: string }) => {
   const isMe = msg.sender === userId;
@@ -15,7 +15,9 @@ const ChatMessage = ({ msg, userId }: { msg: Message; userId: string }) => {
       >
         <div className="whitespace-pre-wrap">{msg.text}</div>
         <div className="text-[11px] opacity-70 mt-1 text-right">
-          {msg.createdAt ? timeAgo(msg.createdAt) : ""}
+          {msg.createdAt
+            ? formatExactTime(msg.createdAt, { includeDate: true })
+            : ""}
         </div>
       </div>
     </div>

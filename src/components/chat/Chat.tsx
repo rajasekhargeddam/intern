@@ -5,11 +5,12 @@ import { useNavigate } from "react-router-dom";
 import EmptyChat from "./EmptyChat";
 import FailedView from "../common/FailedView";
 import { useContext, useEffect, useRef, useState } from "react";
-import socketConnection from "../../utils/socket";
+import { getSocket } from "../../utils/socket";
 import { UserContext } from "../../context/UserContext";
 import { getUserChat } from "../../services/chat";
 import type { Chat as ChatType } from "../../types";
 import ChatMessage from "./ChatMessage";
+import UserPresenceStatus from "./UserPresenceStatus";
 
 const Chat = () => {
   const { userId: targetUserId } = useParams();
@@ -22,12 +23,12 @@ const Chat = () => {
 
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const socketRef = useRef<ReturnType<typeof socketConnection> | null>(null);
+  const socketRef = useRef<ReturnType<typeof getSocket> | null>(null);
 
   useEffect(() => {
     if (!userId || !targetUserId) return;
 
-    const socket = socketConnection();
+    const socket = getSocket();
     socketRef.current = socket;
 
     socket.emit("join", {
@@ -45,14 +46,16 @@ const Chat = () => {
           messages: [...oldChat.messages, newChat],
         };
       });
-      
-      // Invalidate chat users query to refresh last message in sidebar
+
       queryClient.invalidateQueries({ queryKey: ["chatUsers"] });
     });
 
     return () => {
+      socket.emit("leave", {
+        userId,
+        targetUserId,
+      });
       socket.off("receiveMessage");
-      socket.disconnect();
       socketRef.current = null;
     };
   }, [userId, targetUserId, queryClient]);
@@ -116,7 +119,13 @@ const Chat = () => {
         >
           <HiChevronLeft className="text-xl" />
         </button>
-        {chatData?.targetUser.username}
+        <div className="min-w-0">
+          <p className="truncate">{chatData?.targetUser.username}</p>
+          <UserPresenceStatus
+            isOnline={chatData?.targetUser.isOnline}
+            lastSeen={chatData?.targetUser.lastSeen}
+          />
+        </div>
       </div>
 
       {/* Messages */}

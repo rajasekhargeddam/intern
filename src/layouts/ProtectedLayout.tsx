@@ -4,6 +4,7 @@ import { UserContext } from "../context/UserContext";
 import Header from "../components/layout/Header";
 import ProfileSidebar from "../components/profile/ProfileSidebar";
 import SideBar from "../components/layout/SideBar";
+import { disconnectSocket, getSocket } from "../utils/socket";
 
 const ProtectedLayout = () => {
   const { user, login } = useContext(UserContext);
@@ -17,6 +18,16 @@ const ProtectedLayout = () => {
       login(userData);
     }
   }, [user, userData, login]);
+
+  useEffect(() => {
+    if (!user && !userData) return;
+
+    getSocket();
+
+    return () => {
+      disconnectSocket();
+    };
+  }, [user, userData]);
 
   if (!user && !userData) {
     return <Navigate to="/auth/login" replace />;

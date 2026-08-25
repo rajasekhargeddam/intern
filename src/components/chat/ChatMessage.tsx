@@ -5,16 +5,20 @@ const ChatMessage = ({ msg, userId }: { msg: Message; userId: string }) => {
   const isMe = msg.sender === userId;
 
   return (
-    <div className={`flex items-end ${isMe ? "justify-end" : "justify-start"}`}>
+    <div className={`flex ${isMe ? "justify-end" : "justify-start"}`}>
       <div
-        className={`max-w-[80%] wrap-break-word px-3 py-1 shadow-sm text-sm ${
+        className={`w-fit max-w-[75%] overflow-hidden rounded-2xl px-3 py-1.5 text-sm wrap-break-word ${
           isMe
-            ? "bg-blue-600 text-white rounded-bl-md rounded-tl-md rounded-tr-md"
-            : "bg-gray-100 text-slate-900 rounded-br-md rounded-tr-md rounded-tl-md"
+            ? "rounded-br-md bg-blue-600 text-white"
+            : "rounded-bl-md bg-white text-slate-900 ring-1 ring-slate-200"
         }`}
       >
-        <div className="whitespace-pre-wrap">{msg.text}</div>
-        <div className="text-[11px] opacity-70 mt-1 text-right">
+        <div className="whitespace-pre-wrap break-words">{msg.text}</div>
+        <div
+          className={`mt-0.5 text-right text-[10px] ${
+            isMe ? "text-white/70" : "text-slate-400"
+          }`}
+        >
           {msg.createdAt
             ? formatExactTime(msg.createdAt, { includeDate: true })
             : ""}

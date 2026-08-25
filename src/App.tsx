@@ -10,7 +10,7 @@ import { Suspense } from "react";
 
 const App = () => {
   return (
-    <div className="bg-slate-50 min-h-screen pb-4">
+    <div className="min-h-screen bg-slate-50">
       <Suspense fallback={<div>Loading...</div>}>
         <QueryClientProvider client={queryClient}>
           <UserProvider>

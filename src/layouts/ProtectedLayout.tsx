@@ -35,7 +35,7 @@ const ProtectedLayout = () => {
 
   return (
     <>
-      <Header sidebar={isProfileRoute ? <ProfileSidebar /> : <SideBar />} />{" "}
+      <Header sidebar={isProfileRoute ? <ProfileSidebar /> : <SideBar />} />
       <Outlet />
     </>
   );

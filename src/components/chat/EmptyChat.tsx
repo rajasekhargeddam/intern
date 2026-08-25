@@ -1,10 +1,10 @@
 const EmptyChat = () => {
   return (
     <div className="flex h-full items-center justify-center p-6">
-      <div className="text-center">
+      <div className="max-w-sm text-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="mx-auto mb-4 h-20 w-20 text-slate-300"
+          className="mx-auto mb-3 h-14 w-14 text-slate-300"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -17,11 +17,11 @@ const EmptyChat = () => {
           />
         </svg>
 
-        <h2 className="text-2xl font-semibold text-slate-700">
+        <h2 className="text-lg font-semibold text-slate-700">
           Select a user to start chatting
         </h2>
-        <p className="mt-2 text-sm text-slate-500">
-          Conversations will appear here — keep it friendly.
+        <p className="mt-1 text-sm text-slate-500">
+          Conversations will appear here.
         </p>
       </div>
     </div>

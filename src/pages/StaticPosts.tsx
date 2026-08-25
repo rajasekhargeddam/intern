@@ -67,16 +67,16 @@ const StaticPosts = () => {
   return (
     <div className="min-h-screen">
       <div className="flex flex-col items-center justify-center p-4">
-        <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+        <h1 className="text-xl font-semibold text-slate-900">
           Discover Posts
         </h1>
 
-        <p className="mb-2 text-slate-500">
+        <p className="mb-3 text-sm text-slate-500">
           Search and explore posts effortlessly
         </p>
         <div className="flex w-full max-w-2xl flex-col gap-2 sm:flex-row">
           <input
-            className="w-full rounded-xl border border-slate-300 px-5 py-2 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
+            className="h-10 w-full rounded-lg border border-slate-300 px-3 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
             type="search"
             placeholder="Search posts..."
             value={searchText}
@@ -85,7 +85,7 @@ const StaticPosts = () => {
           <button
             onClick={onClickSearch}
             disabled={apiStatus === api_status.loading}
-            className="rounded-xl bg-indigo-600 px-6 py-2 font-medium text-white transition-all hover:bg-indigo-700 sm:w-auto"
+            className="h-10 rounded-lg bg-blue-600 px-5 text-sm font-medium text-white hover:bg-blue-700 sm:w-auto"
           >
             Search
           </button>

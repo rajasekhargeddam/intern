@@ -52,29 +52,27 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 px-4 pb-2 pt-4 sm:px-6 sm:pt-6 relative">
-      <div className="flex items-center gap-5">
+    <div className="relative flex flex-col gap-3 px-4 py-3 sm:px-5">
+      <div className="flex min-w-0 items-center gap-3 pr-8">
         <div
           onClick={(e) => {
             e.stopPropagation();
             navigate(`/user/${author._id}`);
           }}
-          className="flex items-center gap-1 cursor-pointer"
+          className="flex min-w-0 cursor-pointer items-center gap-2"
         >
           <img
             src={author.profilePicture}
             alt="pic"
-            className="w-10 h-11 rounded-full border border-slate-200 object-cover"
+            className="h-10 w-10 rounded-full border border-slate-200 object-cover"
           />
-          <p className="font-semibold text-slate-900 truncate text-base sm:text-lg">
+          <p className="truncate text-sm font-semibold text-slate-900 sm:text-base">
             {author.username}
           </p>
         </div>
-        <p className="text-xs text-slate-500 sm:text-sm">
-          {timeAgo(createdAt)}
-        </p>
+        <p className="shrink-0 text-xs text-slate-500">{timeAgo(createdAt)}</p>
         {createdAt !== updatedAt && (
-          <p className="text-xs text-slate-500 sm:text-sm">(Edited)</p>
+          <p className="shrink-0 text-xs text-slate-500">(Edited)</p>
         )}
       </div>
 
@@ -87,24 +85,22 @@ const UserPostCard = ({ post, onDeletePost }: UserPostsProps) => {
 
       <div
         onClick={(e) => e.stopPropagation()}
-        className="absolute text-lg top-5 right-5 cursor-pointer"
+        className="absolute top-3 right-3 cursor-pointer text-lg text-slate-500"
       >
         <MoreOptionsDropdown post={post} onDeleteHandler={onDeleteHandler} />
       </div>
 
-      <div className="border-t border-slate-200 mt-2">
-        <div className="flex items-center justify-start gap-3">
-          <button className="group flex items-center justify-center gap-2 rounded-lg py-2 px-5 cursor-pointer transition-colors hover:bg-blue-50">
-            <span className="text-sm font-medium text-slate-600 group-hover:text-blue-500">
-              {commentsCount}
-            </span>
-            <FaRegCommentDots className="text-lg text-slate-600 transition-colors group-hover:text-blue-500" />{" "}
+      <div className="mt-1 border-t border-slate-200">
+        <div className="flex items-center gap-1">
+          <button className="group flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1.5 text-sm text-slate-600 transition-colors hover:bg-blue-50 hover:text-blue-600">
+            <FaRegCommentDots className="text-base" />
+            <span className="font-medium">{commentsCount}</span>
             <span>comments</span>
           </button>
 
           <button
             onClick={ontoggleLike}
-            className="group flex items-center justify-center gap-2 rounded-lg py-2 px-2 cursor-pointer transition-colors hover:bg-blue-50"
+            className="group flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1.5 transition-colors hover:bg-blue-50"
           >
             {isLike ? (
               <FaHeart className="text-lg text-blue-600" />

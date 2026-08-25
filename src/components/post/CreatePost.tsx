@@ -46,15 +46,15 @@ function CreatePost() {
   return (
     <Root>
       <Trigger asChild>
-        <button className="flex cursor-pointer items-center gap-1 rounded-md border px-4 py-1.5 transition hover:shadow-md">
-          <IoCreateOutline />
+        <button className="flex h-9 cursor-pointer items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600">
+          <IoCreateOutline className="text-base" />
           <span className="hidden sm:inline">Create Post</span>
         </button>
       </Trigger>
 
       <Portal>
         <Overlay className="fixed inset-0 z-40 bg-black/50" />
-        <Content className="fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-full max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
+        <Content className="fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-white p-5 shadow-xl">
           <div className="flex items-center justify-between">
             <Title className="text-xl font-semibold text-slate-900">
               Create Post

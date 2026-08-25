@@ -19,9 +19,9 @@ function BackButton({ path }: BackButtonProps) {
   return (
     <button
       onClick={handleBack}
-      className="flex items-center gap-1 mb-4 mx-5 rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+    className="mx-3 mb-2 flex items-center gap-1 rounded-md p-1.5 text-slate-700 hover:bg-gray-100"
     >
-      <IoArrowBack size={22} /> <h1 className="text-xl font-semibold">Back</h1>
+      <IoArrowBack size={18} /> <span className="text-sm font-semibold">Back</span>
     </button>
   );
 }

@@ -10,34 +10,40 @@ import { useContext } from "react";
 
 interface ConnectionItemProps {
   connection: UserConnection;
+  profileUserId: string;
   onClose: () => void;
 }
 
-const ConnectionItem = ({ connection, onClose }: ConnectionItemProps) => {
+const ConnectionItem = ({
+  connection,
+  profileUserId,
+  onClose,
+}: ConnectionItemProps) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { userConnectionRemoved } = useContext(UserContext);
+  const { user, userConnectionRemoved } = useContext(UserContext);
   const { username, firstname, lastname, profilePicture } = connection.user;
 
   const handleClick = () => {
     onClose();
-    navigate(`/user/${connection._id}`);
+    navigate(`/user/${connection.user._id}`);
   };
 
   const mutation = useMutation({
     mutationFn: deleteConnection,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["connections", connection._id],
+        queryKey: ["connections", profileUserId],
       });
-      userConnectionRemoved();
+      if (user?._id === profileUserId) {
+        userConnectionRemoved();
+      }
       notifySuccess("Connection removed successfully.");
     },
   });
 
   return (
     <div className="w-full flex justify-between items-center gap-3 rounded-lg border border-gray-200 bg-white shadow-sm">
-      {" "}
       <button
         onClick={handleClick}
         className="flex w-full items-center gap-3 px-5 py-3 transition-colors hover:bg-gray-50 cursor-pointer"

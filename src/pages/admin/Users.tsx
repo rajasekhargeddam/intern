@@ -11,21 +11,23 @@ const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [apiStatus, setApiStatus] = useState("");
 
-  useEffect(() => {
-    const fetchUsersData = async () => {
+  const fetchUsersData = async (showLoading = true) => {
+    if (showLoading) {
       setApiStatus(api_status.loading);
+    }
 
-      try {
-        const usersData = await fetchAdminUsers();
+    try {
+      const usersData = await fetchAdminUsers();
 
-        setUsers(usersData);
-        setApiStatus(api_status.success);
-      } catch (err) {
-        console.error(err);
-        setApiStatus(api_status.failed);
-      }
-    };
+      setUsers(usersData);
+      setApiStatus(api_status.success);
+    } catch (err) {
+      console.error(err);
+      setApiStatus(api_status.failed);
+    }
+  };
 
+  useEffect(() => {
     fetchUsersData();
   }, []);
 
@@ -57,16 +59,16 @@ const Users = () => {
 
   return (
     <section className="mx-auto max-w-6xl">
-      <div className="mb-8 flex flex-col md:flex-row md:justify-between">
+      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
+          <h1 className="text-xl font-semibold text-gray-900">User Management</h1>
 
-          <p className="mt-2 text-gray-500">
+          <p className="mt-1 text-sm text-gray-500">
             View and manage all registered users.
           </p>
         </div>
         <div>
-          <CreateUserDialog />
+          <CreateUserDialog onCreated={() => fetchUsersData(false)} />
         </div>
       </div>
 

@@ -44,7 +44,7 @@ const NotificationRequest = ({ request }: NotificationRequestProps) => {
   const { sender } = request;
 
   return (
-    <div className="flex items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm transition hover:shadow-md">
+    <div className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-white px-3 py-2.5">
       <button
         onClick={() => navigate(`/user/${sender._id}`)}
         className="flex items-center gap-3 cursor-pointer"
@@ -52,7 +52,7 @@ const NotificationRequest = ({ request }: NotificationRequestProps) => {
         <img
           src={sender.profilePicture}
           alt={sender.firstname}
-          className="h-12 w-12 rounded-full object-cover"
+          className="h-10 w-10 rounded-full object-cover"
         />
 
         <div className="text-left">
@@ -68,7 +68,7 @@ const NotificationRequest = ({ request }: NotificationRequestProps) => {
         <button
           onClick={() => acceptMutation.mutate(request._id)}
           disabled={acceptMutation.isPending}
-          className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700 disabled:opacity-60 cursor-pointer"
+          className="rounded-md bg-green-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-green-700 disabled:opacity-60"
         >
           {acceptMutation.isPending ? "Accepting..." : "Accept"}
         </button>
@@ -76,7 +76,7 @@ const NotificationRequest = ({ request }: NotificationRequestProps) => {
         <button
           onClick={() => rejectMutation.mutate(request._id)}
           disabled={rejectMutation.isPending}
-          className="rounded-lg border border-red-500 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-60 cursor-pointer"
+          className="rounded-md border border-red-500 px-3 py-1.5 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-60"
         >
           {rejectMutation.isPending ? "Rejecting..." : "Reject"}
         </button>

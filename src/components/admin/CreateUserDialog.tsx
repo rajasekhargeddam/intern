@@ -14,7 +14,7 @@ import { IoClose } from "react-icons/io5";
 import type { SignupRequest } from "../../types";
 import { createAdminUser } from "../../services/admin";
 
-function CreateUserDialog() {
+function CreateUserDialog({ onCreated }: { onCreated: () => void }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +26,7 @@ function CreateUserDialog() {
   const onSubmit = async () => {
     setError("");
 
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !confirmPassword) {
       setError("Please fill all fields.");
       return;
     }
@@ -48,6 +48,7 @@ function CreateUserDialog() {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+      onCreated();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {

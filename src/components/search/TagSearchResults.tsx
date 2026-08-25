@@ -77,7 +77,7 @@ const TagSearchResults = ({
   if (selectedTag) {
     return (
       <div>
-        <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 pt-4 sm:w-3/4 sm:px-6 lg:w-3/5">
+        <div className="mx-auto flex w-full max-w-3xl items-center gap-3 px-4 pt-3 sm:px-6">
           <button
             type="button"
             onClick={() => onSelectTag(null)}
@@ -95,7 +95,7 @@ const TagSearchResults = ({
 
   if (isLoading) {
     return (
-      <ul className="mx-auto mt-6 flex w-full max-w-6xl list-none flex-col gap-3 px-4 sm:w-3/4 sm:px-6 lg:w-3/5">
+      <ul className="mx-auto mt-3 flex w-full max-w-3xl list-none flex-col gap-2 px-4 sm:px-6">
         {Array.from({ length: 6 }).map((_, index) => (
           <li
             key={index}
@@ -120,7 +120,7 @@ const TagSearchResults = ({
 
   return (
     <>
-      <ul className="mx-auto mt-6 flex w-full max-w-6xl list-none flex-col gap-3 px-4 sm:w-3/4 sm:px-6 lg:w-3/5">
+      <ul className="mx-auto mt-3 flex w-full max-w-3xl list-none flex-col gap-2 px-4 sm:px-6">
         {tags.map((item) => (
           <li key={item.tag}>
             <button

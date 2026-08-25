@@ -48,13 +48,13 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-slate-50 to-slate-100 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-slate-900 mb-2 text-center">
+        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h1 className="mb-1 text-center text-2xl font-bold text-slate-900">
             Welcome Back
           </h1>
-          <p className="text-slate-500 text-center mb-8">
+          <p className="mb-6 text-center text-sm text-slate-500">
             Sign in to your account to continue
           </p>
 
@@ -72,7 +72,7 @@ const Login = () => {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
-                className="w-full px-4 py-2 rounded-lg border border-slate-300 outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 transition-all"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
                 disabled={isLoading}
               />
             </div>
@@ -90,7 +90,7 @@ const Login = () => {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-2 rounded-lg border border-slate-300 outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 transition-all"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
                 disabled={isLoading}
               />
             </div>
@@ -98,7 +98,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-indigo-600 text-white font-medium py-2 rounded-lg hover:bg-indigo-700 transition-all disabled:bg-slate-400 disabled:cursor-not-allowed mt-6"
+              className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-400"
             >
               {isLoading ? "Signing in..." : "Sign In"}
             </button>
@@ -114,7 +114,7 @@ const Login = () => {
             Don't have an account?{" "}
             <Link
               to="/auth/signup"
-              className="text-indigo-600 font-medium hover:underline"
+              className="font-medium text-blue-600 hover:underline"
             >
               Sign up
             </Link>

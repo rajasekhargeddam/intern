@@ -75,14 +75,14 @@ const ProfileHeader = ({ user, mode, onUpdateUser }: ProfileHeaderProps) => {
       <img
         src={profilePicture}
         alt="profile"
-        className="h-32 w-32 rounded-full border object-cover sm:h-44 sm:w-44 md:h-40 md:w-40"
+        className="h-28 w-28 rounded-full border object-cover sm:h-32 sm:w-32"
       />
 
       <div className="flex-1">
         <h1 className="mb-0 pb-0 text-2xl font-light sm:text-3xl">{username}</h1>
 
         {firstname && (
-          <h2 className="mt-6 font-semibold text-lg">{`${firstname.toLowerCase()} ${lastname ? lastname.toLowerCase() : ""}`}</h2>
+          <h2 className="mt-2 text-base font-semibold">{`${firstname.toLowerCase()} ${lastname ? lastname.toLowerCase() : ""}`}</h2>
         )}
 
         <div className="flex justify-center items-center gap-4 mt-3">

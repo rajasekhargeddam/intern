@@ -11,6 +11,7 @@ import { getUserChat } from "../../services/chat";
 import type { Chat as ChatType } from "../../types";
 import ChatMessage from "./ChatMessage";
 import UserPresenceStatus from "./UserPresenceStatus";
+import OnlineAvatar from "./OnlineAvatar";
 
 const Chat = () => {
   const { userId: targetUserId } = useParams();
@@ -59,7 +60,7 @@ const Chat = () => {
       socketRef.current = null;
     };
   }, [userId, targetUserId, queryClient]);
-  
+
   const {
     data: chatData,
     isLoading,
@@ -101,7 +102,11 @@ const Chat = () => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex h-full items-center justify-center text-sm text-slate-500">
+        Loading conversation...
+      </div>
+    );
   }
 
   if (isError) {
@@ -110,17 +115,23 @@ const Chat = () => {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden bg-white">
-      {/* Chat Header */}
-      <div className="border-b w-full p-4 font-semibold flex items-center shrink-0 bg-white">
+      <div className="flex shrink-0 items-center gap-2 border-b border-slate-200 px-3 py-2.5">
         <button
           onClick={() => navigate("/chat")}
-          className="p-2 rounded-md hover:bg-slate-100"
+          className="flex h-8 w-8 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 sm:hidden"
           aria-label="Back to conversations"
         >
           <HiChevronLeft className="text-xl" />
         </button>
-        <div className="min-w-0">
-          <p className="truncate">{chatData?.targetUser.username}</p>
+        <OnlineAvatar
+          src={chatData?.targetUser.profilePicture}
+          alt={chatData?.targetUser.username ?? "User"}
+          isOnline={chatData?.targetUser.isOnline}
+        />
+        <div className="min-w-0 leading-tight">
+          <p className="truncate text-sm font-semibold text-slate-900">
+            {chatData?.targetUser.username}
+          </p>
           <UserPresenceStatus
             isOnline={chatData?.targetUser.isOnline}
             lastSeen={chatData?.targetUser.lastSeen}
@@ -128,32 +139,29 @@ const Chat = () => {
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3 bg-linear-to-b from-white to-slate-50">
-        <div className="max-w-3xl mx-auto space-y-3 pb-10">
+      <div className="min-h-0 flex-1 overflow-y-auto bg-slate-50 px-3 py-3 sm:px-4">
+        <div className="mx-auto flex w-full max-w-3xl flex-col gap-2">
           {chatData?.messages.map((msg) => (
             <ChatMessage key={msg._id} msg={msg} userId={userId!} />
           ))}
-
           <div ref={messagesEndRef} />
         </div>
       </div>
 
-      {/* Input */}
-      <div className="mt-auto border-t w-full p-3 bg-white shrink-0">
-        <div className="max-w-3xl mx-auto flex items-end gap-3">
+      <div className="shrink-0 border-t border-slate-200 bg-white px-3 py-2 sm:px-4">
+        <div className="mx-auto flex w-full max-w-3xl items-end gap-2">
           <textarea
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             rows={1}
             placeholder="Type a message..."
-            className="flex-1 min-w-0 resize-none rounded-xl border px-4 py-2 outline-none focus:ring-1 focus:ring-blue-300 max-h-18 overflow-y-auto leading-6"
+            className="max-h-24 min-h-10 min-w-0 flex-1 resize-none rounded-lg border border-slate-200 px-3 py-2 text-sm leading-5 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200"
           />
 
           <button
             onClick={sendMessageHandler}
-            className="bg-blue-600 text-white px-4 py-2 rounded-xl shadow-md hover:bg-blue-700"
+            className="h-10 shrink-0 rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition hover:bg-blue-700"
             aria-label="Send message"
           >
             Send

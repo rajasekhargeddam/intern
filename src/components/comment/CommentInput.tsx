@@ -28,21 +28,21 @@ const CommentInput = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-start gap-3 py-4">
+    <form onSubmit={handleSubmit} className="flex items-center gap-2 py-3">
       <img
         src="https://static.vecteezy.com/system/resources/thumbnails/067/451/114/small/avatar-default-user-profile-icon-gender-neutral-silhouette-simple-flat-profile-picture-symbol-user-account-dp-sign-best-for-social-media-icons-web-and-app-design-illustration-vector.jpg"
         alt="profile"
-        className="h-10 w-10 rounded-full object-cover"
+        className="h-8 w-8 rounded-full object-cover"
       />
 
-      <div className="flex-1 border-b border-slate-300 focus-within:border-blue-600 transition-colors">
+      <div className="flex-1 border-b border-slate-300 transition-colors focus-within:border-blue-600">
         <input
           type="text"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={placeholder}
           maxLength={1000}
-          className="w-full bg-transparent py-2 outline-none placeholder:text-slate-500"
+          className="w-full bg-transparent py-1.5 text-sm outline-none placeholder:text-slate-500"
         />
       </div>
 

@@ -10,11 +10,11 @@ const OnlineAvatar = ({ src, alt, isOnline }: OnlineAvatarProps) => {
       <img
         src={src}
         alt={alt}
-        className="w-12 h-12 rounded-full object-cover"
+        className="h-10 w-10 rounded-full object-cover"
       />
       {isOnline && (
         <span
-          className="absolute top-0 right-0 h-3.5 w-3.5 rounded-full bg-green-500 ring-2 ring-white"
+          className="absolute right-0 top-0 h-2.5 w-2.5 rounded-full bg-green-500 ring-2 ring-white"
           aria-label="Online"
         />
       )}

@@ -57,10 +57,10 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-slate-50 to-slate-100 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-xl font-bold text-slate-900 mb-2 text-center">
+        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h1 className="mb-4 text-center text-xl font-bold text-slate-900">
             Create account
           </h1>
 
@@ -78,7 +78,7 @@ const SignUp = () => {
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
                 placeholder="Enter Unique Username"
-                className="w-full px-4 py-2 rounded-lg border border-slate-300 outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 transition-all"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
                 disabled={isLoading}
               />
             </div>
@@ -96,7 +96,7 @@ const SignUp = () => {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@example.com"
-                className="w-full px-4 py-2 rounded-lg border border-slate-300 outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 transition-all"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
                 disabled={isLoading}
               />
             </div>
@@ -114,7 +114,7 @@ const SignUp = () => {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-2 rounded-lg border border-slate-300 outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 transition-all"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
                 disabled={isLoading}
               />
             </div>
@@ -133,7 +133,7 @@ const SignUp = () => {
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-2 rounded-lg border border-slate-300 outline-none focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 transition-all"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
                   disabled={isLoading}
                 />
                 <button
@@ -151,7 +151,7 @@ const SignUp = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-indigo-600 text-white font-medium py-2 rounded-lg hover:bg-indigo-700 transition-all disabled:bg-slate-400 disabled:cursor-not-allowed mt-6"
+              className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-400"
             >
               {isLoading ? "Creating account..." : "Create Account"}
             </button>
@@ -167,7 +167,7 @@ const SignUp = () => {
             Have an account?{" "}
             <Link
               to="/auth/login"
-              className="text-indigo-600 font-medium hover:underline"
+              className="font-medium text-blue-600 hover:underline"
             >
               Login
             </Link>

@@ -77,11 +77,11 @@ const UserFeed = () => {
 
   return (
     <>
-      <div className="mx-auto w-full max-w-6xl px-4 pt-6 sm:w-3/4 sm:px-6 lg:w-3/5">
-        <h1 className="text-xl font-semibold text-slate-900 sm:text-2xl">
+      <div className="mx-auto w-full max-w-3xl px-4 pt-4 sm:px-6">
+        <h1 className="text-lg font-semibold text-slate-900 sm:text-xl">
           Discover People
         </h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-0.5 text-sm text-slate-500">
           Find and connect with users you haven&apos;t connected with yet.
         </p>
       </div>

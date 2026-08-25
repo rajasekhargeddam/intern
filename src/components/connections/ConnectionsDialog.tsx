@@ -29,7 +29,6 @@ const ConnectionsDialog = ({
     enabled: open,
   });
 
-
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -66,6 +65,7 @@ const ConnectionsDialog = ({
                   <ConnectionItem
                     key={connection._id}
                     connection={connection}
+                    profileUserId={userId}
                     onClose={() => onOpenChange(false)}
                   />
                 ))}

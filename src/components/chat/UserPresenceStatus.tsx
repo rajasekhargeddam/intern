@@ -10,7 +10,7 @@ const UserPresenceStatus = ({
   lastSeen,
 }: UserPresenceStatusProps) => {
   if (isOnline) {
-    return <span className="text-xs font-medium text-green-600">Online</span>;
+    return <span className="text-[11px] font-medium leading-none text-green-600">Online</span>;
   }
 
   const lastSeenLabel = formatLastSeen(lastSeen);
@@ -19,7 +19,7 @@ const UserPresenceStatus = ({
     return null;
   }
 
-  return <span className="text-xs text-slate-500">{lastSeenLabel}</span>;
+  return <span className="text-[11px] leading-none text-slate-500">{lastSeenLabel}</span>;
 };
 
 export default UserPresenceStatus;

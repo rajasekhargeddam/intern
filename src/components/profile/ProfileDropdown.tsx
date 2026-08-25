@@ -32,9 +32,12 @@ function ProfileDropdown() {
   return (
     <Root>
       <Trigger asChild>
-        <button type="button" className="w-6 rounded-full cursor-pointer">
+        <button
+          type="button"
+          className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-slate-200"
+        >
           <img
-            className="w-full"
+            className="h-full w-full object-cover"
             src="https://static.vecteezy.com/system/resources/thumbnails/067/451/114/small/avatar-default-user-profile-icon-gender-neutral-silhouette-simple-flat-profile-picture-symbol-user-account-dp-sign-best-for-social-media-icons-web-and-app-design-illustration-vector.jpg"
             alt="profile"
           />

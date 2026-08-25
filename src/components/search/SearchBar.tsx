@@ -30,12 +30,12 @@ const SearchBar = ({ value, onChange, onSubmit }: SearchBarProps) => {
         spellCheck={false}
         onChange={(event) => onChange(event.target.value)}
         placeholder="Search posts, people, or #tags"
-        className="min-w-0 flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 sm:text-base"
+        className="min-h-10 min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
       />
       <button
         type="submit"
         aria-label="Submit search"
-        className="shrink-0 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700 active:scale-95 sm:px-5"
+        className="h-10 shrink-0 rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition hover:bg-blue-700"
       >
         Search
       </button>

@@ -15,19 +15,19 @@ const UserCard = ({
   const displayName = [user.firstname, user.lastname].filter(Boolean).join(" ");
 
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <Link
         to={`/user/${user._id}`}
-        className="flex min-w-0 flex-1 items-center gap-4 transition-opacity hover:opacity-90"
+        className="flex min-w-0 flex-1 items-center gap-3 transition-opacity hover:opacity-90"
       >
         <img
           src={user.profilePicture}
           alt={user.username}
-          className="h-14 w-14 shrink-0 rounded-full border border-slate-200 object-cover sm:h-16 sm:w-16"
+          className="h-11 w-11 shrink-0 rounded-full border border-slate-200 object-cover"
         />
 
         <div className="min-w-0">
-          <p className="truncate text-base font-semibold text-slate-900 sm:text-lg">
+          <p className="truncate text-sm font-semibold text-slate-900 sm:text-base">
             {user.username}
           </p>
 

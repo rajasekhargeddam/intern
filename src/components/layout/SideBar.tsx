@@ -1,96 +1,39 @@
 import { NavLink } from "react-router-dom";
 
+const navItems = [
+  { to: "/", label: "User Posts", icon: "✦" },
+  { to: "/discover", label: "Discover People", icon: "✦" },
+  { to: "/search", label: "Search", icon: "⌕" },
+  { to: "/static-posts", label: "Static Posts", icon: "✧" },
+];
+
 const SideBar = () => {
   return (
-    <ul className="space-y-2">
-      <li>
-        <NavLink to="/">
-          {({ isActive }) => (
-            <div
-              className={`group flex items-center gap-3 rounded-xl px-4 py-1 text-sm font-medium transition-all duration-200 ${
-                isActive
-                  ? "bg-linear-to-r from-blue-600 to-indigo-500 text-white shadow-lg shadow-blue-500/30"
-                  : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-              }`}
-            >
-              <span
-                className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm ${
-                  isActive ? "bg-white/20" : "bg-blue-50 text-blue-600"
+    <ul className="space-y-1">
+      {navItems.map(({ to, label, icon }) => (
+        <li key={to}>
+          <NavLink to={to} end={to === "/"}>
+            {({ isActive }) => (
+              <div
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${
+                  isActive
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                 }`}
               >
-                ✦
-              </span>
-              <span>User Posts</span>
-            </div>
-          )}
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/discover">
-          {({ isActive }) => (
-            <div
-              className={`group flex items-center gap-3 rounded-xl px-4 py-1 text-sm font-medium transition-all duration-200 ${
-                isActive
-                  ? "bg-linear-to-r from-blue-600 to-indigo-500 text-white shadow-lg shadow-blue-500/30"
-                  : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-              }`}
-            >
-              <span
-                className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm ${
-                  isActive ? "bg-white/20" : "bg-blue-50 text-blue-600"
-                }`}
-              >
-                ✦
-              </span>
-              <span>Discover People</span>
-            </div>
-          )}
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/search">
-          {({ isActive }) => (
-            <div
-              className={`group flex items-center gap-3 rounded-xl px-4 py-1 text-sm font-medium transition-all duration-200 ${
-                isActive
-                  ? "bg-linear-to-r from-blue-600 to-indigo-500 text-white shadow-lg shadow-blue-500/30"
-                  : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-              }`}
-            >
-              <span
-                className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm ${
-                  isActive ? "bg-white/20" : "bg-blue-50 text-blue-600"
-                }`}
-              >
-                ⌕
-              </span>
-              <span>Search</span>
-            </div>
-          )}
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/static-posts">
-          {({ isActive }) => (
-            <div
-              className={`group flex items-center gap-3 rounded-xl px-4 py-1 text-sm font-medium transition-all duration-200 ${
-                isActive
-                  ? "bg-linear-to-r from-blue-600 to-indigo-500 text-white shadow-lg shadow-blue-500/30"
-                  : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-              }`}
-            >
-              <span
-                className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm ${
-                  isActive ? "bg-white/20" : "bg-blue-50 text-blue-600"
-                }`}
-              >
-                ✧
-              </span>
-              <span>Static Posts</span>
-            </div>
-          )}
-        </NavLink>
-      </li>
+                <span
+                  className={`flex h-7 w-7 items-center justify-center rounded-md text-sm ${
+                    isActive ? "bg-white/20" : "bg-blue-50 text-blue-600"
+                  }`}
+                >
+                  {icon}
+                </span>
+                <span className="truncate">{label}</span>
+              </div>
+            )}
+          </NavLink>
+        </li>
+      ))}
     </ul>
   );
 };

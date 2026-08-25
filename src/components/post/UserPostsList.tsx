@@ -13,11 +13,11 @@ const UserPostsList = ({ posts, onDeletePost }: UserPostsListProps) => {
   return posts.length === 0 ? (
     <NoPostsView />
   ) : (
-    <ul className="w-full sm:w-3/4 lg:w-3/5 max-w-6xl mx-auto flex flex-col gap-6 px-4 py-8 sm:px-6 list-none">
+    <ul className="mx-auto flex w-full max-w-3xl list-none flex-col gap-4 px-4 py-4 sm:px-6">
       {posts.map((post) => (
         <li
           key={post._id}
-          className="w-full bg-white rounded-lg border border-slate-200/80 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl overflow-hidden"
+          className="w-full overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
           onClick={() => navigate(`/posts/${post._id}`)}
         >
           <UserPostCard post={post} onDeletePost={onDeletePost} />

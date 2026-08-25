@@ -59,15 +59,15 @@ const Search = () => {
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 pt-6 sm:w-3/4 sm:px-6 lg:w-3/5">
-      <h1 className="text-xl font-semibold text-slate-900 sm:text-2xl">
+    <div className="mx-auto w-full max-w-3xl px-4 pt-4 sm:px-6">
+      <h1 className="text-lg font-semibold text-slate-900 sm:text-xl">
         Search
       </h1>
-      <p className="mt-1 text-sm text-slate-500">
+      <p className="mt-0.5 text-sm text-slate-500">
         Search posts, people, and hashtags.
       </p>
 
-      <div className="mt-5">
+      <div className="mt-3">
         <SearchBar
           value={searchInput}
           onChange={setSearchInput}
@@ -77,7 +77,7 @@ const Search = () => {
       </div>
 
       {!searchQuery ? (
-        <p className="mt-10 text-center text-sm text-slate-500">
+        <p className="mt-6 text-center text-sm text-slate-500">
           Type a query and press Enter or Search. Requests are not sent until
           you submit.
         </p>
@@ -88,7 +88,7 @@ const Search = () => {
               id="search-panel-posts"
               role="tabpanel"
               aria-labelledby="search-tab-posts"
-              className="-mx-4 pb-8 sm:-mx-6"
+              className="pb-4"
             >
               <PostSearchResults searchQuery={searchQuery} />
             </div>
@@ -99,7 +99,7 @@ const Search = () => {
               id="search-panel-people"
               role="tabpanel"
               aria-labelledby="search-tab-people"
-              className="-mx-4 pb-8 sm:-mx-6"
+              className="pb-4"
             >
               <PeopleSearchResults searchQuery={searchQuery} />
             </div>
@@ -110,7 +110,7 @@ const Search = () => {
               id="search-panel-tags"
               role="tabpanel"
               aria-labelledby="search-tab-tags"
-              className="-mx-4 pb-8 sm:-mx-6"
+              className="pb-4"
             >
               <TagSearchResults
                 searchQuery={searchQuery}

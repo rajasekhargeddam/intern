@@ -32,22 +32,29 @@ const ChatUsers = () => {
   });
 
   if (chatLoading || connectionLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex h-full items-center justify-center text-sm text-slate-500">
+        Loading...
+      </div>
+    );
   }
 
   if (chatError || connectionError) {
-    return <div>Error loading users.</div>;
+    return (
+      <div className="p-4 text-sm text-red-600">Error loading users.</div>
+    );
   }
 
   return (
-    <aside className="w-full h-full border-r bg-white flex flex-col">
-      <h2 className="p-4 text-xl font-semibold border-b shrink-0">Chats</h2>
+    <aside className="flex h-full min-h-0 w-full flex-col bg-white">
+      <h2 className="shrink-0 border-b border-slate-200 px-4 py-3 text-base font-semibold">
+        Chats
+      </h2>
 
-      <div className="flex-1 min-h-0 overflow-y-auto">
-        {/* Chat Users Section */}
+      <div className="min-h-0 flex-1 overflow-y-auto">
         {chatUsers.length > 0 && (
           <>
-            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-gray-50">
+            <div className="bg-slate-50 px-4 py-1.5 text-[11px] font-semibold tracking-wide text-slate-500">
               ACTIVE CHATS
             </div>
             {chatUsers.map((chat: Chat) => (
@@ -55,8 +62,8 @@ const ChatUsers = () => {
                 key={chat._id}
                 to={`/chat/${chat.targetUser._id}`}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 p-4 hover:bg-gray-100 transition ${
-                    isActive ? "bg-gray-200" : ""
+                  `flex items-center gap-3 px-3 py-2.5 transition hover:bg-slate-50 ${
+                    isActive ? "bg-blue-50" : ""
                   }`
                 }
               >
@@ -66,12 +73,12 @@ const ChatUsers = () => {
                   isOnline={chat.targetUser.isOnline}
                 />
 
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium truncate">
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium text-slate-900">
                     {chat.targetUser.username}
                   </div>
                   {chat.lastMessage?.text && (
-                    <div className="text-xs text-slate-500 truncate">
+                    <div className="truncate text-xs text-slate-500">
                       {chat.lastMessage.text}
                     </div>
                   )}
@@ -81,30 +88,31 @@ const ChatUsers = () => {
           </>
         )}
 
-        {/* Connection Users Section */}
         {connectionUsers.length > 0 && (
           <>
-            <div className="px-4 py-2 text-xs font-semibold text-gray-500 bg-gray-50">
+            <div className="bg-slate-50 px-4 py-1.5 text-[11px] font-semibold tracking-wide text-slate-500">
               AVAILABLE CONNECTIONS
             </div>
-            {connectionUsers.map((user: User) => (
+            {connectionUsers.map((chatUser: User) => (
               <NavLink
-                key={user._id}
-                to={`/chat/${user._id}`}
+                key={chatUser._id}
+                to={`/chat/${chatUser._id}`}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 p-4 hover:bg-gray-100 transition ${
-                    isActive ? "bg-gray-200" : ""
+                  `flex items-center gap-3 px-3 py-2.5 transition hover:bg-slate-50 ${
+                    isActive ? "bg-blue-50" : ""
                   }`
                 }
               >
                 <OnlineAvatar
-                  src={user.profilePicture}
-                  alt={user.username}
-                  isOnline={user.isOnline}
+                  src={chatUser.profilePicture}
+                  alt={chatUser.username}
+                  isOnline={chatUser.isOnline}
                 />
 
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium truncate">{user.username}</div>
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium text-slate-900">
+                    {chatUser.username}
+                  </div>
                 </div>
               </NavLink>
             ))}
@@ -112,7 +120,7 @@ const ChatUsers = () => {
         )}
 
         {chatUsers.length === 0 && connectionUsers.length === 0 && (
-          <div className="p-4 text-center text-gray-500">
+          <div className="px-4 py-8 text-center text-sm text-slate-500">
             No chats or available connections
           </div>
         )}

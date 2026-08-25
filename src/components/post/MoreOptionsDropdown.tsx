@@ -54,7 +54,7 @@ const MoreOptionsDropdown = ({
     <>
       <Root>
         <Trigger asChild>
-          <button className="cursor-pointer">
+          <button className="rounded-md p-1 text-slate-500 hover:bg-slate-100">
             <MdMoreVert />
           </button>
         </Trigger>

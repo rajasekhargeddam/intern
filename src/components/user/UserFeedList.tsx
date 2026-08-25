@@ -13,13 +13,13 @@ const UserFeedList = ({ users, invalidateQueryKeys }: UserFeedListProps) => {
   }
 
   return (
-    <ul className="mx-auto flex w-full max-w-6xl list-none flex-col gap-6 px-4 py-8 sm:w-3/4 sm:px-6 lg:w-3/5">
+    <ul className="mx-auto flex w-full max-w-3xl list-none flex-col gap-3 px-4 py-4 sm:px-6">
       {users.map((user) => (
         <li
           key={user._id}
-          className="w-full overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
+          className="w-full overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm"
         >
-          <div className="px-4 py-4 sm:px-6 sm:py-5">
+          <div className="px-4 py-3">
             <UserCard user={user} invalidateQueryKeys={invalidateQueryKeys} />
           </div>
         </li>

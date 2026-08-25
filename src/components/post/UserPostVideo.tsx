@@ -14,7 +14,7 @@ const UserPostVideo = ({ video }: Props) => {
         controls
         preload="metadata"
         className="w-full h-full"
-        style={{ maxHeight: "500px" }}
+        style={{ maxHeight: "360px" }}
       />
     </div>
   );

@@ -1,5 +1,8 @@
 export const SEARCH_STALE_TIME = 30_000;
 
+export const searchSuggestionsQueryKey = (query: string) =>
+  ["searchSuggestions", query] as const;
+
 export const searchPostsQueryKey = (query: string) =>
   ["search-posts", query] as const;
 

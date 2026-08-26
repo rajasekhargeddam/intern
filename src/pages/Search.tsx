@@ -54,6 +54,11 @@ const Search = () => {
     setParams({ q: nextQuery, tag: null });
   };
 
+  const selectSuggestion = (suggestion: string) => {
+    setSearchInput(suggestion);
+    setParams({ q: suggestion.trim(), tag: null });
+  };
+
   const changeTab = (tab: SearchTab) => {
     setParams({ tab, tag: tab === "tags" ? selectedTag : null });
   };
@@ -72,6 +77,7 @@ const Search = () => {
           value={searchInput}
           onChange={setSearchInput}
           onSubmit={submitSearch}
+          onSuggestionSelect={selectSuggestion}
         />
         <SearchTabs activeTab={activeTab} onChange={changeTab} />
       </div>

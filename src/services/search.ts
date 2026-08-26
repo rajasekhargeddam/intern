@@ -2,6 +2,28 @@ import { BASE_URL } from "../constants";
 import type { FetchPostsResponse } from "./posts";
 import type { FetchUserFeedResponse } from "./users";
 
+export interface FetchSearchSuggestionsResponse {
+  suggestions: string[];
+}
+
+export const fetchSearchSuggestions = async (
+  query: string,
+): Promise<FetchSearchSuggestionsResponse> => {
+  const params = new URLSearchParams({ q: query });
+
+  const response = await fetch(`${BASE_URL}/search/suggestions?${params}`, {
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch search suggestions");
+  }
+
+  return data;
+};
+
 export const fetchSearchPosts = async ({
   query,
   pageParam = 0,

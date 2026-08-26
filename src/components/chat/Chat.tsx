@@ -9,6 +9,7 @@ import { getSocket } from "../../utils/socket";
 import { UserContext } from "../../context/UserContext";
 import { getUserChat } from "../../services/chat";
 import type { Chat as ChatType } from "../../types";
+import { clearChatUnreadInCache } from "../../utils/chatUnread";
 import ChatMessage from "./ChatMessage";
 import UserPresenceStatus from "./UserPresenceStatus";
 import OnlineAvatar from "./OnlineAvatar";
@@ -27,6 +28,12 @@ const Chat = () => {
   const socketRef = useRef<ReturnType<typeof getSocket> | null>(null);
 
   useEffect(() => {
+    if (!targetUserId) return;
+
+    clearChatUnreadInCache(queryClient, targetUserId);
+  }, [targetUserId, queryClient]);
+
+  useEffect(() => {
     if (!userId || !targetUserId) return;
 
     const socket = getSocket();
@@ -37,8 +44,7 @@ const Chat = () => {
       targetUserId,
     });
 
-    socket.on("receiveMessage", (newChat) => {
-      console.log(newChat);
+    socket.on("receiveMessage", async (newChat) => {
       queryClient.setQueryData<ChatType>(["chat", targetUserId], (oldChat) => {
         if (!oldChat) return oldChat;
 
@@ -47,6 +53,12 @@ const Chat = () => {
           messages: [...oldChat.messages, newChat],
         };
       });
+
+      try {
+        await getUserChat(targetUserId);
+      } catch {
+        // Keep the new message visible even if marking read fails.
+      }
 
       queryClient.invalidateQueries({ queryKey: ["chatUsers"] });
     });
@@ -65,11 +77,18 @@ const Chat = () => {
     data: chatData,
     isLoading,
     isError,
+    isSuccess,
   } = useQuery<ChatType>({
     queryKey: ["chat", targetUserId],
     queryFn: () => getUserChat(targetUserId!),
     enabled: !!targetUserId,
   });
+
+  useEffect(() => {
+    if (!isSuccess) return;
+
+    queryClient.invalidateQueries({ queryKey: ["chatUsers"] });
+  }, [isSuccess, targetUserId, queryClient]);
 
   useEffect(() => {
     if (!chatData) return;

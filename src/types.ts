@@ -62,6 +62,7 @@ export interface Chat {
   targetUser: User;
   messages: Message[];
   lastMessage?: Message;
+  unreadCount?: number;
   updatedAt?: string;
 }
 

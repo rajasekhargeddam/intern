@@ -1,14 +1,16 @@
 import { NavLink } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getChatUsers, getChatConnectionUsers } from "../../services/chat";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import type { Chat, User } from "../../types";
 import useChatPresence from "../../hooks/useChatPresence";
+import { clearChatUnreadInCache } from "../../utils/chatUnread";
 import OnlineAvatar from "./OnlineAvatar";
 
 const ChatUsers = () => {
   const { user } = useContext(UserContext);
+  const queryClient = useQueryClient();
   useChatPresence();
 
   const {
@@ -57,34 +59,51 @@ const ChatUsers = () => {
             <div className="bg-slate-50 px-4 py-1.5 text-[11px] font-semibold tracking-wide text-slate-500">
               ACTIVE CHATS
             </div>
-            {chatUsers.map((chat: Chat) => (
-              <NavLink
-                key={chat._id}
-                to={`/chat/${chat.targetUser._id}`}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 px-3 py-2.5 transition hover:bg-slate-50 ${
-                    isActive ? "bg-blue-50" : ""
-                  }`
-                }
-              >
-                <OnlineAvatar
-                  src={chat.targetUser.profilePicture}
-                  alt={chat.targetUser.username}
-                  isOnline={chat.targetUser.isOnline}
-                />
+            {chatUsers.map((chat: Chat) => {
+              const unreadCount = chat.unreadCount ?? 0;
 
-                <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm font-medium text-slate-900">
-                    {chat.targetUser.username}
-                  </div>
-                  {chat.lastMessage?.text && (
-                    <div className="truncate text-xs text-slate-500">
-                      {chat.lastMessage.text}
-                    </div>
+              return (
+                <NavLink
+                  key={chat._id}
+                  to={`/chat/${chat.targetUser._id}`}
+                  onClick={() =>
+                    clearChatUnreadInCache(queryClient, chat.targetUser._id)
+                  }
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 px-3 py-2.5 transition hover:bg-slate-50 ${
+                      isActive ? "bg-blue-50" : ""
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <OnlineAvatar
+                        src={chat.targetUser.profilePicture}
+                        alt={chat.targetUser.username}
+                        isOnline={chat.targetUser.isOnline}
+                      />
+
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate text-sm font-medium text-slate-900">
+                          {chat.targetUser.username}
+                        </div>
+                        {chat.lastMessage?.text && (
+                          <div className="truncate text-xs text-slate-500">
+                            {chat.lastMessage.text}
+                          </div>
+                        )}
+                      </div>
+
+                      {unreadCount > 0 && !isActive && (
+                        <span className="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-blue-600 px-1.5 text-[11px] font-semibold text-white">
+                          {unreadCount > 99 ? "99+" : unreadCount}
+                        </span>
+                      )}
+                    </>
                   )}
-                </div>
-              </NavLink>
-            ))}
+                </NavLink>
+              );
+            })}
           </>
         )}
 

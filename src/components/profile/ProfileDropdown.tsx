@@ -38,7 +38,7 @@ function ProfileDropdown() {
         >
           <img
             className="h-full w-full object-cover"
-            src="https://static.vecteezy.com/system/resources/thumbnails/067/451/114/small/avatar-default-user-profile-icon-gender-neutral-silhouette-simple-flat-profile-picture-symbol-user-account-dp-sign-best-for-social-media-icons-web-and-app-design-illustration-vector.jpg"
+            src={user?.profilePicture}
             alt="profile"
           />
         </button>

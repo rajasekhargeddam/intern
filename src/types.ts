@@ -48,6 +48,7 @@ export interface SignupRequest {
   username: string;
   email: string;
   password: string;
+  otp: string;
 }
 
 export interface Message {

@@ -20,6 +20,27 @@ export const loginUser = async (loginData: LoginRequest): Promise<AuthSuccessRes
   return data;
 };
 
+export const sendOtp = async (
+  email: string,
+): Promise<{ success: boolean; message: string }> => {
+  const response = await fetch(`${BASE_URL}/auth/send-otp`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ email }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to send OTP");
+  }
+
+  return data;
+};
+
 export const signupUser = async (signupData: SignupRequest): Promise<AuthSuccessResponse> => {
   const response = await fetch(`${BASE_URL}/auth/signup`, {
     method: "POST",

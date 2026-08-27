@@ -11,6 +11,7 @@ import { getChatUsers } from "../../services/chat";
 import { RiMessengerLine } from "react-icons/ri";
 import type { Chat } from "../../types";
 import useNewChatMessage from "../../hooks/useNewChatMessage";
+import Logo from "./Logo";
 
 type HeaderProps = {
   sidebar: ReactNode;
@@ -49,19 +50,17 @@ const Header = ({ sidebar }: HeaderProps) => {
 
   return (
     <header className="sticky top-0 z-50 flex h-16 w-full items-center justify-between gap-3 border-b border-slate-200 bg-white px-3 sm:px-5">
-      <div className="flex min-w-0 items-center gap-2">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-3">
         <ToggleSideBar>{sidebar}</ToggleSideBar>
-        <p className="min-w-0 truncate text-sm font-semibold text-slate-900 sm:text-base">
-          <Link to="/" className="hover:text-blue-600">
-            Hello
-          </Link>
-          , {user?.username}
+        <Logo />
+        <span className="hidden min-w-0 truncate text-sm text-slate-500 sm:inline">
+          {user?.username}
           {adminTag && (
             <sup className="ml-1 text-[10px] font-medium uppercase text-blue-600">
               {user.role}
             </sup>
           )}
-        </p>
+        </span>
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <CreatePost />

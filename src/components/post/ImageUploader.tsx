@@ -1,4 +1,5 @@
 import { MdDeleteOutline } from "react-icons/md";
+import { HiOutlinePhotograph } from "react-icons/hi";
 
 type ImageUploaderProps = {
   images: File[];
@@ -15,7 +16,8 @@ function ImageUploader({
 }: ImageUploaderProps) {
   return (
     <div className="mt-4 flex flex-col gap-3">
-      <label className="text-sm font-medium text-slate-700">
+      <label className="flex items-center gap-1.5 text-sm font-medium text-slate-700">
+        <HiOutlinePhotograph size={16} aria-hidden className="text-slate-500" />
         Upload Images
       </label>
 

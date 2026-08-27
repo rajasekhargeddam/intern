@@ -8,6 +8,12 @@ import {
   Item,
   Separator,
 } from "@radix-ui/react-dropdown-menu";
+import {
+  HiOutlineUser,
+  HiOutlineHome,
+  HiOutlineShieldCheck,
+  HiOutlineLogout,
+} from "react-icons/hi";
 import { UserContext } from "../../context/UserContext";
 import { logoutUser } from "../../services/auth";
 
@@ -46,53 +52,67 @@ function ProfileDropdown() {
 
       <Portal>
         <Content
-          className="bg-white rounded-lg shadow-lg border p-2 w-48 z-60"
+          className="z-60 w-48 rounded-lg border bg-white p-2 shadow-lg"
           sideOffset={8}
         >
-          <Item className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer outline-none">
+          <Item className="cursor-pointer rounded outline-none hover:bg-gray-100">
             <NavLink
               to="/profile"
               className={({ isActive }) =>
-                isActive ? "text-blue-600 font-semibold" : ""
+                `flex items-center gap-2.5 px-3 py-2 text-sm ${
+                  isActive ? "font-semibold text-blue-600" : "text-slate-700"
+                }`
               }
             >
+              <HiOutlineUser size={16} aria-hidden className="shrink-0" />
               My Profile
             </NavLink>
           </Item>
 
           {user?.role === "admin" && (
             <>
-              <Item className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer outline-none">
+              <Item className="cursor-pointer rounded outline-none hover:bg-gray-100">
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
-                    isActive ? "text-blue-600 font-semibold" : ""
+                    `flex items-center gap-2.5 px-3 py-2 text-sm ${
+                      isActive ? "font-semibold text-blue-600" : "text-slate-700"
+                    }`
                   }
                 >
-                  user portal
+                  <HiOutlineHome size={16} aria-hidden className="shrink-0" />
+                  User Portal
                 </NavLink>
               </Item>
-              <Item className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer outline-non">
+              <Item className="cursor-pointer rounded outline-none hover:bg-gray-100">
                 <NavLink
                   to="/admin"
                   className={({ isActive }) =>
-                    isActive ? "text-blue-600 font-semibold" : ""
+                    `flex items-center gap-2.5 px-3 py-2 text-sm ${
+                      isActive ? "font-semibold text-blue-600" : "text-slate-700"
+                    }`
                   }
                 >
+                  <HiOutlineShieldCheck
+                    size={16}
+                    aria-hidden
+                    className="shrink-0"
+                  />
                   Admin Portal
                 </NavLink>
               </Item>
             </>
           )}
 
-          <Separator className="h-px bg-gray-200 my-2" />
+          <Separator className="my-2 h-px bg-gray-200" />
 
-          <Item className="px-3 py-2 rounded text-red-600 hover:bg-red-50">
+          <Item className="rounded text-red-600 outline-none hover:bg-red-50">
             <button
               type="button"
-              className="w-full flex justify-center items-center cursor-pointer outline-none"
+              className="flex w-full cursor-pointer items-center justify-center gap-2 px-3 py-2 text-sm outline-none"
               onClick={() => handleLogout()}
             >
+              <HiOutlineLogout size={16} aria-hidden className="shrink-0" />
               Logout
             </button>
           </Item>

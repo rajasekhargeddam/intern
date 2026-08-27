@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { HiOutlineSearch } from "react-icons/hi";
 
 import { fetchSearchSuggestions } from "../../services/search";
 import {
@@ -75,6 +76,11 @@ const SearchBar = ({
         <label htmlFor="search-query" className="sr-only">
           Search posts, people, or hashtags
         </label>
+        <HiOutlineSearch
+          size={16}
+          aria-hidden
+          className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
+        />
         <input
           id="search-query"
           type="search"
@@ -88,7 +94,7 @@ const SearchBar = ({
             setTimeout(() => setShowSuggestions(false), 150);
           }}
           placeholder="Search posts, people, or #tags"
-          className="min-h-10 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+          className="min-h-10 w-full rounded-lg border border-slate-200 bg-white py-2 pr-3 pl-9 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
         />
 
         {shouldShowDropdown && (
@@ -117,8 +123,9 @@ const SearchBar = ({
       <button
         type="submit"
         aria-label="Submit search"
-        className="h-10 shrink-0 rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition hover:bg-blue-700"
+        className="flex h-10 shrink-0 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition hover:bg-blue-700"
       >
+        <HiOutlineSearch size={16} aria-hidden />
         Search
       </button>
     </form>

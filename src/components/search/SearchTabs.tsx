@@ -1,9 +1,11 @@
+import { HiOutlineDocumentText, HiOutlineUsers, HiOutlineHashtag } from "react-icons/hi";
+import type { IconType } from "react-icons";
 import type { SearchTab } from "./SearchBar";
 
-const TABS: { id: SearchTab; label: string }[] = [
-  { id: "posts", label: "Posts" },
-  { id: "people", label: "People" },
-  { id: "tags", label: "#Tags" },
+const TABS: { id: SearchTab; label: string; icon: IconType }[] = [
+  { id: "posts", label: "Posts", icon: HiOutlineDocumentText },
+  { id: "people", label: "People", icon: HiOutlineUsers },
+  { id: "tags", label: "Tags", icon: HiOutlineHashtag },
 ];
 
 type SearchTabsProps = {
@@ -31,7 +33,7 @@ const SearchTabs = ({ activeTab, onChange }: SearchTabsProps) => {
       onKeyDown={onKeyDown}
       className="mt-3 flex gap-1 rounded-lg border border-slate-200 bg-slate-100 p-0.5"
     >
-      {TABS.map(({ id, label }) => {
+      {TABS.map(({ id, label, icon: Icon }) => {
         const isActive = activeTab === id;
 
         return (
@@ -44,12 +46,13 @@ const SearchTabs = ({ activeTab, onChange }: SearchTabsProps) => {
             aria-controls={`search-panel-${id}`}
             tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(id)}
-            className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition ${
+            className={`flex flex-1 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition ${
               isActive
                 ? "bg-white text-blue-600 shadow-sm"
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
+            <Icon size={15} aria-hidden className="shrink-0" />
             {label}
           </button>
         );

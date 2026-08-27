@@ -1,16 +1,23 @@
 import { NavLink } from "react-router-dom";
+import {
+  HiOutlineHome,
+  HiOutlineUsers,
+  HiOutlineSearch,
+  HiOutlineDocumentText,
+} from "react-icons/hi";
+import type { IconType } from "react-icons";
 
-const navItems = [
-  { to: "/", label: "User Posts", icon: "✦" },
-  { to: "/discover", label: "Discover People", icon: "✦" },
-  { to: "/search", label: "Search", icon: "⌕" },
-  { to: "/static-posts", label: "Static Posts", icon: "✧" },
+const navItems: { to: string; label: string; icon: IconType }[] = [
+  { to: "/", label: "User Posts", icon: HiOutlineHome },
+  { to: "/discover", label: "Discover People", icon: HiOutlineUsers },
+  { to: "/search", label: "Search", icon: HiOutlineSearch },
+  { to: "/static-posts", label: "Static Posts", icon: HiOutlineDocumentText },
 ];
 
 const SideBar = () => {
   return (
     <ul className="space-y-1">
-      {navItems.map(({ to, label, icon }) => (
+      {navItems.map(({ to, label, icon: Icon }) => (
         <li key={to}>
           <NavLink to={to} end={to === "/"}>
             {({ isActive }) => (
@@ -22,11 +29,11 @@ const SideBar = () => {
                 }`}
               >
                 <span
-                  className={`flex h-7 w-7 items-center justify-center rounded-md text-sm ${
+                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md ${
                     isActive ? "bg-white/20" : "bg-blue-50 text-blue-600"
                   }`}
                 >
-                  {icon}
+                  <Icon size={16} aria-hidden />
                 </span>
                 <span className="truncate">{label}</span>
               </div>

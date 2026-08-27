@@ -1,5 +1,13 @@
 import { useState, useEffect, type FormEvent, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import {
+  HiOutlineUser,
+  HiOutlineMail,
+  HiOutlineLockClosed,
+  HiOutlineKey,
+  HiOutlineEye,
+  HiOutlineEyeOff,
+} from "react-icons/hi";
 import type { SignupRequest } from "../types";
 import { UserContext } from "../context/UserContext";
 import { sendOtp, signupUser } from "../services/auth";
@@ -136,15 +144,22 @@ const SignUp = () => {
               >
                 Username
               </label>
-              <input
-                id="username"
-                type="text"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
-                placeholder="Enter Unique Username"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
-                disabled={isLoading || isSendingOtp}
-              />
+              <div className="relative">
+                <HiOutlineUser
+                  size={16}
+                  aria-hidden
+                  className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  id="username"
+                  type="text"
+                  value={username}
+                  onChange={(event) => setUsername(event.target.value)}
+                  placeholder="Enter Unique Username"
+                  className="w-full rounded-lg border border-slate-300 py-2 pr-3 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
+                  disabled={isLoading || isSendingOtp}
+                />
+              </div>
             </div>
 
             <div>
@@ -155,15 +170,22 @@ const SignUp = () => {
                 Email Address
               </label>
               <div className="flex gap-2">
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  placeholder="you@example.com"
-                  className="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
-                  disabled={isLoading || isSendingOtp}
-                />
+                <div className="relative min-w-0 flex-1">
+                  <HiOutlineMail
+                    size={16}
+                    aria-hidden
+                    className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
+                  />
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    placeholder="you@example.com"
+                    className="w-full rounded-lg border border-slate-300 py-2 pr-3 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
+                    disabled={isLoading || isSendingOtp}
+                  />
+                </div>
                 <button
                   type="button"
                   onClick={handleSendOtp}
@@ -188,23 +210,30 @@ const SignUp = () => {
               >
                 OTP
               </label>
-              <input
-                id="otp"
-                type="text"
-                inputMode="numeric"
-                autoComplete="one-time-code"
-                maxLength={6}
-                value={otp}
-                onChange={(event) => {
-                  const nextValue = event.target.value
-                    .replace(/\D/g, "")
-                    .slice(0, 6);
-                  setOtp(nextValue);
-                }}
-                placeholder="Enter 6-digit OTP"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
-                disabled={isLoading || isSendingOtp}
-              />
+              <div className="relative">
+                <HiOutlineKey
+                  size={16}
+                  aria-hidden
+                  className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  id="otp"
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  maxLength={6}
+                  value={otp}
+                  onChange={(event) => {
+                    const nextValue = event.target.value
+                      .replace(/\D/g, "")
+                      .slice(0, 6);
+                    setOtp(nextValue);
+                  }}
+                  placeholder="Enter 6-digit OTP"
+                  className="w-full rounded-lg border border-slate-300 py-2 pr-3 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
+                  disabled={isLoading || isSendingOtp}
+                />
+              </div>
               {otpMessage && (
                 <p className="mt-1 text-sm font-medium text-green-700">
                   {otpMessage}
@@ -219,15 +248,22 @@ const SignUp = () => {
               >
                 Password
               </label>
-              <input
-                id="password"
-                type={toggleShowPassword ? "text" : "password"}
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="••••••••"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
-                disabled={isLoading || isSendingOtp}
-              />
+              <div className="relative">
+                <HiOutlineLockClosed
+                  size={16}
+                  aria-hidden
+                  className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  id="password"
+                  type={toggleShowPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder="••••••••"
+                  className="w-full rounded-lg border border-slate-300 py-2 pr-3 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
+                  disabled={isLoading || isSendingOtp}
+                />
+              </div>
             </div>
 
             <div>
@@ -238,22 +274,37 @@ const SignUp = () => {
                 Confirm Password
               </label>
               <div className="flex gap-2">
-                <input
-                  id="confirmPassword"
-                  type={toggleShowPassword ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
-                  placeholder="••••••••"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
-                  disabled={isLoading || isSendingOtp}
-                />
+                <div className="relative min-w-0 flex-1">
+                  <HiOutlineLockClosed
+                    size={16}
+                    aria-hidden
+                    className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
+                  />
+                  <input
+                    id="confirmPassword"
+                    type={toggleShowPassword ? "text" : "password"}
+                    value={confirmPassword}
+                    onChange={(event) => setConfirmPassword(event.target.value)}
+                    placeholder="••••••••"
+                    className="w-full rounded-lg border border-slate-300 py-2 pr-3 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
+                    disabled={isLoading || isSendingOtp}
+                  />
+                </div>
                 <button
                   type="button"
-                  className="rounded-lg border border-slate-300 px-3 outline-none"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 outline-none"
                   onClick={() => {
                     setToggleShowPassword((value) => !value);
                   }}
+                  aria-label={
+                    toggleShowPassword ? "Hide password" : "Show password"
+                  }
                 >
+                  {toggleShowPassword ? (
+                    <HiOutlineEyeOff size={16} aria-hidden />
+                  ) : (
+                    <HiOutlineEye size={16} aria-hidden />
+                  )}
                   {toggleShowPassword ? "Hide" : "Show"}
                 </button>
               </div>

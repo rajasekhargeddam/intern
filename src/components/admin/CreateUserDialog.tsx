@@ -11,7 +11,6 @@ import {
 import { useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import type { SignupRequest } from "../../types";
 import { createAdminUser } from "../../services/admin";
 
 function CreateUserDialog({ onCreated }: { onCreated: () => void }) {
@@ -38,9 +37,7 @@ function CreateUserDialog({ onCreated }: { onCreated: () => void }) {
 
     try {
       setIsLoading(true);
-      const userData: SignupRequest = { username, email, password };
-
-      await createAdminUser(userData);
+      await createAdminUser({ username, email, password });
 
       alert("User Created successfully...");
 

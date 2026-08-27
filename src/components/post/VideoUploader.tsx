@@ -1,4 +1,5 @@
 import { MdDeleteOutline } from "react-icons/md";
+import { HiOutlineVideoCamera } from "react-icons/hi";
 
 type VideoUploaderProps = {
   video: File | null;
@@ -77,7 +78,8 @@ function VideoUploader({
 
   return (
     <div className="mt-4 flex flex-col gap-3">
-      <label className="text-sm font-medium text-slate-700">
+      <label className="flex items-center gap-1.5 text-sm font-medium text-slate-700">
+        <HiOutlineVideoCamera size={16} aria-hidden className="text-slate-500" />
         Upload Video
       </label>
 

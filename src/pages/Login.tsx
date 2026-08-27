@@ -1,5 +1,11 @@
-import { useState, type FormEvent , useContext} from "react";
+import { useState, type SubmitEvent, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import {
+  HiOutlineMail,
+  HiOutlineLockClosed,
+  HiOutlineEye,
+  HiOutlineEyeOff,
+} from "react-icons/hi";
 import type { LoginRequest } from "../types";
 import { UserContext } from "../context/UserContext";
 import { loginUser } from "../services/auth";
@@ -9,17 +15,17 @@ const Login = () => {
   const { login } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
     setIsLoading(true);
 
-    // Basic validation
     if (!email || !password) {
       setError("Please fill in all fields");
       setIsLoading(false);
@@ -31,7 +37,7 @@ const Login = () => {
     try {
       const resData = await loginUser(loginData);
 
-      notifySuccess("Welcome back!")
+      notifySuccess("Welcome back!");
       setEmail("");
       setPassword("");
       login(resData.user);
@@ -62,37 +68,63 @@ const Login = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-slate-700 mb-2"
+                className="mb-2 block text-sm font-medium text-slate-700"
               >
                 Email Address
               </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="you@example.com"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
-                disabled={isLoading}
-              />
+              <div className="relative">
+                <HiOutlineMail
+                  size={16}
+                  aria-hidden
+                  className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  placeholder="you@example.com"
+                  className="w-full rounded-lg border border-slate-300 py-2 pr-3 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
+                  disabled={isLoading}
+                />
+              </div>
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-slate-700 mb-2"
+                className="mb-2 block text-sm font-medium text-slate-700"
               >
                 Password
               </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="••••••••"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
-                disabled={isLoading}
-              />
+              <div className="relative">
+                <HiOutlineLockClosed
+                  size={16}
+                  aria-hidden
+                  className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder="••••••••"
+                  className="w-full rounded-lg border border-slate-300 py-2 pr-10 pl-9 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-100"
+                  disabled={isLoading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute top-1/2 right-3 -translate-y-1/2 text-slate-400 transition hover:text-slate-600"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <HiOutlineEyeOff size={16} aria-hidden />
+                  ) : (
+                    <HiOutlineEye size={16} aria-hidden />
+                  )}
+                </button>
+              </div>
             </div>
 
             <button
@@ -106,11 +138,11 @@ const Login = () => {
 
           {error && (
             <div>
-              <p className="text-red-700 text-sm font-medium">{error}</p>
+              <p className="text-sm font-medium text-red-700">{error}</p>
             </div>
           )}
 
-          <p className="text-center text-slate-600 text-sm mt-6">
+          <p className="mt-6 text-center text-sm text-slate-600">
             Don't have an account?{" "}
             <Link
               to="/auth/signup"

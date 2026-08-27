@@ -13,6 +13,7 @@ import useDeletePostMutation from "../hooks/useDeletePostMutation";
 import { notifyError, notifySuccess } from "../utils/toast";
 
 import type { Comment } from "../types";
+import BackButton from "../components/BackButton";
 
 const PostDetails = () => {
   const { postId } = useParams();
@@ -88,26 +89,29 @@ const PostDetails = () => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-4 sm:px-6">
-      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
-        <UserPostCard post={post} onDeletePost={onDeletePost} />
-      </div>
-
-      <div className="mt-4">
-        <CommentInput
-          onSubmit={handleAddComment}
-          isLoading={addCommentMutation.isPending}
-        />
-      </div>
-
-      {isCommentsError ? (
-        <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          Failed to load comments. Please refresh the page.
+    <>
+      <BackButton />
+      <div className="mx-auto w-full max-w-3xl px-4 py-4 sm:px-6">
+        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+          <UserPostCard post={post} onDeletePost={onDeletePost} />
         </div>
-      ) : (
-        <CommentList comments={comments} postId={postId!} />
-      )}
-    </div>
+
+        <div className="mt-4">
+          <CommentInput
+            onSubmit={handleAddComment}
+            isLoading={addCommentMutation.isPending}
+          />
+        </div>
+
+        {isCommentsError ? (
+          <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+            Failed to load comments. Please refresh the page.
+          </div>
+        ) : (
+          <CommentList comments={comments} postId={postId!} />
+        )}
+      </div>
+    </>
   );
 };
 

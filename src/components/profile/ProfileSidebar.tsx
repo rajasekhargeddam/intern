@@ -1,21 +1,26 @@
 import { NavLink } from "react-router-dom";
-import { FaUser, FaHeart, FaBookmark } from "react-icons/fa";
+import {
+  HiOutlineUser,
+  HiOutlineHeart,
+  HiOutlineBookmark,
+} from "react-icons/hi";
+import type { IconType } from "react-icons";
 
-const navItems = [
+const navItems: { label: string; path: string; icon: IconType }[] = [
   {
     label: "Profile",
     path: "/profile",
-    icon: FaUser,
+    icon: HiOutlineUser,
   },
   {
     label: "Liked Posts",
     path: "/profile/liked-posts",
-    icon: FaHeart,
+    icon: HiOutlineHeart,
   },
   {
     label: "Saved Posts",
     path: "/profile/saved-posts",
-    icon: FaBookmark,
+    icon: HiOutlineBookmark,
   },
 ];
 
@@ -36,7 +41,7 @@ const ProfileSidebar = () => {
                 }`
               }
             >
-              <Icon size={16} />
+              <Icon size={18} aria-hidden className="shrink-0" />
               <span>{label}</span>
             </NavLink>
           </li>

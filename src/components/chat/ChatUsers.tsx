@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { HiOutlineChatAlt2 } from "react-icons/hi";
 import { getChatUsers, getChatConnectionUsers } from "../../services/chat";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
@@ -49,7 +50,8 @@ const ChatUsers = () => {
 
   return (
     <aside className="flex h-full min-h-0 w-full flex-col bg-white">
-      <h2 className="shrink-0 border-b border-slate-200 px-4 py-3 text-base font-semibold">
+      <h2 className="flex shrink-0 items-center gap-2 border-b border-slate-200 px-4 py-3 text-base font-semibold">
+        <HiOutlineChatAlt2 size={20} aria-hidden className="text-blue-600" />
         Chats
       </h2>
 
